@@ -1,6 +1,6 @@
 import { Icon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
-import { CTASection, PageHero } from "@/components/ui/PageHero";
+import { PageHero } from "@/components/ui/PageHero";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { getIndustry, industries } from "@/content/industries";
 import { getService } from "@/content/services";
@@ -59,13 +59,6 @@ export default async function IndustryDetailPage({
       <article className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand/15 text-brand">
           <Icon name={industry.icon} className="h-6 w-6" />
-        </div>
-
-        <div className="flex flex-wrap gap-3">
-          <ButtonLink href="/contact">{tn("startProject")}</ButtonLink>
-          <ButtonLink href="/contact" variant="secondary">
-            {tn("contact")}
-          </ButtonLink>
         </div>
 
         <section className="mt-12">
@@ -174,13 +167,6 @@ export default async function IndustryDetailPage({
           </section>
         ) : null}
       </article>
-
-      <CTASection
-        title={loc(industry.ctaTitle, l)}
-        body={loc(industry.ctaBody, l)}
-        primary={{ href: "/contact", label: tn("startProject") }}
-        secondary={{ href: "/industries", label: tc("allIndustries") }}
-      />
     </>
   );
 }

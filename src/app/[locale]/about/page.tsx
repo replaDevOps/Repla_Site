@@ -1,5 +1,5 @@
 import { ButtonLink } from "@/components/ui/Button";
-import { CTASection, PageHero } from "@/components/ui/PageHero";
+import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { companyCopy } from "@/content/company";
@@ -140,11 +140,6 @@ export default async function AboutPage({
           </div>
         </div>
       </section>
-      <CTASection
-        title={loc(companyCopy.whyTitle, l)}
-        body={loc(companyCopy.ctaBody, l)}
-        primary={{ href: "/contact", label: tn("startProject") }}
-      />
     </>
   );
 }
