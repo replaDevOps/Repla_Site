@@ -111,8 +111,8 @@ export const companyCopy = {
       icon: "Cpu",
       title: L("Technical Expertise", "الخبرة التقنية"),
       body: L(
-        "We leverage modern technologies and proven development practices to create reliable, scalable, and high-performance solutions tailored to your business needs. Our experienced team uses modern technologies and proven development practices to build reliable, scalable, and high-performance solutions.",
-        "نعتمد تقنيات حديثة وممارسات تطوير مثبتة لإنشاء حلول موثوقة وقابلة للتوسع وعالية الأداء مصممة لتلبية احتياجات أعمالكم. يستخدم فريقنا المتمرس تقنيات حديثة وممارسات تطوير مثبتة لبناء حلول موثوقة وقابلة للتوسع وعالية الأداء.",
+        "Our experienced team uses modern technologies and proven or the development practices to build reliable, scalable, and high-performance solutions.",
+        "يستخدم فريقنا المتمرس تقنيات حديثة وممارسات تطوير مُثبتة لبناء حلول موثوقة وقابلة للتوسع وعالية الأداء."
       ),
     },
     {

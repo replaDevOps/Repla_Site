@@ -207,7 +207,9 @@ export function NavbarClient({
                       href={`/services/${s.slug}`}
                       className="flex items-start gap-3.5 rounded-xl px-3 py-3 transition-colors hover:bg-foreground/[0.04]"
                     >
-                      <Icon name={s.icon} className="mt-0.5 h-5 w-5 shrink-0 text-foreground/55" />
+                      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
+                        <Icon name={s.icon} className="h-5 w-5" />
+                      </span>
                       <span className="min-w-0">
                         <span className="block text-sm font-medium text-foreground">{s.title}</span>
                         <span className="mt-0.5 block text-xs leading-relaxed text-muted line-clamp-2">{s.tagline}</span>
@@ -225,16 +227,18 @@ export function NavbarClient({
             open={open === "industries"}
             onOpen={() => setOpen("industries")}
             onClose={() => setOpen(null)}
-            panelClassName="w-[min(980px,calc(100vw-2rem))]"
+            panelClassName="w-[min(1040px,calc(100vw-2rem))]"
           >
             <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
               {industries.map((i) => (
                 <li key={i.slug}>
                   <Link
                     href={`/industries/${i.slug}`}
-                    className="flex items-start gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
                   >
-                    <Icon name={i.icon} className="mt-0.5 h-5 w-5 shrink-0 text-foreground/55" />
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
+                      <Icon name={i.icon} className="h-5 w-5" />
+                    </span>
                     <span className="min-w-0">{i.title}</span>
                   </Link>
                 </li>
@@ -284,7 +288,9 @@ export function NavbarClient({
                       href={item.href}
                       className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-foreground/[0.04]"
                     >
-                      <Icon name={item.icon} className="h-5 w-5 shrink-0 text-foreground/55" />
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
+                        <Icon name={item.icon} className="h-5 w-5" />
+                      </span>
                       {t(item.labelKey)}
                     </Link>
                   </li>

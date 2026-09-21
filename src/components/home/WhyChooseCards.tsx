@@ -1,12 +1,12 @@
 "use client";
 
-import { Reveal } from "@/components/ui/Reveal";
 import { loc, type Locale } from "@/content/types";
 import { cn } from "@/lib/cn";
+import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, Cpu, Handshake, ShieldCheck, type LucideIcon } from "lucide-react";
-import type { CSSProperties } from "react";
+import { useState } from "react";
 
-const icons: Record<string, LucideIcon> = {
+const ICONS: Record<string, LucideIcon> = {
   Cpu,
   Briefcase,
   ShieldCheck,
@@ -19,100 +19,189 @@ type Item = {
   body: { en: string; ar: string };
 };
 
-/** Asymmetric bento placement (4-column grid). */
-const BENTO_LAYOUT = [
-  "col-span-2 row-span-2 sm:row-span-2 max-sm:row-span-1",
-  "col-span-2",
-  "col-span-2",
-  "col-span-2 sm:col-span-4",
+/* Extra metadata for split card layout (subtitles & bottom tags) */
+const ITEM_META = [
+  {
+    subtitle: { en: "Modern technology & architecture.", ar: "تقنيات حديثة وبنية هندسية." },
+    tags: [
+      { en: "Architecture", ar: "البنية الهندسية" },
+      { en: "APIs", ar: "واجهات البرمجة" },
+      { en: "Performance", ar: "الأداء العالي" },
+    ],
+  },
+  {
+    subtitle: { en: "Understand first. Build second.", ar: "افهم أولاً. ابْنِ ثانياً." },
+    tags: [
+      { en: "Strategy", ar: "الاستراتيجية" },
+      { en: "ROI", ar: "عائد الاستثمار" },
+      { en: "Scalability", ar: "القابلية للتوسع" },
+    ],
+  },
+  {
+    subtitle: { en: "Reliable from development to deployment.", ar: "موثوق من التطوير إلى النشر." },
+    tags: [
+      { en: "Security", ar: "الأمان" },
+      { en: "Testing", ar: "الاختبارات" },
+      { en: "Clean Code", ar: "كود نظيف" },
+    ],
+  },
+  {
+    subtitle: { en: "Support as your business evolves.", ar: "دعم مستمر مع نمو أعمالكم." },
+    tags: [
+      { en: "Support", ar: "الدعم المستمر" },
+      { en: "Evolution", ar: "التطوير" },
+      { en: "Collaboration", ar: "التعاون" },
+    ],
+  },
 ] as const;
 
-/** Per-tile accent for gradient hairline + hover glow (Repla brand family). */
-const BENTO_GLOWS = ["#c41e24", "#d9383e", "#a81820", "#e85a5f"] as const;
-
 export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[] }) {
-  return (
-    <Reveal>
-      <div
-        className="why-bento-grid mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:[grid-auto-rows:minmax(140px,auto)] lg:gap-[1.125rem]"
-        role="list"
-      >
-        {items.map((item, i) => (
-          <WhyChooseBentoCard
-            key={item.title.en}
-            item={item}
-            locale={locale}
-            layout={BENTO_LAYOUT[i] ?? "col-span-2"}
-            glow={BENTO_GLOWS[i] ?? BENTO_GLOWS[0]}
-            featured={i === 0}
-          />
-        ))}
-      </div>
-    </Reveal>
-  );
-}
+  const [active, setActive] = useState(0);
 
-function WhyChooseBentoCard({
-  item,
-  locale,
-  layout,
-  glow,
-  featured,
-}: {
-  item: Item;
-  locale: Locale;
-  layout: string;
-  glow: string;
-  featured: boolean;
-}) {
-  const Icon = icons[item.icon] ?? Cpu;
-  const style = { "--bento-glow": glow } as CSSProperties;
+  const activeItem = items[active] ?? items[0];
+  const activeMeta = ITEM_META[active % ITEM_META.length];
+  const Icon = ICONS[activeItem.icon] ?? Cpu;
 
   return (
-    <article
-      role="listitem"
-      style={style}
-      className={cn(
-        "why-bento-card group relative flex flex-col overflow-hidden rounded-[20px] p-6 motion-safe:transition-[transform,box-shadow,border-color] motion-safe:duration-300 motion-safe:ease-out motion-reduce:transition-none",
-        layout,
-        featured && "min-h-[280px] sm:min-h-0",
-      )}
-    >
+    <div className="relative mx-auto mt-10 w-full overflow-hidden rounded-[24px] border border-brand/35 bg-surface/80 p-5 shadow-2xl backdrop-blur-xl transition-colors duration-300 sm:rounded-[32px] sm:p-8 lg:p-10">
+      {/* Background ambient lighting */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 motion-reduce:transition-none"
-        aria-hidden
-        style={{
-          background: `radial-gradient(circle at 85% 0%, color-mix(in srgb, ${glow} 22%, transparent), transparent 58%)`,
-        }}
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 -top-40 h-96 w-96 rounded-full bg-brand/10 blur-[120px] [.dark_&]:bg-brand/10"
       />
-      <div className="relative flex min-h-0 flex-1 flex-col gap-4 sm:justify-end sm:gap-2">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-brand/5 blur-[120px]"
+      />
+
+      <div className="relative grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-10">
+        {/* Left Side: Selectable Tabs */}
         <div
-          className={cn(
-            "flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] opacity-90 transition-[transform,box-shadow] duration-300 group-hover:scale-[1.03] motion-reduce:transform-none sm:mb-1",
-          )}
-          style={{ backgroundColor: glow }}
+          className="flex flex-col justify-center gap-3 lg:col-span-5"
+          role="tablist"
+          aria-label="Why Choose REPLA"
         >
-          <Icon className="h-[1.125rem] w-[1.125rem] text-white" aria-hidden />
+          {items.map((item, i) => {
+            const isActive = active === i;
+            const meta = ITEM_META[i % ITEM_META.length];
+
+            return (
+              <button
+                key={item.title.en}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`why-tabpanel-${i}`}
+                id={`why-tab-${i}`}
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => setActive(i)}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setActive((i + 1) % items.length);
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setActive((i - 1 + items.length) % items.length);
+                  }
+                }}
+                className={cn(
+                  "group relative flex flex-col items-start rounded-2xl p-4 text-left outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-brand sm:p-6",
+                  locale === "ar" && "items-end text-right",
+                  isActive
+                    ? "font-bold text-foreground"
+                    : "text-muted/70 hover:bg-foreground/[0.03] hover:text-foreground",
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="whyActiveTabBg"
+                    className="absolute inset-0 rounded-2xl border border-line bg-surface shadow-md [.dark_&]:border-white/15 [.dark_&]:bg-white/[0.06]"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10 font-display text-lg font-bold tracking-tight sm:text-xl">
+                  {loc(item.title, locale)}
+                </span>
+                <span
+                  className={cn(
+                    "relative z-10 mt-1.5 text-xs font-normal transition-colors duration-200 sm:text-sm",
+                    isActive ? "text-muted" : "text-muted/60",
+                  )}
+                >
+                  {loc(meta.subtitle, locale)}
+                </span>
+              </button>
+            );
+          })}
         </div>
-        <div className="mt-auto sm:mt-0">
-          <h3
-            className={cn(
-              "font-display font-bold tracking-[-0.01em] text-foreground",
-              featured ? "text-xl sm:text-[1.4rem]" : "text-lg sm:text-[1.05rem]",
-            )}
-          >
-            {loc(item.title, locale)}
-          </h3>
-          <p
-            className={cn(
-              "mt-1 text-pretty text-sm leading-relaxed text-muted sm:mt-0.5 sm:text-[0.82rem] sm:leading-[1.45]",
-              featured && "sm:max-w-[95%]",
-            )}
-          >
-            {loc(item.body, locale)}
-          </p>
+
+        {/* Right Side: Detailed Content Card */}
+        <div className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-7 shadow-xl transition-colors duration-300 sm:min-h-[460px] sm:p-10 lg:col-span-7 lg:min-h-[480px] lg:p-12 [.dark_&]:border-white/10 [.dark_&]:bg-[#0d0d12]/90">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 14, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -14, scale: 0.98 }}
+              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+              id={`why-tabpanel-${active}`}
+              role="tabpanel"
+              aria-labelledby={`why-tab-${active}`}
+              className="flex flex-1 flex-col justify-between"
+            >
+              <div>
+                {/* Minimalist Icon */}
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-line bg-brand/10 text-brand shadow-sm transition-colors duration-300 [.dark_&]:border-white/10 [.dark_&]:bg-white/5">
+                  <Icon className="h-7 w-7 text-brand" />
+                </div>
+
+                {/* Heading */}
+                <h3 className="mt-7 font-display text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 sm:text-4xl lg:text-[2.6rem] lg:leading-tight [.dark_&]:text-white">
+                  {loc(activeItem.title, locale)}
+                </h3>
+
+                {/* Paragraph */}
+                <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted transition-colors duration-300 sm:text-lg [.dark_&]:text-white/70">
+                  {loc(activeItem.body, locale)}
+                </p>
+              </div>
+
+              {/* Bottom Row: Arrow Button + Tags */}
+              <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-line pt-8 transition-colors duration-300 [.dark_&]:border-white/10">
+                <button
+                  type="button"
+                  aria-label="Next feature"
+                  onClick={() => setActive((active + 1) % items.length)}
+                  className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line bg-surface-2/60 text-foreground transition-all duration-300 hover:scale-105 hover:border-brand hover:bg-brand/10 hover:text-brand active:scale-95 [.dark_&]:border-white/15 [.dark_&]:bg-white/5 [.dark_&]:text-white"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="h-5 w-5 transition-transform duration-300 group-hover:translate-y-0.5"
+                  >
+                    <path d="M12 5v14M19 12l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {activeMeta.tags.map((tag) => (
+                    <span
+                      key={tag.en}
+                      className="rounded-full border border-line bg-surface-2/70 px-4 py-2 text-xs font-medium text-foreground/80 shadow-xs transition-colors hover:border-brand/40 sm:text-sm [.dark_&]:border-white/10 [.dark_&]:bg-white/[0.04] [.dark_&]:text-white/80 [.dark_&]:hover:border-white/20"
+                    >
+                      {loc(tag, locale)}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
-    </article>
+    </div>
   );
 }
+
+
+
