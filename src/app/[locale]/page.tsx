@@ -1,7 +1,6 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { IndustryGrid, IndustryReveal } from "@/components/home/IndustryGrid";
 import { ServiceCard } from "@/components/ui/Cards";
-import { CTASection } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatCounter } from "@/components/ui/StatCounter";
@@ -204,13 +203,6 @@ export default async function HomePage({
           />
         </div>
       </section>
-
-      <CTASection
-        title={loc(companyCopy.ctaTitle, l)}
-        body={loc(companyCopy.ctaBody, l)}
-        primary={{ href: "/contact", label: tn("startProject") }}
-        secondary={{ href: "/services", label: tn("exploreServices") }}
-      />
     </>
   );
 }

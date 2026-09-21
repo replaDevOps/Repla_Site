@@ -1,11 +1,10 @@
 import { Icon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
-import { CTASection, PageHero } from "@/components/ui/PageHero";
+import { PageHero } from "@/components/ui/PageHero";
 import { getSolution, solutions } from "@/content/solutions";
 import { getService } from "@/content/services";
 import { getIndustry } from "@/content/industries";
 import { loc, locList, type Locale } from "@/content/types";
-import { companyCopy } from "@/content/company";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/metadata";
@@ -102,11 +101,6 @@ export default async function SolutionDetailPage({
           <ButtonLink href="/contact">{tn("startProject")}</ButtonLink>
         </div>
       </article>
-      <CTASection
-        title={loc(companyCopy.ctaTitle, l)}
-        body={loc(companyCopy.ctaBody, l)}
-        primary={{ href: "/contact", label: tn("startProject") }}
-      />
     </>
   );
 }

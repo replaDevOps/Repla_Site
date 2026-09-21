@@ -3,8 +3,6 @@
 import { Icon } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { SocialLinks } from "@/components/layout/SocialLinks";
-import { BrevoMeetingPopover, useBrevoPopoverId } from "@/components/layout/BrevoMeetingDialog";
-import { Button } from "@/components/ui/Button";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { COMPANY } from "@/lib/site";
 import { cn } from "@/lib/cn";
@@ -12,6 +10,8 @@ import { ArrowRight, ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-re
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+
+const CALENDLY_URL = "https://calendly.com/replaofficials";
 
 /** Pre-localized nav entries built on the server, so content modules stay out of this bundle. */
 export type NavEntry = {
@@ -53,7 +53,6 @@ export function NavbarClient({
   const [mobile, setMobile] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const menuId = useId();
-  const bookingPopoverId = useBrevoPopoverId();
   const bookACallLabel = locale === "ar" ? "احجز مكالمة" : "Book a Call";
 
   useEffect(() => {
@@ -309,14 +308,14 @@ export function NavbarClient({
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Button
-            type="button"
-            size="sm"
-            popoverTarget={bookingPopoverId}
-            popoverTargetAction="show"
+          <a
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-brand/90 active:scale-[0.97]"
           >
             {bookACallLabel}
-          </Button>
+          </a>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -400,17 +399,16 @@ export function NavbarClient({
             </nav>
 
             <div className="mt-6 space-y-5">
-              <Button
-                type="button"
-                size="lg"
-                className="w-full justify-center gap-2 rounded-xl shadow-[0_12px_32px_rgba(196,30,36,0.35)]"
-                popoverTarget={bookingPopoverId}
-                popoverTargetAction="show"
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-6 py-3.5 text-base font-semibold text-white shadow-[0_12px_32px_rgba(196,30,36,0.35)] transition-all duration-200 hover:bg-brand/90 active:scale-[0.97]"
                 onClick={() => setMobile(false)}
               >
                 {bookACallLabel}
                 <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
-              </Button>
+              </a>
 
               <ul className="space-y-3.5 px-0.5">
                 <li className="flex items-start gap-3 text-sm text-foreground/80">
@@ -462,11 +460,6 @@ export function NavbarClient({
         </div>
       ) : null}
 
-      <BrevoMeetingPopover
-        id={bookingPopoverId}
-        title={bookACallLabel}
-        closeLabel={t("closeMenu")}
-      />
     </header>
   );
 }

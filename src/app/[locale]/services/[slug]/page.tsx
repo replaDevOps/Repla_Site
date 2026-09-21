@@ -1,11 +1,10 @@
 import { Icon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
-import { CTASection, PageHero } from "@/components/ui/PageHero";
+import { PageHero } from "@/components/ui/PageHero";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { loc, locList, type Locale } from "@/content/types";
 import { getChildServices, getService, services } from "@/content/services";
 import { getIndustry } from "@/content/industries";
-import { companyCopy } from "@/content/company";
 import { Link } from "@/i18n/navigation";
 import { pageMetadata } from "@/lib/metadata";
 import { routing } from "@/i18n/routing";
@@ -155,12 +154,6 @@ export default async function ServiceDetailPage({
           </aside>
         </div>
       </article>
-      <CTASection
-        title={loc(companyCopy.ctaTitle, l)}
-        body={loc(service.description, l)}
-        primary={{ href: "/contact", label: tn("startProject") }}
-        secondary={{ href: "/services", label: tc("allServices") }}
-      />
     </>
   );
 }
