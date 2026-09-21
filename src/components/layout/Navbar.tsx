@@ -10,14 +10,14 @@ const featuredNav = [
   "ai-intelligent-automation",
   "custom-software-development",
   "web-development",
+  "api-development",
   "mobile-app-development",
   "cloud-devops",
   "cybersecurity",
+  "dedicated-development-teams",
   "iot-embedded-systems",
   "ui-ux-design",
   "quality-assurance",
-  "api-development",
-  "dedicated-development-teams",
 ];
 
 type Localizable = {

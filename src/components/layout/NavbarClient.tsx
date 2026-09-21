@@ -191,7 +191,7 @@ export function NavbarClient({
             open={open === "services"}
             onOpen={() => setOpen("services")}
             onClose={() => setOpen(null)}
-            panelClassName="w-[min(900px,calc(50vw))]"
+            panelClassName="w-[min(1160px,calc(100vw-2rem))]"
           >
             <div>
               <div className="mb-5 flex items-center justify-between">
@@ -200,7 +200,7 @@ export function NavbarClient({
                   {t("viewAll")}
                 </Link>
               </div>
-              <ul className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+              <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
                 {featured.map((s) => (
                   <li key={s.slug}>
                     <Link
@@ -225,17 +225,17 @@ export function NavbarClient({
             open={open === "industries"}
             onOpen={() => setOpen("industries")}
             onClose={() => setOpen(null)}
-            panelClassName="w-[min(860px,calc(50vw))]"
+            panelClassName="w-[min(980px,calc(100vw-2rem))]"
           >
-            <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
               {industries.map((i) => (
                 <li key={i.slug}>
                   <Link
                     href={`/industries/${i.slug}`}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
+                    className="flex items-start gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
                   >
-                    <Icon name={i.icon} className="h-5 w-5 shrink-0 text-foreground/55" />
-                    {i.title}
+                    <Icon name={i.icon} className="mt-0.5 h-5 w-5 shrink-0 text-foreground/55" />
+                    <span className="min-w-0">{i.title}</span>
                   </Link>
                 </li>
               ))}
