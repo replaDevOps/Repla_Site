@@ -9,7 +9,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import Image from "next/image";
-import { FooterCta } from "@/components/layout/FooterCta";
+import { FooterCta, FooterExploreServicesButton } from "@/components/layout/FooterCta";
 
 const footerIndustrySlugs = [
   "fintech-banking",
@@ -75,9 +75,7 @@ export async function Footer() {
               <ButtonLink href="/contact" size="lg">
                 {t("getStarted")}
               </ButtonLink>
-              <ButtonLink href="/services" variant="secondary" size="lg">
-                {tn("exploreServices")}
-              </ButtonLink>
+              <FooterExploreServicesButton label={tn("exploreServices")} />
             </div>
           </div>
         </FooterCta>

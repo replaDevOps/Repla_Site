@@ -1,7 +1,6 @@
 import { ServiceCard } from "@/components/ui/Cards";
-import { CTASection, PageHero } from "@/components/ui/PageHero";
+import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
-import { companyCopy } from "@/content/company";
 import { getCatalogServices } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
@@ -93,11 +92,6 @@ export default async function ServicesPage({
           ))}
         </div>
       </section>
-      <CTASection
-        title={loc(companyCopy.ctaTitle, l)}
-        body={loc(companyCopy.ctaBody, l)}
-        primary={{ href: "/contact", label: tn("startProject") }}
-      />
     </>
   );
 }
