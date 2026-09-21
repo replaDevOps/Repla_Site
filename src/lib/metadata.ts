@@ -37,12 +37,20 @@ export function pageMetadata({
       siteName: COMPANY.shortName,
       locale: locale === "ar" ? "ar_SA" : "en_US",
       type: "website",
-      images: [{ url: `${SITE_URL}/logo.png`, alt: COMPANY.brand }],
+      images: [
+        {
+          url: `${SITE_URL}/logo.png`,
+          width: 1200,
+          height: 630,
+          alt: `${COMPANY.brand} Logo`,
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: `${t} | ${COMPANY.shortName}`,
       description: d,
+      images: [`${SITE_URL}/logo.png`],
     },
   };
 }

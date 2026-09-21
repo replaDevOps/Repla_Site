@@ -63,6 +63,8 @@ export default async function LocaleLayout({
     >
       <head>
         <ThemeScript />
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <JsonLd data={organizationJsonLd()} />
