@@ -77,11 +77,13 @@ function NetworkGlobe() {
     let last = performance.now();
 
     const resize = () => {
-      const size = canvas.clientWidth;
-      if (!size) return;
+      const rect = canvas.getBoundingClientRect();
+      const w = rect.width || canvas.clientWidth;
+      const h = rect.height || canvas.clientHeight;
+      if (!w || !h) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = size * dpr;
-      canvas.height = size * dpr;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (!running) render(performance.now());
     };
@@ -91,15 +93,18 @@ function NetworkGlobe() {
       last = now;
       if (!reduce) angle += dt * 0.22;
 
-      const size = canvas.clientWidth;
-      if (!size) return;
-      const cx = size / 2;
-      const cy = size / 2;
+      const rect = canvas.getBoundingClientRect();
+      const w = rect.width || canvas.clientWidth;
+      const h = rect.height || canvas.clientHeight;
+      if (!w || !h) return;
+      const cx = w / 2;
+      const cy = h / 2;
+      const size = Math.min(w, h);
       const scale = size * 0.38;
       const tilt = 0.38;
       const light = document.documentElement.classList.contains("light");
 
-      ctx.clearRect(0, 0, size, size);
+      ctx.clearRect(0, 0, w, h);
 
       const projected = points.map((p) => {
         const r = rotateX(rotateY(p, angle), tilt);
@@ -185,13 +190,13 @@ function NetworkGlobe() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="relative z-10 block h-full w-full" aria-hidden="true" />;
+  return <canvas ref={canvasRef} className="relative z-10 block aspect-square h-full w-full object-contain" aria-hidden="true" />;
 }
 
 export function BrandNetworkGlobe() {
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[34rem] px-5 sm:px-8">
-      <div className="relative h-full w-full">
+    <div className="relative mx-auto w-full max-w-[34rem] px-2 sm:px-4">
+      <div className="relative mx-auto aspect-square w-full">
         <div className="pointer-events-none absolute inset-[8%] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,196,176,0.42),rgba(196,30,36,0.08)_46%,transparent_72%)]" />
         <div className="pointer-events-none absolute inset-0">
           <NetworkGlobe />
@@ -223,3 +228,4 @@ export function BrandNetworkGlobe() {
     </div>
   );
 }
+
