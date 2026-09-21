@@ -9,6 +9,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import Image from "next/image";
+import { FooterCta } from "@/components/layout/FooterCta";
 
 const footerIndustrySlugs = [
   "fintech-banking",
@@ -51,33 +52,35 @@ export async function Footer() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 pt-12 sm:px-6">
-        <div className="relative overflow-hidden rounded-[1.75rem] border border-line bg-surface/85 px-6 py-10 text-center shadow-[0_24px_70px_rgba(196,30,36,0.1)] sm:px-12 sm:py-14">
-          <div className="pointer-events-none absolute inset-0">
-            <div className="glow-orb absolute start-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2" />
-            <div className="absolute inset-0 grid-bg opacity-50" />
+        <FooterCta>
+          <div className="relative overflow-hidden rounded-[1.75rem] border border-line bg-surface/85 px-6 py-10 text-center shadow-[0_24px_70px_rgba(196,30,36,0.1)] sm:px-12 sm:py-14">
+            <div className="pointer-events-none absolute inset-0">
+              <div className="glow-orb absolute start-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2" />
+              <div className="absolute inset-0 grid-bg opacity-50" />
+            </div>
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -bottom-7 end-4 select-none font-display text-[4rem] font-bold leading-none text-foreground/[0.045] sm:text-[5.5rem] md:text-[7.5rem]"
+            >
+              REPLA
+            </span>
+            <p className="relative text-xs font-medium uppercase tracking-[0.22em] text-brand">{t("ctaEyebrow")}</p>
+            <h2 className="relative mt-3 font-display text-2xl font-bold text-foreground sm:text-4xl">
+              {t("ctaTitle")}
+            </h2>
+            <p className="relative mx-auto mt-3 max-w-xl text-sm font-normal leading-relaxed text-muted sm:text-base">
+              {t("ctaBody")}
+            </p>
+            <div className="relative mt-7 flex flex-wrap items-center justify-center gap-3">
+              <ButtonLink href="/contact" size="lg">
+                {t("getStarted")}
+              </ButtonLink>
+              <ButtonLink href="/services" variant="secondary" size="lg">
+                {tn("exploreServices")}
+              </ButtonLink>
+            </div>
           </div>
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -bottom-7 end-4 select-none font-display text-[4rem] font-bold leading-none text-foreground/[0.045] sm:text-[5.5rem] md:text-[7.5rem]"
-          >
-            REPLA
-          </span>
-          <p className="relative text-xs font-medium uppercase tracking-[0.22em] text-brand">{t("ctaEyebrow")}</p>
-          <h2 className="relative mt-3 font-display text-2xl font-bold text-foreground sm:text-4xl">
-            {t("ctaTitle")}
-          </h2>
-          <p className="relative mx-auto mt-3 max-w-xl text-sm font-normal leading-relaxed text-muted sm:text-base">
-            {t("ctaBody")}
-          </p>
-          <div className="relative mt-7 flex flex-wrap items-center justify-center gap-3">
-            <ButtonLink href="/contact" size="lg">
-              {t("getStarted")}
-            </ButtonLink>
-            <ButtonLink href="/services" variant="secondary" size="lg">
-              {tn("exploreServices")}
-            </ButtonLink>
-          </div>
-        </div>
+        </FooterCta>
 
         {/* Equal-width tracks made the gutters look uneven, because each column's longest
             link differs. Sizing tracks to their content and spreading the leftover space

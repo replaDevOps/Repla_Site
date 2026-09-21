@@ -291,16 +291,18 @@ export function ContactForm({
         ) : null}
       </div>
 
-      <Button type="submit" disabled={status === "submitting"} size="lg" className="min-w-[8.75rem] px-8">
-        {status === "submitting" ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-            {t("submitting")}
-          </>
-        ) : (
-          t("submit")
-        )}
-      </Button>
+      <div className="flex justify-end pt-2">
+        <Button type="submit" disabled={status === "submitting"} size="lg" className="min-w-[8.75rem] px-8">
+          {status === "submitting" ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+              {t("submitting")}
+            </>
+          ) : (
+            t("submit")
+          )}
+        </Button>
+      </div>
 
       {status === "success" ? (
         <p className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400" role="status">
