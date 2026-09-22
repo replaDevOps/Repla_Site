@@ -161,15 +161,17 @@ export function ContactForm({
   const form = (
     <form
       onSubmit={onSubmit}
-      className="contact-form-shell space-y-6 overflow-visible rounded-2xl border border-line bg-surface p-6 sm:p-8 lg:p-10"
+      className="contact-form-shell w-full min-w-0 max-w-full space-y-5 overflow-visible rounded-2xl border border-line bg-surface p-4 sm:space-y-6 sm:p-6 lg:p-10"
       noValidate
     >
-      <div>
-        <h2 className="font-display text-2xl font-semibold text-foreground">{t("title")}</h2>
-        <p className="mt-2 text-sm text-muted">{loc(companyCopy.contactHelp, locale)}</p>
+      <div className="min-w-0">
+        <h2 className="break-words text-balance font-display text-[clamp(1.25rem,3.5vw,1.5rem)] font-semibold leading-snug text-foreground">
+          {t("title")}
+        </h2>
+        <p className="mt-2 break-words text-sm leading-relaxed text-muted">{loc(companyCopy.contactHelp, locale)}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 md:gap-x-5 md:gap-y-4">
+      <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-4">
         <Field
           name="fullName"
           label={t("fullName")}
@@ -195,7 +197,7 @@ export function ContactForm({
           placeholder={t("placeholders.company")}
           autoComplete="organization"
         />
-        <label className="block text-sm">
+        <label className="block min-w-0 text-sm">
           <FieldCaption label={t("phone")} optional={t("optional")} />
           <PhoneField
             key={formKey}
@@ -214,7 +216,7 @@ export function ContactForm({
 
         {isInquiry ? (
           <>
-            <label className="block text-sm">
+            <label className="block min-w-0 text-sm">
               <FieldCaption label={t("service")} required />
               <FormSelect
                 name="service"
@@ -230,7 +232,7 @@ export function ContactForm({
               />
               <FieldError message={errors.service} />
             </label>
-            <label className="block text-sm">
+            <label className="block min-w-0 text-sm">
               <FieldCaption label={t("industry")} optional={t("optional")} />
               <FormSelect
                 name="industry"
@@ -240,7 +242,7 @@ export function ContactForm({
                 placeholder={t("selectIndustry")}
               />
             </label>
-            <label className="block text-sm">
+            <label className="block min-w-0 text-sm">
               <FieldCaption label={t("budget")} optional={t("optional")} />
               <FormSelect
                 name="budget"
@@ -250,7 +252,7 @@ export function ContactForm({
                 placeholder={t("selectBudget")}
               />
             </label>
-            <label className="block text-sm">
+            <label className="block min-w-0 text-sm">
               <FieldCaption label={t("timeline")} optional={t("optional")} />
               <FormSelect
                 name="timeline"
@@ -263,13 +265,16 @@ export function ContactForm({
           </>
         ) : null}
 
-        <label className="block text-sm md:col-span-2">
+        <label className="block min-w-0 text-sm sm:col-span-2">
           <FieldCaption label={isInquiry ? t("message") : t("application")} required />
           <textarea
             name="message"
             data-field="message"
-            rows={6}
-            className={cn("form-field mt-1.5 min-h-[9rem] resize-y", errors.message && "form-field-error")}
+            rows={5}
+            className={cn(
+              "form-field mt-1.5 min-h-[8.5rem] resize-y sm:min-h-[9rem]",
+              errors.message && "form-field-error",
+            )}
             placeholder={isInquiry ? t("placeholders.message") : t("placeholders.application")}
             aria-invalid={Boolean(errors.message)}
             onChange={(e) => clearFieldError("message", e.target.value)}
@@ -278,7 +283,7 @@ export function ContactForm({
         </label>
 
         {isInquiry ? (
-          <label className="block text-sm md:col-span-2">
+          <label className="block min-w-0 text-sm sm:col-span-2">
             <FieldCaption label={t("source")} optional={t("optional")} />
             <FormSelect
               name="source"
@@ -291,8 +296,8 @@ export function ContactForm({
         ) : null}
       </div>
 
-      <div className="flex justify-end pt-2">
-        <Button type="submit" disabled={status === "submitting"} size="lg" className="min-w-[8.75rem] px-8">
+      <div className="flex justify-stretch pt-2 sm:justify-end">
+        <Button type="submit" disabled={status === "submitting"} size="lg" className="w-full min-w-0 px-8 sm:w-auto sm:min-w-[8.75rem]">
           {status === "submitting" ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
@@ -305,12 +310,12 @@ export function ContactForm({
       </div>
 
       {status === "success" ? (
-        <p className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400" role="status">
+        <p className="break-words rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400" role="status">
           {loc(companyCopy.formSuccess, locale)}
         </p>
       ) : null}
       {status === "not_configured" ? (
-        <p className="rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3 text-sm text-amber-300" role="status">
+        <p className="break-words rounded-xl border border-amber-400/25 bg-amber-400/10 px-4 py-3 text-sm text-amber-300" role="status">
           {loc(companyCopy.formNotConfigured, locale)}{" "}
           <a className="underline" href={`mailto:${COMPANY.email}`}>
             {COMPANY.email}
@@ -318,7 +323,7 @@ export function ContactForm({
         </p>
       ) : null}
       {status === "error" ? (
-        <p className="rounded-xl border border-brand/30 bg-brand-soft px-4 py-3 text-sm text-brand" role="alert">
+        <p className="break-words rounded-xl border border-brand/30 bg-brand-soft px-4 py-3 text-sm text-brand" role="alert">
           {loc(companyCopy.formError, locale)}{" "}
           <a className="underline" href={`mailto:${COMPANY.email}`}>
             {COMPANY.email}
@@ -334,7 +339,7 @@ export function ContactForm({
   );
 
   if (variant === "careers") return form;
-  return <Reveal>{form}</Reveal>;
+  return <Reveal className="min-w-0">{form}</Reveal>;
 }
 
 function FieldCaption({
@@ -347,7 +352,7 @@ function FieldCaption({
   required?: boolean;
 }) {
   return (
-    <span className="text-foreground/90">
+    <span className="break-words text-foreground/90">
       {label}
       {optional ? <span className="text-muted"> ({optional})</span> : null}
       {required ? (
@@ -385,14 +390,14 @@ function Field({
   onValue?: (value: string) => void;
 }) {
   return (
-    <label className="block text-sm">
+    <label className="block min-w-0 text-sm">
       <FieldCaption label={label} optional={optional} required={!optional} />
       <input
         name={name}
         data-field={name}
         type={type}
         autoComplete={autoComplete}
-        className={cn("form-field mt-1.5", error && "form-field-error")}
+        className={cn("form-field mt-1.5 min-w-0", error && "form-field-error")}
         placeholder={placeholder}
         aria-invalid={Boolean(error)}
         onChange={(e) => onValue?.(e.target.value)}

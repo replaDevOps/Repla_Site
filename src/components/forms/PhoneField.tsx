@@ -70,13 +70,13 @@ export function PhoneField({
   }, [open]);
 
   return (
-    <div ref={rootRef} className={cn("relative mt-1.5", open && "z-20")}>
+    <div ref={rootRef} className={cn("relative mt-1.5 min-w-0", open && "z-20")}>
       <input type="hidden" name="phone" value={combined} />
       <input type="hidden" name="phoneCountry" value={iso} />
       <div className={cn("form-control flex overflow-hidden", error && "form-control-error")} dir="ltr">
         <button
           type="button"
-          className="flex shrink-0 items-center gap-1.5 border-e border-line px-3 py-3 text-sm text-foreground outline-none transition-colors hover:bg-foreground/[0.03] focus-visible:outline-none"
+          className="flex shrink-0 touch-manipulation items-center gap-1 border-e border-line px-2.5 py-2.5 text-xs text-foreground outline-none transition-colors hover:bg-foreground/[0.03] focus-visible:outline-none sm:gap-1.5 sm:px-3 sm:py-3 sm:text-sm"
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-label={country.name}
@@ -96,7 +96,7 @@ export function PhoneField({
           placeholder={placeholder}
           value={national}
           aria-invalid={Boolean(error)}
-          className="min-w-0 flex-1 bg-transparent px-3 py-3 text-base text-foreground outline-none placeholder:text-muted sm:text-sm"
+          className="min-w-0 flex-1 bg-transparent px-2.5 py-2.5 text-base text-foreground outline-none placeholder:text-muted sm:px-3 sm:py-3 sm:text-sm"
           onChange={(e) => {
             setNational(e.target.value);
             emit(iso, e.target.value);
@@ -116,7 +116,7 @@ export function PhoneField({
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
-          <ul id={listId} role="listbox" className="max-h-56 overflow-auto p-1">
+          <ul id={listId} role="listbox" className="max-h-[min(14rem,45dvh)] overflow-auto p-1 sm:max-h-56">
             {filtered.length === 0 ? (
               <li className="px-3 py-2 text-sm text-muted">{emptyLabel}</li>
             ) : (
@@ -129,7 +129,7 @@ export function PhoneField({
                       role="option"
                       aria-selected={selected}
                       className={cn(
-                        "flex w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm transition-colors hover:bg-foreground/[0.04]",
+                        "flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-start text-sm transition-colors hover:bg-foreground/[0.04]",
                         selected && "bg-brand-soft",
                       )}
                       onClick={() => {
@@ -139,7 +139,7 @@ export function PhoneField({
                         emit(c.iso, national);
                       }}
                     >
-                      <span className="min-w-0 flex-1 truncate text-foreground">{c.name}</span>
+                      <span className="min-w-0 flex-1 break-words text-foreground">{c.name}</span>
                       <span className="tabular-nums text-muted">{c.dial}</span>
                     </button>
                   </li>

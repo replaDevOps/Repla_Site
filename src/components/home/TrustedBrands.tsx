@@ -23,7 +23,7 @@ export async function TrustedBrands() {
           </p>
           <h2
             id="trusted-brands-heading"
-            className="mt-5 font-display text-3xl font-bold leading-[1.15] text-foreground sm:text-4xl lg:text-[2.75rem]"
+            className="mt-5 break-words text-balance font-display text-[clamp(1.5rem,4.5vw,2.75rem)] font-bold leading-[1.15] text-foreground"
           >
             {t.rich("brandsTitle", {
               brand: (chunks) => <span className="text-brand">{chunks}</span>,
