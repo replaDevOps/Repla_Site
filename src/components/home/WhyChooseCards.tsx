@@ -86,29 +86,11 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
             const meta = ITEM_META[i % ITEM_META.length];
 
             return (
-              <button
+              <div
                 key={item.title.en}
-                role="tab"
-                aria-selected={isActive}
-                aria-controls={`why-tabpanel-${i}`}
-                id={`why-tab-${i}`}
-                tabIndex={isActive ? 0 : -1}
-                onClick={() => setActive(i)}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowDown") {
-                    e.preventDefault();
-                    setActive((i + 1) % items.length);
-                  } else if (e.key === "ArrowUp") {
-                    e.preventDefault();
-                    setActive((i - 1 + items.length) % items.length);
-                  }
-                }}
                 className={cn(
-                  "group relative flex flex-col items-start rounded-2xl p-4 text-left outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-brand sm:p-6",
-                  locale === "ar" && "items-end text-right",
-                  isActive
-                    ? "font-bold text-foreground"
-                    : "text-muted/70 hover:bg-foreground/[0.03] hover:text-foreground",
+                  "group relative rounded-2xl transition-colors duration-300",
+                  !isActive && "hover:bg-foreground/[0.03]",
                 )}
               >
                 {isActive && (
@@ -118,18 +100,46 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
-                <span className="relative z-10 font-display text-lg font-bold tracking-tight sm:text-xl">
-                  {loc(item.title, locale)}
-                </span>
-                <span
+                <h3 className="relative z-10 m-0">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`why-tabpanel-${i}`}
+                    id={`why-tab-${i}`}
+                    tabIndex={isActive ? 0 : -1}
+                    onClick={() => setActive(i)}
+                    onKeyDown={(e) => {
+                      if (e.key === "ArrowDown") {
+                        e.preventDefault();
+                        setActive((i + 1) % items.length);
+                      } else if (e.key === "ArrowUp") {
+                        e.preventDefault();
+                        setActive((i - 1 + items.length) % items.length);
+                      }
+                    }}
+                    className={cn(
+                      "w-full rounded-2xl p-4 pb-1.5 text-left font-display text-lg font-bold tracking-tight outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand sm:p-6 sm:pb-1.5 sm:text-xl",
+                      locale === "ar" && "text-right",
+                      isActive
+                        ? "text-foreground"
+                        : "text-muted/70 group-hover:text-foreground",
+                    )}
+                  >
+                    {loc(item.title, locale)}
+                  </button>
+                </h3>
+                <p
                   className={cn(
-                    "relative z-10 mt-1.5 text-xs font-normal transition-colors duration-200 sm:text-sm",
+                    "relative z-10 cursor-pointer px-4 pb-4 text-xs font-normal transition-colors duration-200 sm:px-6 sm:pb-6 sm:text-sm",
+                    locale === "ar" && "text-right",
                     isActive ? "text-muted" : "text-muted/60",
                   )}
+                  onClick={() => setActive(i)}
                 >
                   {loc(meta.subtitle, locale)}
-                </span>
-              </button>
+                </p>
+              </div>
             );
           })}
         </div>
@@ -154,10 +164,10 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
                   <Icon className="h-7 w-7 text-brand" />
                 </div>
 
-                {/* Heading */}
-                <h3 className="mt-7 font-display text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 sm:text-4xl lg:text-[2.6rem] lg:leading-tight [.dark_&]:text-white">
+                {/* Visual title only — H3s live on the tab list for a clean outline */}
+                <p className="mt-7 font-display text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 sm:text-4xl lg:text-[2.6rem] lg:leading-tight [.dark_&]:text-white">
                   {loc(activeItem.title, locale)}
-                </h3>
+                </p>
 
                 {/* Paragraph */}
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted transition-colors duration-300 sm:text-lg [.dark_&]:text-white/70">

@@ -214,10 +214,11 @@ export function BrandNetworkGlobe() {
             <span className="brand-float-plate">
               <Image
                 src={brand.src}
-                alt={brand.name}
-                width={160}
-                height={48}
-                sizes="(max-width: 640px) 72px, 100px"
+                alt={`${brand.name} logo`}
+                title={brand.name}
+                width={100}
+                height={30}
+                sizes="100px"
                 className="h-4 w-auto max-w-[4.75rem] object-contain sm:h-[1.15rem] sm:max-w-[5.5rem]"
                 unoptimized={brand.src.endsWith(".svg")}
               />

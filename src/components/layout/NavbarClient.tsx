@@ -159,7 +159,8 @@ export function NavbarClient({
         <Link href="/" className="flex min-w-0 items-center gap-2">
           <Image
             src="/logo.png"
-            alt="REPLA"
+            alt="REPLA Technologies"
+            title="REPLA Technologies"
             width={40}
             height={40}
             priority
@@ -168,7 +169,8 @@ export function NavbarClient({
           />
           <Image
             src="/logo-light.png"
-            alt="REPLA"
+            alt="REPLA Technologies"
+            title="REPLA Technologies"
             width={40}
             height={40}
             priority

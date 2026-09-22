@@ -99,8 +99,8 @@ export const companyCopy = {
   ],
   whyChooseEyebrow: L("Why Choose REPLA", "لماذا تختارون REPLA"),
   whyChooseTitle: L(
-    "Why Businesses Choose Repla Technologies",
-    "لماذا تختار الشركات Repla Technologies",
+    "Why Businesses Choose REPLA Technologies",
+    "لماذا تختار الشركات REPLA Technologies",
   ),
   whyChooseBody: L(
     "We combine technical expertise, business understanding, and modern technology to build reliable digital solutions that create real business value.",

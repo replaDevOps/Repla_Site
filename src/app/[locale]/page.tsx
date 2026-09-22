@@ -11,6 +11,7 @@ import { industries } from "@/content/industries";
 import { getFeaturedServices, getService } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
+import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { TechSlider } from "@/components/ui/TechSlider";
 import { Link } from "@/i18n/navigation";
@@ -32,12 +33,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-  return pageMetadata({
+  const meta = pageMetadata({
     locale: locale as Locale,
-    title: "Home",
+    title: SITE_TITLE,
     description: t("homeDescription"),
     path: "/",
   });
+  return {
+    ...meta,
+    title: { absolute: SITE_TITLE },
+    openGraph: { ...meta.openGraph, title: SITE_TITLE },
+    twitter: { ...meta.twitter, title: SITE_TITLE },
+  };
 }
 
 export default async function HomePage({
@@ -66,10 +73,13 @@ export default async function HomePage({
             <p className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(companyCopy.eyebrow, l)}
             </p>
-            <h2 className="mt-5 font-display text-[clamp(1.75rem,6.5vw,2.25rem)] font-bold leading-[1.15] text-foreground sm:text-4xl lg:text-5xl">
+            <h1 className="mt-5 font-display text-[clamp(1.75rem,6.5vw,2.25rem)] font-bold leading-[1.15] text-foreground sm:text-4xl lg:text-5xl">
+              {loc(SITE_H1, l)}
+            </h1>
+            <p className="mt-4 max-w-xl font-display text-lg font-semibold leading-snug text-foreground/90 sm:text-xl">
               {loc(companyCopy.heroTitle, l)}
-            </h2>
-            <p className="mt-5 max-w-xl text-base font-normal leading-relaxed text-muted sm:text-lg">
+            </p>
+            <p className="mt-4 max-w-xl text-base font-normal leading-relaxed text-muted sm:text-lg">
               {loc(companyCopy.heroBody, l)}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -173,20 +183,6 @@ export default async function HomePage({
       <TrustedBrands />
 
       <WhyChooseSection locale={l} />
-
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHeader title={loc(companyCopy.whyTitle, l)} description={loc(companyCopy.whySubtitle, l)} />
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {companyCopy.why.map((item, i) => (
-            <Reveal key={item.title.en} delay={i * 0.05}>
-              <div className="card-hover h-full rounded-2xl border border-line bg-surface p-6">
-                <p className="font-display text-xl font-semibold text-foreground">{loc(item.title, l)}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{loc(item.body, l)}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
 
       <section id="industries" className="overflow-x-clip border-t border-line py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
