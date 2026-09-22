@@ -15,11 +15,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const l = locale as Locale;
+  const t = await getTranslations({ locale, namespace: "meta" });
   return pageMetadata({
-    locale: l,
-    title: loc(companyCopy.aboutTeaserTitle, l),
-    description: loc(companyCopy.story, l),
+    locale: locale as Locale,
+    title: t("aboutTitle"),
+    description: t("aboutDescription"),
     path: "/about",
   });
 }
@@ -34,12 +34,13 @@ export default async function AboutPage({
   const l = locale as Locale;
   const tn = await getTranslations("nav");
   const tc = await getTranslations("common");
+  const tm = await getTranslations("meta");
 
   return (
     <>
       <PageHero
         eyebrow={tn("about")}
-        title={l === "en" ? "About REPLA Technologies" : "عن REPLA Technologies"}
+        title={tm("aboutTitle")}
         description={
           l === "en"
             ? "Your trusted partner for AI-first digital transformation"
@@ -95,25 +96,25 @@ export default async function AboutPage({
             ))}
           </div>
         </div>
-        <div className="mt-16">
+        <div className="mt-20">
           <h2 className="font-display text-3xl font-bold text-foreground">{tc("journey")}</h2>
-          <ol className="mt-8 space-y-4 border-s border-line ps-6">
+          <ol className="mt-10 space-y-10 border-s border-line ps-6 sm:space-y-12">
             {companyCopy.journey.map((step) => (
-              <li key={step.year} className="relative">
+              <li key={step.year} className="relative pb-1">
                 <span className="absolute -start-[1.9rem] top-1.5 h-3 w-3 rounded-full bg-brand" />
                 <p className="text-xs uppercase tracking-widest text-brand">{step.year}</p>
-                <h3 className="mt-1 font-display text-xl font-semibold text-foreground">{loc(step.title, l)}</h3>
-                <p className="mt-1 text-sm text-muted">{loc(step.body, l)}</p>
+                <h3 className="mt-2 font-display text-xl font-semibold text-foreground">{loc(step.title, l)}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{loc(step.body, l)}</p>
               </li>
             ))}
           </ol>
         </div>
-        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+        <div className="mt-20 grid gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="font-display text-3xl font-bold text-foreground">{tc("expertise")}</h2>
-            <ul className="mt-4 space-y-2 text-sm text-muted">
+            <ul className="mt-6 space-y-4 text-sm leading-relaxed text-muted">
               {locList(companyCopy.expertise, l).map((item) => (
-                <li key={item} className="border-s-2 border-brand/50 ps-3">
+                <li key={item} className="border-s-2 border-brand/50 py-1 ps-4">
                   {item}
                 </li>
               ))}
@@ -121,8 +122,8 @@ export default async function AboutPage({
           </div>
           <div>
             <h2 className="font-display text-3xl font-bold text-foreground">{tc("technologies")}</h2>
-            <p className="mt-3 text-sm text-muted">{loc(companyCopy.technologiesNote, l)}</p>
-            <ul className="mt-4 flex flex-wrap gap-2">
+            <p className="mt-4 text-sm leading-relaxed text-muted">{loc(companyCopy.technologiesNote, l)}</p>
+            <ul className="mt-6 flex flex-wrap gap-3">
               {TECHNOLOGIES.map((tech) => (
                 <li
                   key={tech}
@@ -132,7 +133,7 @@ export default async function AboutPage({
                 </li>
               ))}
             </ul>
-            <div className="mt-6">
+            <div className="mt-8">
               <ButtonLink href="/team" variant="secondary">
                 {tn("team")}
               </ButtonLink>

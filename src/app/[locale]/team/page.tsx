@@ -12,12 +12,20 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata({
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const title = t("teamTitle");
+  const meta = pageMetadata({
     locale: locale as Locale,
-    title: locale === "ar" ? "الفريق" : "Team",
-    description: loc(companyCopy.emptyTeamBody, locale as Locale),
+    title,
+    description: t("teamDescription"),
     path: "/team",
   });
+  return {
+    ...meta,
+    title: { absolute: title },
+    openGraph: { ...meta.openGraph, title },
+    twitter: { ...meta.twitter, title },
+  };
 }
 
 export default async function TeamPage({
@@ -30,12 +38,13 @@ export default async function TeamPage({
   const l = locale as Locale;
   const tn = await getTranslations("nav");
   const te = await getTranslations("empty");
+  const tm = await getTranslations("meta");
 
   return (
     <>
       <PageHero
         eyebrow={tn("team")}
-        title={l === "en" ? "Team" : "الفريق"}
+        title={tm("teamTitle")}
         description={loc(companyCopy.emptyTeamBody, l)}
       />
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">

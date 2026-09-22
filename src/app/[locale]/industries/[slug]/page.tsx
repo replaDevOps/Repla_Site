@@ -7,7 +7,8 @@ import { getService } from "@/content/services";
 import { loc, locList, type Locale } from "@/content/types";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { pageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, faqPageJsonLd, pageMetadata, webPageJsonLd } from "@/lib/metadata";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -25,7 +26,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const industry = getIndustry(slug);
-  if (!industry) return {};
+  if (!industry) return { robots: { index: false, follow: false } };
   const l = locale as Locale;
   return pageMetadata({
     locale: l,
@@ -47,9 +48,32 @@ export default async function IndustryDetailPage({
   const l = locale as Locale;
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
+  const industryPath = `/industries/${slug}`;
+  const industryName = loc(industry.title, l);
+  const industryDescription = loc(industry.metaDescription, l);
+  const faqItems = industry.faqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }));
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(
+          [
+            { name: tn("home"), path: "" },
+            { name: tn("industries"), path: "/industries" },
+            { name: industryName },
+          ],
+          l,
+        )}
+      />
+      <JsonLd
+        data={webPageJsonLd({
+          name: industryName,
+          description: industryDescription,
+          locale: l,
+          path: industryPath,
+        })}
+      />
+      {faqItems.length ? <JsonLd data={faqPageJsonLd(faqItems)} /> : null}
       <PageHero
         eyebrow={tn("industries")}
         title={loc(industry.heroTitle, l)}

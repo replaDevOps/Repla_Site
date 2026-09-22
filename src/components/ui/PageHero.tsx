@@ -25,9 +25,9 @@ export function PageHero({
         )}
       >
         {eyebrow ? (
-          <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-brand">
+          <span className="mb-4 inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
             {eyebrow}
-          </p>
+          </span>
         ) : null}
         <h1 className="max-w-4xl font-display text-[clamp(1.9rem,7vw,2.5rem)] font-bold leading-[1.1] text-foreground sm:text-5xl lg:text-6xl">
           {title}

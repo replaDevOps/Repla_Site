@@ -13,14 +13,22 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
   return pageMetadata({
     locale: locale as Locale,
-    title: locale === "ar" ? "خدماتنا" : "Our Services",
-    description:
-      locale === "ar"
-        ? "محفظة خدمات تقنية معلومات شاملة للمؤسسات الحديثة القائمة على الذكاء الاصطناعي."
-        : "Comprehensive IT services portfolio for modern, AI-first enterprises.",
+    title: t("servicesTitle"),
+    description: t("servicesDescription"),
     path: "/services",
+    keywords: [
+      "IT services Saudi Arabia",
+      "AI automation services",
+      "custom software development",
+      "web development company",
+      "mobile app development",
+      "cloud and DevOps services",
+      "cybersecurity services",
+      "REPLA Technologies services",
+    ],
   });
 }
 
@@ -34,6 +42,7 @@ export default async function ServicesPage({
   const l = locale as Locale;
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
+  const tm = await getTranslations("meta");
   const all = getCatalogServices();
   const featured = all.filter((s) => s.category === "featured");
   const catalog = all.filter((s) => s.category === "catalog");
@@ -42,56 +51,70 @@ export default async function ServicesPage({
     <>
       <PageHero
         eyebrow={tn("services")}
-        title={l === "en" ? "Our Services" : "خدماتنا"}
-        description={
-          l === "en"
-            ? "A complete IT services portfolio for modern, AI-first enterprises — from agents to dedicated teams."
-            : "محفظة خدمات تقنية معلومات كاملة للمؤسسات الحديثة القائمة على الذكاء الاصطناعي — من الوكلاء إلى الفرق المخصصة."
-        }
+        title={tm("servicesTitle")}
+        description={tm("servicesHeroDescription")}
+        containerClassName="max-w-7xl"
       />
-      <section className="mx-auto max-w-7xl overflow-x-clip px-4 py-16 sm:px-6">
-        <h2 className="font-display text-2xl font-semibold text-foreground">{tc("featured")}</h2>
-        <div className="mt-6 grid grid-cols-1 gap-4">
-          {featured.map((s, i) => (
-            <Reveal
-              key={s.slug}
-              delay={(i % 4) * 0.06}
-              tone="bold"
-              from={i % 2 === 0 ? "start" : "end"}
-            >
-              <ServiceCard
-                href={`/services/${s.slug}`}
-                icon={s.icon}
-                title={loc(s.title, l)}
-                description={loc(s.description, l)}
-                cta={tc("viewService")}
-                featured={i < 2}
-                layout="row"
-              />
-            </Reveal>
-          ))}
-        </div>
-        <h2 className="mt-16 font-display text-2xl font-semibold text-foreground">{tc("catalog")}</h2>
-        <div className="mt-6 grid grid-cols-1 gap-4">
-          {catalog.map((s, i) => (
-            <Reveal
-              key={s.slug}
-              delay={(i % 4) * 0.06}
-              tone="bold"
-              from={i % 2 === 0 ? "start" : "end"}
-            >
-              <ServiceCard
-                href={`/services/${s.slug}`}
-                icon={s.icon}
-                title={loc(s.title, l)}
-                description={loc(s.description, l)}
-                cta={tc("viewService")}
-                layout="row"
-              />
-            </Reveal>
-          ))}
-        </div>
-      </section>
+
+      <div className="mx-auto max-w-7xl overflow-x-clip px-4 py-16 sm:px-6">
+        <section aria-labelledby="services-intro-heading" className="max-w-3xl">
+          <h2 id="services-intro-heading" className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
+            {tm("servicesIntroTitle")}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">{tm("servicesIntroBody")}</p>
+        </section>
+
+        <section aria-labelledby="services-featured-heading" className="mt-16">
+          <h2 id="services-featured-heading" className="font-display text-2xl font-semibold text-foreground">
+            {tm("servicesFeaturedHeading")}
+          </h2>
+          <div className="mt-6 grid grid-cols-1 gap-4">
+            {featured.map((s, i) => (
+              <Reveal
+                key={s.slug}
+                delay={(i % 4) * 0.06}
+                tone="bold"
+                from={i % 2 === 0 ? "start" : "end"}
+              >
+                <ServiceCard
+                  href={`/services/${s.slug}`}
+                  icon={s.icon}
+                  title={loc(s.title, l)}
+                  description={loc(s.description, l)}
+                  cta={tc("viewService")}
+                  featured={i < 2}
+                  layout="row"
+                />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="services-catalog-heading" className="mt-16">
+          <h2 id="services-catalog-heading" className="font-display text-2xl font-semibold text-foreground">
+            {tm("servicesCatalogHeading")}
+          </h2>
+          <div className="mt-6 grid grid-cols-1 gap-4">
+            {catalog.map((s, i) => (
+              <Reveal
+                key={s.slug}
+                delay={(i % 4) * 0.06}
+                tone="bold"
+                from={i % 2 === 0 ? "start" : "end"}
+              >
+                <ServiceCard
+                  href={`/services/${s.slug}`}
+                  icon={s.icon}
+                  title={loc(s.title, l)}
+                  description={loc(s.description, l)}
+                  cta={tc("viewService")}
+                  layout="row"
+                />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      </div>
     </>
   );
 }

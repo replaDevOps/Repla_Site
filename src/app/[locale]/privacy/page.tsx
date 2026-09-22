@@ -2,7 +2,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { privacy } from "@/content/legal";
 import { loc, locList, type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -11,10 +11,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
   return pageMetadata({
     locale: locale as Locale,
-    title: loc(privacy.title, locale as Locale),
-    description: loc(privacy.updated, locale as Locale),
+    title: t("privacyTitle"),
+    description: t("privacyDescription"),
     path: "/privacy",
   });
 }

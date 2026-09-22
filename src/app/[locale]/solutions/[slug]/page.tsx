@@ -7,7 +7,8 @@ import { getIndustry } from "@/content/industries";
 import { loc, locList, type Locale } from "@/content/types";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { pageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from "@/lib/metadata";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -25,7 +26,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const solution = getSolution(slug);
-  if (!solution) return {};
+  if (!solution) return { robots: { index: false, follow: false } };
   return pageMetadata({
     locale: locale as Locale,
     title: loc(solution.title, locale as Locale),
@@ -46,12 +47,34 @@ export default async function SolutionDetailPage({
   const l = locale as Locale;
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
+  const tm = await getTranslations("meta");
+  const solutionPath = `/solutions/${slug}`;
+  const solutionTitle = loc(solution.title, l);
+  const solutionDescription = loc(solution.description, l);
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(
+          [
+            { name: tn("home"), path: "" },
+            { name: tm("solutionsTitle"), path: "/solutions" },
+            { name: solutionTitle },
+          ],
+          l,
+        )}
+      />
+      <JsonLd
+        data={webPageJsonLd({
+          name: solutionTitle,
+          description: solutionDescription,
+          locale: l,
+          path: solutionPath,
+        })}
+      />
       <PageHero
         eyebrow={tn("solutions")}
-        title={loc(solution.title, l)}
+        title={solutionTitle}
         description={loc(solution.tagline, l)}
       />
       <article className="mx-auto max-w-5xl px-4 py-16 sm:px-6">

@@ -15,10 +15,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
   return pageMetadata({
     locale: locale as Locale,
-    title: locale === "ar" ? "الوظائف" : "Careers",
-    description: loc(companyCopy.careersIntro, locale as Locale),
+    title: t("careersTitle"),
+    description: t("careersDescription"),
     path: "/careers",
   });
 }
@@ -32,12 +33,13 @@ export default async function CareersPage({
   setRequestLocale(locale);
   const l = locale as Locale;
   const tn = await getTranslations("nav");
+  const tm = await getTranslations("meta");
 
   return (
     <>
       <PageHero
         eyebrow={tn("careers")}
-        title={loc(companyCopy.careersTitle, l)}
+        title={tm("careersTitle")}
         description={loc(companyCopy.careersIntro, l)}
       />
 

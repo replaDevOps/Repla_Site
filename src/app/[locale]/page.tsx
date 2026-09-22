@@ -10,7 +10,8 @@ import { companyCopy } from "@/content/company";
 import { industries } from "@/content/industries";
 import { getFeaturedServices, getService } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
-import { pageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMetadata, websiteJsonLd } from "@/lib/metadata";
 import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { TechSlider } from "@/components/ui/TechSlider";
@@ -63,6 +64,7 @@ export default async function HomePage({
 
   return (
     <>
+      <JsonLd data={websiteJsonLd(l)} />
       <section className="relative overflow-hidden grain">
         <div className="pointer-events-none absolute inset-0">
           <div className="glow-orb absolute -top-32 start-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rtl:translate-x-1/2" />

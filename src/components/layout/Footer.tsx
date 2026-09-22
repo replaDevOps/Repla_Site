@@ -102,7 +102,7 @@ export async function Footer() {
                 height={40}
                 className="logo-light-only h-10 w-10 object-contain"
               />
-              <span className="font-display text-lg font-semibold">REPLA</span>
+              <span className="font-display text-lg font-semibold">{COMPANY.shortName}</span>
             </Link>
             <p className="mt-4 max-w-[17.5rem] text-sm leading-relaxed text-muted">
               {loc(companyCopy.footerBlurb, locale)}

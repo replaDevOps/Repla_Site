@@ -4,8 +4,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { companyCopy } from "@/content/company";
 import { loc, type Locale } from "@/content/types";
-import { COMPANY, SITE_URL } from "@/lib/site";
-import { pageMetadata } from "@/lib/metadata";
+import { contactPageJsonLd, pageMetadata } from "@/lib/metadata";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -15,12 +14,21 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata({
-    locale: locale as Locale,
-    title: locale === "ar" ? "اتصل بنا" : "Contact Us",
-    description: loc(companyCopy.contactIntro, locale as Locale),
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const l = locale as Locale;
+  const seoTitle = l === "en" ? t("contactSeoTitle") : t("contactTitle");
+  const meta = pageMetadata({
+    locale: l,
+    title: seoTitle,
+    description: t("contactDescription"),
     path: "/contact",
   });
+  return {
+    ...meta,
+    title: { absolute: seoTitle },
+    openGraph: { ...meta.openGraph, title: seoTitle },
+    twitter: { ...meta.twitter, title: seoTitle },
+  };
 }
 
 export default async function ContactPage({
@@ -33,20 +41,14 @@ export default async function ContactPage({
   const l = locale as Locale;
   const tn = await getTranslations("nav");
   const tc = await getTranslations("common");
+  const tm = await getTranslations("meta");
 
   return (
     <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          name: COMPANY.shortName,
-          url: `${SITE_URL}/${locale}/contact`,
-        }}
-      />
+      <JsonLd data={contactPageJsonLd(l)} />
       <PageHero
         eyebrow={tn("contact")}
-        title={tn("contact")}
+        title={tm("contactTitle")}
         description={loc(companyCopy.contactIntro, l)}
         containerClassName="max-w-7xl"
       />
