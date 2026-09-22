@@ -85,7 +85,7 @@ export default async function ServiceDetailPage({
         description={loc(service.tagline, l)}
       />
       <article className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
+        <div className="grid gap-10 lg:grid-cols-[1fr_240px] xl:grid-cols-[1fr_280px]">
           <div>
             <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand/15 text-brand">
               <Icon name={service.icon} className="h-6 w-6" />

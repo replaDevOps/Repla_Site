@@ -22,7 +22,7 @@ export function LoadingScreen() {
 
   return (
     <div
-      className="pointer-events-none fixed bottom-6 end-6 z-40 opacity-80"
+      className="pointer-events-none fixed bottom-20 end-6 z-40 opacity-80 sm:bottom-6"
       role="status"
       aria-label="Loading"
     >

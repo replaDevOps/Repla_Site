@@ -58,7 +58,7 @@ function NetworkGlobe() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const points = spherePoints(88);
+    const points = spherePoints(64);
     const links: Array<[number, number]> = [];
     const maxDist = 0.52;
     for (let i = 0; i < points.length; i++) {
@@ -195,7 +195,7 @@ function NetworkGlobe() {
 
 export function BrandNetworkGlobe() {
   return (
-    <div className="relative mx-auto w-full max-w-[34rem] px-2 sm:px-4">
+    <div className="relative mx-auto w-full max-w-[26rem] px-1 sm:max-w-[30rem] sm:px-2 lg:max-w-[34rem] lg:px-4">
       <div className="relative mx-auto aspect-square w-full">
         <div className="pointer-events-none absolute inset-[8%] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,196,176,0.42),rgba(196,30,36,0.08)_46%,transparent_72%)]" />
         <div className="pointer-events-none absolute inset-0">
@@ -220,6 +220,7 @@ export function BrandNetworkGlobe() {
                 height={30}
                 sizes="100px"
                 className="h-4 w-auto max-w-[4.75rem] object-contain sm:h-[1.15rem] sm:max-w-[5.5rem]"
+                loading="lazy"
                 unoptimized={brand.src.endsWith(".svg")}
               />
             </span>

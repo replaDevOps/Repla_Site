@@ -95,13 +95,16 @@ export function FormSelect({
   }
 
   return (
-    <div ref={rootRef} className={cn("relative mt-1.5", open && "z-20")}>
+    <div ref={rootRef} className={cn("relative mt-1.5 min-w-0", open && "z-20")}>
       <input type="hidden" name={name} value={value} required={required} />
       <button
         ref={btnRef}
         type="button"
         data-field={name}
-        className={cn("form-field flex items-center justify-between gap-3 text-start", error && "form-field-error")}
+        className={cn(
+          "form-field flex min-h-11 touch-manipulation items-center justify-between gap-2 text-start sm:min-h-0 sm:gap-3",
+          error && "form-field-error",
+        )}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
@@ -109,7 +112,7 @@ export function FormSelect({
         onClick={() => setOpen((v) => !v)}
         onKeyDown={onButtonKeyDown}
       >
-        <span className={cn("min-w-0 truncate", selected ? "text-foreground" : "text-muted")}>
+        <span className={cn("min-w-0 line-clamp-2 text-start", selected ? "text-foreground" : "text-muted")}>
           {selected?.label ?? placeholder}
         </span>
         <ChevronDown
@@ -123,7 +126,7 @@ export function FormSelect({
           role="listbox"
           tabIndex={-1}
           aria-activedescendant={`${listId}-${active}`}
-          className="form-menu absolute inset-x-0 top-[calc(100%+6px)] z-30 max-h-60 overflow-auto rounded-xl border border-line bg-surface p-1 shadow-[var(--panel-shadow)]"
+          className="form-menu absolute inset-x-0 top-[calc(100%+6px)] z-30 max-h-[min(15rem,45dvh)] overflow-auto rounded-xl border border-line bg-surface p-1 shadow-[var(--panel-shadow)] sm:max-h-60"
           onKeyDown={onListKeyDown}
           ref={listRef}
         >
@@ -137,7 +140,7 @@ export function FormSelect({
                 role="option"
                 aria-selected={isSelected}
                 className={cn(
-                  "cursor-pointer rounded-lg px-3 py-2 text-sm transition-colors",
+                  "cursor-pointer break-words rounded-lg px-3 py-2.5 text-sm leading-snug transition-colors",
                   isActive && "bg-foreground/[0.04]",
                   isSelected && "bg-brand-soft text-foreground",
                 )}

@@ -129,7 +129,7 @@ export function EmptyState({
   return (
     <div className="relative overflow-hidden rounded-3xl border border-dashed border-line bg-surface px-6 py-16 text-center sm:px-12">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-40" />
-      <h2 className="relative font-display text-3xl font-bold text-foreground">{title}</h2>
+      <h2 className="relative break-words text-balance font-display text-[clamp(1.5rem,4vw,1.875rem)] font-bold text-foreground">{title}</h2>
       <p className="relative mx-auto mt-4 max-w-2xl text-muted">{body}</p>
       <div className="relative mt-8 flex justify-center">
         <ButtonLink href={href}>{cta}</ButtonLink>

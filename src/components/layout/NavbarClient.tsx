@@ -160,8 +160,8 @@ export function NavbarClient({
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6">
-        <Link href="/" className="flex min-w-0 items-center gap-2">
+      <div className="mx-auto flex max-w-7xl min-w-0 items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6">
+        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2">
           <Image
             src="/logo.png"
             alt="REPLA Technologies"
@@ -257,7 +257,7 @@ export function NavbarClient({
             open={open === "solutions"}
             onOpen={() => setOpen("solutions")}
             onClose={() => setOpen(null)}
-            panelClassName="w-[min(720px,calc(50vw))]"
+            panelClassName="w-[min(720px,calc(100vw-2rem))]"
           >
             <ul className="grid gap-2 sm:grid-cols-2">
               {solutions.map((s) => (
@@ -284,7 +284,7 @@ export function NavbarClient({
             open={open === "company"}
             onOpen={() => setOpen("company")}
             onClose={() => setOpen(null)}
-            panelClassName="w-[min(700px,calc(50vw))]"
+            panelClassName="w-[min(700px,calc(100vw-2rem))]"
           >
             <div className="grid gap-10 sm:grid-cols-2">
               <ul className="space-y-1 text-sm">
@@ -314,7 +314,7 @@ export function NavbarClient({
           </NavLink>
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden shrink-0 items-center gap-3 lg:flex">
           <a
             href={CALENDLY_URL}
             target="_blank"
@@ -420,7 +420,7 @@ export function NavbarClient({
               <ul className="space-y-3.5 px-0.5">
                 <li className="flex items-start gap-3 text-sm text-foreground/80">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
-                  <span>{COMPANY.address}</span>
+                  <span className="min-w-0 break-words">{COMPANY.address}</span>
                 </li>
                 <li>
                   <a

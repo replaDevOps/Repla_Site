@@ -110,7 +110,7 @@ export async function Footer() {
             <ul className="mt-6 max-w-[17.5rem] space-y-3 text-sm text-muted">
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
-                <span>{COMPANY.address}</span>
+                <span className="min-w-0 break-words">{COMPANY.address}</span>
               </li>
               <li>
                 <a href={COMPANY.phoneHref} className="footer-link gap-2.5" dir="ltr">

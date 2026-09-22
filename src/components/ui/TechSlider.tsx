@@ -10,7 +10,7 @@ function Tiles({ suffix, copy = false }: { suffix: string; copy?: boolean }) {
       {TECHNOLOGIES.map((tech) => (
         <li
           key={`${tech}-${suffix}`}
-          className="tech-tile flex min-w-36 shrink-0 cursor-default items-center gap-2.5 rounded-2xl border border-line bg-surface px-3 py-2.5 sm:min-w-48 sm:gap-3 sm:px-4 sm:py-3"
+          className="tech-tile flex min-w-[8.5rem] shrink-0 cursor-default items-center gap-2 rounded-2xl border border-line bg-surface px-2.5 py-2.5 sm:min-w-36 sm:gap-2.5 sm:px-3 sm:py-3 md:min-w-48 md:px-4"
         >
           <span
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-line bg-foreground/10 sm:h-11 sm:w-11"
@@ -40,7 +40,8 @@ export function TechSlider() {
     const rtl = document.documentElement.dir === "rtl";
     const speed = 42; // px / second
     let x = 0;
-    let paused = false;
+    let paused = true;
+    let visible = false;
     let frame = 0;
     let last = performance.now();
 
@@ -48,7 +49,7 @@ export function TechSlider() {
       const dt = Math.min(now - last, 48);
       last = now;
 
-      if (!paused) {
+      if (!paused && visible && !document.hidden) {
         const loop = marquee.scrollWidth / 2;
         if (loop > 0) {
           x += (rtl ? speed : -speed) * (dt / 1000);
@@ -67,9 +68,27 @@ export function TechSlider() {
       paused = true;
     };
     const resume = () => {
-      paused = false;
-      last = performance.now();
+      if (visible && !document.hidden) {
+        paused = false;
+        last = performance.now();
+      }
     };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !document.hidden) resume();
+        else paused = true;
+      },
+      { rootMargin: "80px" },
+    );
+    io.observe(track);
+
+    const onVisibility = () => {
+      if (document.hidden) paused = true;
+      else if (visible) resume();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     track.addEventListener("mouseenter", pause);
     track.addEventListener("mouseleave", resume);
@@ -78,6 +97,8 @@ export function TechSlider() {
 
     return () => {
       cancelAnimationFrame(frame);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       track.removeEventListener("mouseenter", pause);
       track.removeEventListener("mouseleave", resume);
       track.removeEventListener("focusin", pause);

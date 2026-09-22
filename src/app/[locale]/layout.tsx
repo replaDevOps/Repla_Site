@@ -3,6 +3,7 @@ import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { cn } from "@/lib/cn";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { ThemeScript } from "@/components/theme/ThemeScript";
@@ -58,7 +59,12 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${inter.variable} ${poppins.variable} ${notoArabic.variable} dark h-full antialiased`}
+      className={cn(
+        inter.variable,
+        poppins.variable,
+        locale === "ar" && notoArabic.variable,
+        "dark h-full antialiased",
+      )}
       suppressHydrationWarning
     >
       <head>

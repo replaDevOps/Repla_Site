@@ -119,7 +119,7 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
                       }
                     }}
                     className={cn(
-                      "w-full rounded-2xl p-4 pb-1.5 text-left font-display text-lg font-bold tracking-tight outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand sm:p-6 sm:pb-1.5 sm:text-xl",
+                      "w-full break-words rounded-2xl p-4 pb-1.5 text-left font-display text-lg font-bold tracking-tight outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand sm:p-6 sm:pb-1.5 sm:text-xl",
                       locale === "ar" && "text-right",
                       isActive
                         ? "text-foreground"
@@ -145,7 +145,7 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
         </div>
 
         {/* Right Side: Detailed Content Card */}
-        <div className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-7 shadow-xl transition-colors duration-300 sm:min-h-[460px] sm:p-10 lg:col-span-7 lg:min-h-[480px] lg:p-12 [.dark_&]:border-white/10 [.dark_&]:bg-[#0d0d12]/90">
+        <div className="relative flex min-h-0 flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-xl transition-colors duration-300 sm:min-h-[420px] sm:p-10 lg:col-span-7 lg:min-h-[480px] lg:p-12 [.dark_&]:border-white/10 [.dark_&]:bg-[#0d0d12]/90">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -165,7 +165,7 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
                 </div>
 
                 {/* Visual title only — H3s live on the tab list for a clean outline */}
-                <p className="mt-7 font-display text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 sm:text-4xl lg:text-[2.6rem] lg:leading-tight [.dark_&]:text-white">
+                <p className="mt-7 break-words text-balance font-display text-[clamp(1.5rem,4vw,2.6rem)] font-bold leading-tight tracking-tight text-foreground transition-colors duration-300 [.dark_&]:text-white">
                   {loc(activeItem.title, locale)}
                 </p>
 

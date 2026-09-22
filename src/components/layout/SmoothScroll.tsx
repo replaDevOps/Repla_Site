@@ -32,10 +32,7 @@ export function SmoothScroll() {
       let el = node instanceof Element ? node : null;
       while (el && el !== document.body && el !== root) {
         if (el.hasAttribute("data-no-smooth-scroll")) return true;
-        const style = getComputedStyle(el);
-        const scrollable =
-          /(auto|scroll)/.test(style.overflowY) && el.scrollHeight > el.clientHeight + 1;
-        if (scrollable) {
+        if (el.hasAttribute("data-scroll-container")) {
           const atTop = el.scrollTop <= 0;
           const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
           if (!((delta < 0 && atTop) || (delta > 0 && atBottom))) return true;
@@ -59,6 +56,11 @@ export function SmoothScroll() {
     };
 
     const tick = (now: number) => {
+      if (document.hidden) {
+        release(window.scrollY);
+        return;
+      }
+
       const dt = last ? Math.min(now - last, 64) : 16.7;
       last = now;
       const current = window.scrollY;
@@ -117,11 +119,17 @@ export function SmoothScroll() {
       if (!animating) target = window.scrollY;
     };
 
+    const onVisibility = () => {
+      if (document.hidden && animating) release(window.scrollY);
+    };
+
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("visibilitychange", onVisibility);
       reduced.removeEventListener("change", onMotionChange);
       if (frame) cancelAnimationFrame(frame);
     };

@@ -4,8 +4,6 @@ import { ServiceCard } from "@/components/ui/Cards";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatCounter } from "@/components/ui/StatCounter";
-import { WhyChooseSection } from "@/components/home/WhyChooseSection";
-import { TrustedBrands } from "@/components/home/TrustedBrands";
 import { companyCopy } from "@/content/company";
 import { industries } from "@/content/industries";
 import { getFeaturedServices, getService } from "@/content/services";
@@ -14,10 +12,23 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata, websiteJsonLd } from "@/lib/metadata";
 import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
-import { TechSlider } from "@/components/ui/TechSlider";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import dynamic from "next/dynamic";
 import type { Metadata } from "next";
+
+const TechSlider = dynamic(
+  () => import("@/components/ui/TechSlider").then((m) => ({ default: m.TechSlider })),
+  { loading: () => <div className="h-[4.5rem]" aria-hidden /> },
+);
+
+const TrustedBrands = dynamic(() =>
+  import("@/components/home/TrustedBrands").then((m) => ({ default: m.TrustedBrands })),
+);
+
+const WhyChooseSection = dynamic(() =>
+  import("@/components/home/WhyChooseSection").then((m) => ({ default: m.WhyChooseSection })),
+);
 
 const HERO_SERVICE_SLUGS = [
   "ai-intelligent-automation",
@@ -75,7 +86,7 @@ export default async function HomePage({
             <p className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(companyCopy.eyebrow, l)}
             </p>
-            <h1 className="mt-5 font-display text-[clamp(1.75rem,6.5vw,2.25rem)] font-bold leading-[1.15] text-foreground sm:text-4xl lg:text-5xl">
+            <h1 className="mt-5 break-words text-balance font-display text-[clamp(1.75rem,5.5vw,3rem)] font-bold leading-[1.15] text-foreground">
               {loc(SITE_H1, l)}
             </h1>
             <p className="mt-4 max-w-xl font-display text-lg font-semibold leading-snug text-foreground/90 sm:text-xl">
@@ -93,7 +104,7 @@ export default async function HomePage({
               </ButtonLink>
             </div>
           </div>
-          <div className="relative hidden md:block">
+          <div className="relative min-w-0">
             <div className="rounded-3xl border border-line bg-surface/80 p-5 sm:p-6">
               <p className="text-xs uppercase tracking-widest text-muted">{tn("services")}</p>
               <ul className="mt-4 grid gap-2.5 sm:gap-3 md:grid-cols-2 lg:grid-cols-1">
@@ -144,7 +155,7 @@ export default async function HomePage({
             </ButtonLink>
           </div>
         </Reveal>
-        <Reveal delay={0.1} className="grid grid-cols-2 gap-3 overflow-x-clip">
+        <Reveal delay={0.1} className="grid grid-cols-1 gap-3 overflow-x-clip min-[420px]:grid-cols-2">
           {companyCopy.stats.map((s) => (
             <StatCounter
               key={s.value}
