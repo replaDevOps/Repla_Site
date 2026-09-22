@@ -1,11 +1,15 @@
-"use client";
+import { NotFoundActions } from "@/components/layout/NotFoundActions";
+import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 
-import { Button, ButtonLink } from "@/components/ui/Button";
-import { useTranslations } from "next-intl";
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false, follow: true },
+};
 
-export default function NotFound() {
-  const t = useTranslations("notFound");
-  const tc = useTranslations("common");
+export default async function NotFound() {
+  const t = await getTranslations("notFound");
+  const tc = await getTranslations("common");
 
   return (
     <section className="relative overflow-hidden px-4 py-28 text-center">
@@ -14,12 +18,7 @@ export default function NotFound() {
       <p className="relative font-display text-5xl font-bold text-brand sm:text-7xl">{t("code")}</p>
       <h1 className="relative mt-4 font-display text-3xl font-bold text-foreground sm:text-5xl">{t("title")}</h1>
       <p className="relative mx-auto mt-4 max-w-md text-muted">{t("body")}</p>
-      <div className="relative mt-8 flex flex-wrap justify-center gap-3">
-        <ButtonLink href="/">{tc("backHome")}</ButtonLink>
-        <Button type="button" variant="secondary" onClick={() => window.history.back()}>
-          {tc("back")}
-        </Button>
-      </div>
+      <NotFoundActions backLabel={tc("back")} homeLabel={tc("backHome")} />
     </section>
   );
 }

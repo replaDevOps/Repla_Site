@@ -13,13 +13,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
   return pageMetadata({
     locale: locale as Locale,
-    title: locale === "ar" ? "الصناعات" : "Industries",
-    description:
-      locale === "ar"
-        ? "حلول متخصصة عبر الرعاية الصحية والتقنية المالية والتعليم والعقارات والمزيد."
-        : "Specialized solutions across healthcare, fintech, education, real estate, and more.",
+    title: t("industriesTitle"),
+    description: t("industriesDescription"),
     path: "/industries",
   });
 }
@@ -35,11 +33,15 @@ export default async function IndustriesPage({
   const tn = await getTranslations("nav");
   const t = await getTranslations("home");
   const tc = await getTranslations("common");
+  const tm = await getTranslations("meta");
 
   return (
     <>
-      <PageHero eyebrow={tn("industries")} title={t("industries")} description={t("industriesSub")} />
-      <section className="mx-auto max-w-7xl overflow-x-clip px-4 py-16 sm:px-6">
+      <PageHero eyebrow={tn("industries")} title={tm("industriesTitle")} description={tm("industriesDescription")} />
+      <section className="mx-auto max-w-7xl overflow-x-clip px-4 py-16 sm:px-6" aria-labelledby="industries-list-heading">
+        <h2 id="industries-list-heading" className="sr-only">
+          {tm("industriesTitle")}
+        </h2>
         <div className="grid grid-cols-1 gap-4">
           {industries.map((ind, i) => (
             <Reveal

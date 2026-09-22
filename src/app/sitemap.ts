@@ -22,6 +22,17 @@ const staticPaths = [
   "/terms",
 ];
 
+const priorityFor = (path: string) => {
+  if (path === "") return 1;
+  if (path === "/services" || path === "/contact") return 0.9;
+  if (path.startsWith("/services/")) return 0.8;
+  if (path.startsWith("/industries/")) return 0.7;
+  if (path.startsWith("/solutions/")) return 0.7;
+  if (path.startsWith("/insights/")) return 0.6;
+  if (path === "/privacy" || path === "/terms") return 0.3;
+  return 0.6;
+};
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     ...staticPaths,
@@ -34,11 +45,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return routing.locales.flatMap((locale) =>
     paths.map((path) => ({
       url: `${SITE_URL}/${locale}${path}`,
-      lastModified: new Date(),
+      changeFrequency: path === "" ? "weekly" : "monthly",
+      priority: priorityFor(path),
       alternates: {
         languages: {
           en: `${SITE_URL}/en${path}`,
           ar: `${SITE_URL}/ar${path}`,
+          "x-default": `${SITE_URL}/en${path}`,
         },
       },
     })),

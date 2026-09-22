@@ -6,7 +6,13 @@ import { loc, locList, type Locale } from "@/content/types";
 import { getChildServices, getService, services } from "@/content/services";
 import { getIndustry } from "@/content/industries";
 import { Link } from "@/i18n/navigation";
-import { pageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  breadcrumbJsonLd,
+  faqPageJsonLd,
+  pageMetadata,
+  serviceJsonLd,
+} from "@/lib/metadata";
 import { routing } from "@/i18n/routing";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -25,7 +31,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const service = getService(slug);
-  if (!service) return {};
+  if (!service) return { robots: { index: false, follow: false } };
   return pageMetadata({
     locale: locale as Locale,
     title: loc(service.title, locale as Locale),
@@ -47,12 +53,35 @@ export default async function ServiceDetailPage({
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
   const children = getChildServices(slug);
+  const servicePath = `/services/${slug}`;
+  const serviceTitle = loc(service.title, l);
+  const serviceDescription = loc(service.description, l);
+  const faqItems = service.faqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }));
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd(
+          [
+            { name: tn("home"), path: "" },
+            { name: tn("services"), path: "/services" },
+            { name: serviceTitle },
+          ],
+          l,
+        )}
+      />
+      <JsonLd
+        data={serviceJsonLd({
+          name: serviceTitle,
+          description: serviceDescription,
+          locale: l,
+          path: servicePath,
+        })}
+      />
+      {faqItems.length ? <JsonLd data={faqPageJsonLd(faqItems)} /> : null}
       <PageHero
         eyebrow={tn("services")}
-        title={loc(service.title, l)}
+        title={serviceTitle}
         description={loc(service.tagline, l)}
       />
       <article className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
@@ -105,9 +134,7 @@ export default async function ServiceDetailPage({
             {service.faqs.length ? (
               <section className="mt-10">
                 <h2 className="mb-4 font-display text-2xl font-semibold text-foreground">{tc("faq")}</h2>
-                <FaqAccordion
-                  items={service.faqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }))}
-                />
+                <FaqAccordion items={faqItems} />
               </section>
             ) : null}
           </div>

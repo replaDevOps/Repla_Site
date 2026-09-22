@@ -12,10 +12,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
   return pageMetadata({
     locale: locale as Locale,
-    title: locale === "ar" ? "الأعمال" : "Portfolio",
-    description: loc(companyCopy.emptyPortfolioBody, locale as Locale),
+    title: t("portfolioTitle"),
+    description: t("portfolioDescription"),
     path: "/portfolio",
   });
 }
@@ -30,13 +31,14 @@ export default async function PortfolioPage({
   const l = locale as Locale;
   const tn = await getTranslations("nav");
   const te = await getTranslations("empty");
+  const tm = await getTranslations("meta");
 
   return (
     <>
       <PageHero
         eyebrow={tn("portfolio")}
-        title={l === "en" ? "Portfolio / Case studies" : "الأعمال / دراسات الحالة"}
-        description={loc(companyCopy.emptyPortfolioBody, l)}
+        title={tm("portfolioTitle")}
+        description={tm("portfolioDescription")}
       />
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
         <EmptyState

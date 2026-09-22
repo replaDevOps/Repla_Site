@@ -86,9 +86,23 @@ export async function Footer() {
         <div className="grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[repeat(5,auto)] xl:justify-between">
           <div className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2">
-              <Image src="/logo.png" alt="REPLA" width={40} height={40} className="logo-dark-only h-10 w-10 rounded-full" />
-              <Image src="/logo-light.png" alt="REPLA" width={40} height={40} className="logo-light-only h-10 w-10 object-contain" />
-              <span className="font-display text-lg font-semibold">REPLA</span>
+              <Image
+                src="/logo.png"
+                alt="REPLA Technologies"
+                title="REPLA Technologies"
+                width={40}
+                height={40}
+                className="logo-dark-only h-10 w-10 rounded-full"
+              />
+              <Image
+                src="/logo-light.png"
+                alt="REPLA Technologies"
+                title="REPLA Technologies"
+                width={40}
+                height={40}
+                className="logo-light-only h-10 w-10 object-contain"
+              />
+              <span className="font-display text-lg font-semibold">{COMPANY.shortName}</span>
             </Link>
             <p className="mt-4 max-w-[17.5rem] text-sm leading-relaxed text-muted">
               {loc(companyCopy.footerBlurb, locale)}

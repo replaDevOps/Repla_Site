@@ -13,6 +13,12 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 
 const CALENDLY_URL = "https://calendly.com/replaofficials";
 
+const BOOK_A_CALL_CLASSES = cn(
+  "relative inline-flex items-center justify-center gap-2 rounded-full font-button tracking-wide",
+  "btn-animate btn-slide-round btn-primary bg-brand text-white font-semibold",
+  "shadow-[0_0_0_1px_rgba(196,30,36,0.4),0_10px_30px_rgba(196,30,36,0.18)]",
+);
+
 /** Pre-localized nav entries built on the server, so content modules stay out of this bundle. */
 export type NavEntry = {
   slug: string;
@@ -25,7 +31,6 @@ export type NavEntry = {
 const COMPANY_LINKS = [
   { href: "/about", labelKey: "about" as const, icon: "Building2" },
   { href: "/services", labelKey: "services" as const, icon: "Briefcase" },
-  { href: "/about#values", labelKey: "process" as const, icon: "Workflow" },
   { href: "/industries", labelKey: "industries" as const, icon: "Globe" },
   { href: "/team", labelKey: "team" as const, icon: "Users" },
   { href: "/portfolio", labelKey: "portfolio" as const, icon: "FolderKanban" },
@@ -159,7 +164,8 @@ export function NavbarClient({
         <Link href="/" className="flex min-w-0 items-center gap-2">
           <Image
             src="/logo.png"
-            alt="REPLA"
+            alt="REPLA Technologies"
+            title="REPLA Technologies"
             width={40}
             height={40}
             priority
@@ -168,7 +174,8 @@ export function NavbarClient({
           />
           <Image
             src="/logo-light.png"
-            alt="REPLA"
+            alt="REPLA Technologies"
+            title="REPLA Technologies"
             width={40}
             height={40}
             priority
@@ -312,7 +319,7 @@ export function NavbarClient({
             href={CALENDLY_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-brand/90 active:scale-[0.97]"
+            className={cn(BOOK_A_CALL_CLASSES, "h-9 px-4 text-sm")}
           >
             {bookACallLabel}
           </a>
@@ -403,7 +410,7 @@ export function NavbarClient({
                 href={CALENDLY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-6 py-3.5 text-base font-semibold text-white shadow-[0_12px_32px_rgba(196,30,36,0.35)] transition-all duration-200 hover:bg-brand/90 active:scale-[0.97]"
+                className={cn(BOOK_A_CALL_CLASSES, "h-12 w-full px-6 text-[15px]")}
                 onClick={() => setMobile(false)}
               >
                 {bookACallLabel}

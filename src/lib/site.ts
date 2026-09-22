@@ -1,5 +1,16 @@
+import { L } from "@/content/types";
+
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://replatechnologies.com";
+
+export const SITE_TITLE =
+  "REPLA Technologies | Software Development & IT Solutions";
+
+/** Visible homepage H1 — matches the SEO title in both locales. */
+export const SITE_H1 = L(
+  SITE_TITLE,
+  "REPLA Technologies | تطوير البرمجيات والحلول التقنية",
+);
 
 export const COMPANY = {
   legalName: "REPLA Technologies Pvt. Ltd.",

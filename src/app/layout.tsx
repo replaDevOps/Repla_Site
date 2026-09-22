@@ -1,4 +1,4 @@
-import { COMPANY, SITE_URL } from "@/lib/site";
+import { COMPANY, SITE_TITLE, SITE_URL } from "@/lib/site";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
@@ -14,7 +14,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${COMPANY.brand} | AI & Enterprise Software Solutions`,
+    default: SITE_TITLE,
     template: `%s | ${COMPANY.shortName}`,
   },
   description:
@@ -30,10 +30,10 @@ export const metadata: Metadata = {
     "Cybersecurity",
     "Dedicated Development Teams",
     "Riyadh IT Company",
-  ],
-  authors: [{ name: COMPANY.brand, url: SITE_URL }],
-  creator: COMPANY.brand,
-  publisher: COMPANY.brand,
+  ].join(", "),
+  authors: [{ name: COMPANY.shortName, url: SITE_URL }],
+  creator: COMPANY.shortName,
+  publisher: COMPANY.shortName,
   category: "technology",
   icons: {
     icon: "/logo.png",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: COMPANY.shortName,
-    title: `${COMPANY.brand} | AI & Enterprise Software Solutions`,
+    title: SITE_TITLE,
     description:
       "REPLA Technologies delivers enterprise-grade AI, custom software, web, mobile, cloud, and cybersecurity solutions for organizations in Saudi Arabia and worldwide.",
     url: SITE_URL,
@@ -52,13 +52,13 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/logo.png`,
         width: 1200,
         height: 630,
-        alt: `${COMPANY.brand} Logo`,
+          alt: `${COMPANY.shortName} logo`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${COMPANY.brand} | AI & Enterprise Software Solutions`,
+    title: SITE_TITLE,
     description:
       "REPLA Technologies delivers enterprise-grade AI, custom software, web, mobile, cloud, and cybersecurity solutions for organizations in Saudi Arabia and worldwide.",
     images: [`${SITE_URL}/logo.png`],
