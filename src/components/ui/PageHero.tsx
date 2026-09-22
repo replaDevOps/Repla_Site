@@ -1,11 +1,16 @@
+import { cn } from "@/lib/cn";
+
 export function PageHero({
   eyebrow,
   title,
   description,
+  containerClassName,
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
+  /** Match navbar/footer width (`max-w-7xl`) when set. */
+  containerClassName?: string;
 }) {
   return (
     <section className="relative overflow-hidden border-b border-line">
@@ -13,7 +18,12 @@ export function PageHero({
         <div className="glow-orb absolute -top-24 start-1/4 h-80 w-80" />
         <div className="absolute inset-0 grid-bg opacity-70" />
       </div>
-      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+      <div
+        className={cn(
+          "relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28",
+          containerClassName,
+        )}
+      >
         {eyebrow ? (
           <p className="mb-4 text-xs font-medium uppercase tracking-[0.22em] text-brand">
             {eyebrow}

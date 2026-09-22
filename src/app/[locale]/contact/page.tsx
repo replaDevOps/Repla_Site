@@ -44,23 +44,28 @@ export default async function ContactPage({
           url: `${SITE_URL}/${locale}/contact`,
         }}
       />
-      <PageHero eyebrow={tn("contact")} title={tn("contact")} description={loc(companyCopy.contactIntro, l)} />
-      <section className="mx-auto max-w-6xl space-y-6 px-4 py-16 sm:px-6 lg:space-y-8 lg:py-20">
+      <PageHero
+        eyebrow={tn("contact")}
+        title={tn("contact")}
+        description={loc(companyCopy.contactIntro, l)}
+        containerClassName="max-w-7xl"
+      />
+      <div className="mx-auto max-w-7xl space-y-6 px-4 py-16 sm:px-6 lg:space-y-8 lg:py-20">
         <ContactForm />
         <ContactDetailCards />
-      </section>
-      <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
-        <h2 className="sr-only">{tc("map")}</h2>
-        <div className="overflow-hidden rounded-2xl border border-line">
-          <iframe
-            title={tc("map")}
-            className="h-[320px] w-full grayscale"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            src="https://maps.google.com/maps?q=Riyadh%20Taif%20Road%20Riyadh%20Saudi%20Arabia&z=12&output=embed"
-          />
-        </div>
-      </section>
+        <section>
+          <h2 className="sr-only">{tc("map")}</h2>
+          <div className="overflow-hidden rounded-2xl border border-line">
+            <iframe
+              title={tc("map")}
+              className="h-[320px] w-full grayscale"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              src="https://maps.google.com/maps?q=Riyadh%20Taif%20Road%20Riyadh%20Saudi%20Arabia&z=12&output=embed"
+            />
+          </div>
+        </section>
+      </div>
     </>
   );
 }
