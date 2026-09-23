@@ -5,8 +5,8 @@ import { ArrowUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-const SIZE = 52;
-const STROKE = 2.5;
+const SIZE = 40;
+const STROKE = 2;
 const RADIUS = (SIZE - STROKE) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
@@ -54,7 +54,7 @@ export function ScrollToTop() {
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
       className={cn(
-        "scroll-to-top fixed bottom-6 end-6 z-40 flex h-[52px] w-[52px] items-center justify-center rounded-full",
+        "scroll-to-top fixed bottom-6 left-5 z-40 flex h-10 w-10 items-center justify-center rounded-full sm:left-6",
         "transition-[opacity,transform,visibility] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         visible
@@ -91,8 +91,8 @@ export function ScrollToTop() {
           className="text-brand transition-[stroke-dashoffset] duration-150 ease-out"
         />
       </svg>
-      <span className="scroll-to-top-core relative flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white">
-        <ArrowUp className="h-4 w-4" strokeWidth={2.4} aria-hidden="true" />
+      <span className="scroll-to-top-core relative flex h-8 w-8 items-center justify-center rounded-full bg-brand text-white">
+        <ArrowUp className="h-3.5 w-3.5" strokeWidth={2.4} aria-hidden="true" />
       </span>
     </button>
   );

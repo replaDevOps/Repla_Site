@@ -1,3 +1,4 @@
+import { BrevoChat } from "@/components/layout/BrevoChat";
 import { Footer } from "@/components/layout/Footer";
 import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { Navbar } from "@/components/layout/Navbar";
@@ -69,8 +70,6 @@ export default async function LocaleLayout({
     >
       <head>
         <ThemeScript />
-        <link rel="icon" href="/logo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <JsonLd data={organizationJsonLd()} />
@@ -82,6 +81,7 @@ export default async function LocaleLayout({
             <main className="flex-1">{children}</main>
             <Footer />
             <ScrollToTop />
+            <BrevoChat />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
