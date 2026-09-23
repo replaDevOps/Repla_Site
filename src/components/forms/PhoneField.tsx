@@ -1,5 +1,6 @@
 "use client";
 
+import { useDropdownPlacement } from "@/components/forms/useDropdownPlacement";
 import { cn } from "@/lib/cn";
 import {
   DEFAULT_PHONE_COUNTRY,
@@ -28,10 +29,12 @@ export function PhoneField({
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const rootRef = useRef<HTMLDivElement>(null);
+  const controlRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const country = findCountry(iso);
   const combined = formatInternationalPhone(iso, national);
+  const { placement, maxHeight } = useDropdownPlacement(open, controlRef);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -70,10 +73,14 @@ export function PhoneField({
   }, [open]);
 
   return (
-    <div ref={rootRef} className={cn("relative mt-1.5 min-w-0", open && "z-20")}>
+    <div ref={rootRef} className={cn("relative mt-1.5 min-w-0", open && "z-50")}>
       <input type="hidden" name="phone" value={combined} />
       <input type="hidden" name="phoneCountry" value={iso} />
-      <div className={cn("form-control flex overflow-hidden", error && "form-control-error")} dir="ltr">
+      <div
+        ref={controlRef}
+        className={cn("form-control flex w-full overflow-hidden", error && "form-control-error")}
+        dir="ltr"
+      >
         <button
           type="button"
           className="flex shrink-0 touch-manipulation items-center gap-1 border-e border-line px-2.5 py-2.5 text-xs text-foreground outline-none transition-colors hover:bg-foreground/[0.03] focus-visible:outline-none sm:gap-1.5 sm:px-3 sm:py-3 sm:text-sm"
@@ -104,7 +111,13 @@ export function PhoneField({
         />
       </div>
       {open ? (
-        <div className="form-menu absolute inset-x-0 top-[calc(100%+6px)] z-30 overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--panel-shadow)]">
+        <div
+          className={cn(
+            "form-menu absolute inset-x-0 z-50 overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--panel-shadow)]",
+            placement === "down" ? "top-[calc(100%+6px)]" : "bottom-[calc(100%+6px)]",
+          )}
+          style={{ maxHeight }}
+        >
           <div className="flex items-center gap-2 border-b border-line px-3 py-2">
             <Search className="h-3.5 w-3.5 shrink-0 text-muted" aria-hidden />
             <input

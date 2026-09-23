@@ -1,10 +1,14 @@
 "use client";
 
+import { useDropdownPlacement } from "@/components/forms/useDropdownPlacement";
 import { cn } from "@/lib/cn";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 
 export type FormSelectOption = { value: string; label: string };
+
+const menuClassName =
+  "form-menu absolute inset-x-0 z-50 overflow-auto rounded-xl border border-line bg-surface p-1 shadow-[var(--panel-shadow)]";
 
 export function FormSelect({
   name,
@@ -31,6 +35,7 @@ export function FormSelect({
   const listId = useId();
   const selected = options.find((o) => o.value === value);
   const wasOpen = useRef(false);
+  const { placement, maxHeight } = useDropdownPlacement(open, btnRef);
 
   useEffect(() => {
     if (!open) return;
@@ -95,14 +100,14 @@ export function FormSelect({
   }
 
   return (
-    <div ref={rootRef} className={cn("relative mt-1.5 min-w-0", open && "z-20")}>
+    <div ref={rootRef} className={cn("relative mt-1.5 min-w-0", open && "z-50")}>
       <input type="hidden" name={name} value={value} required={required} />
       <button
         ref={btnRef}
         type="button"
         data-field={name}
         className={cn(
-          "form-field flex min-h-11 touch-manipulation items-center justify-between gap-2 text-start sm:min-h-0 sm:gap-3",
+          "form-field flex min-h-11 w-full touch-manipulation items-center justify-between gap-2 text-start sm:min-h-0 sm:gap-3",
           error && "form-field-error",
         )}
         aria-haspopup="listbox"
@@ -126,7 +131,11 @@ export function FormSelect({
           role="listbox"
           tabIndex={-1}
           aria-activedescendant={`${listId}-${active}`}
-          className="form-menu absolute inset-x-0 top-[calc(100%+6px)] z-30 max-h-[min(15rem,45dvh)] overflow-auto rounded-xl border border-line bg-surface p-1 shadow-[var(--panel-shadow)] sm:max-h-60"
+          className={cn(
+            menuClassName,
+            placement === "down" ? "top-[calc(100%+6px)]" : "bottom-[calc(100%+6px)]",
+          )}
+          style={{ maxHeight }}
           onKeyDown={onListKeyDown}
           ref={listRef}
         >

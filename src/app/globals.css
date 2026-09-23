@@ -960,6 +960,7 @@ html.light .contact-form-shell {
 }
 
 .form-menu {
+  background-color: var(--surface);
   animation: nav-panel-in 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 

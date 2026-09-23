@@ -161,7 +161,7 @@ export function ContactForm({
   const form = (
     <form
       onSubmit={onSubmit}
-      className="contact-form-shell w-full min-w-0 max-w-full space-y-5 overflow-visible rounded-2xl border border-line bg-surface p-4 sm:space-y-6 sm:p-6 lg:p-10"
+      className="contact-form-shell relative z-20 w-full min-w-0 max-w-full space-y-5 overflow-visible rounded-2xl border border-line bg-surface p-4 sm:space-y-6 sm:p-6 lg:p-10"
       noValidate
     >
       <div className="min-w-0">
@@ -339,7 +339,7 @@ export function ContactForm({
   );
 
   if (variant === "careers") return form;
-  return <Reveal className="min-w-0">{form}</Reveal>;
+  return <Reveal className="relative z-20 min-w-0">{form}</Reveal>;
 }
 
 function FieldCaption({

@@ -40,7 +40,6 @@ export default async function ContactPage({
   setRequestLocale(locale);
   const l = locale as Locale;
   const tn = await getTranslations("nav");
-  const tc = await getTranslations("common");
   const tm = await getTranslations("meta");
 
   return (
@@ -55,18 +54,6 @@ export default async function ContactPage({
       <div className="mx-auto min-w-0 max-w-7xl space-y-6 px-4 py-16 sm:px-6 lg:space-y-8 lg:py-20">
         <ContactForm />
         <ContactDetailCards />
-        <section>
-          <h2 className="sr-only">{tc("map")}</h2>
-          <div className="overflow-hidden rounded-2xl border border-line">
-            <iframe
-              title={tc("map")}
-              className="h-[min(320px,55vw)] min-h-[220px] w-full grayscale sm:h-[320px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://maps.google.com/maps?q=Riyadh%20Taif%20Road%20Riyadh%20Saudi%20Arabia&z=12&output=embed"
-            />
-          </div>
-        </section>
       </div>
     </>
   );
