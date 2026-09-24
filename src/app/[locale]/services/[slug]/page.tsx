@@ -4,6 +4,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { loc, locList, type Locale } from "@/content/types";
 import { getChildServices, getService, services } from "@/content/services";
+import { getServiceSeo } from "@/content/seo";
 import { getIndustry } from "@/content/industries";
 import { Link } from "@/i18n/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -32,11 +33,14 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const service = getService(slug);
   if (!service) return { robots: { index: false, follow: false } };
+  const l = locale as Locale;
+  const seo = l === "en" ? getServiceSeo(slug) : undefined;
   return pageMetadata({
-    locale: locale as Locale,
-    title: loc(service.title, locale as Locale),
-    description: loc(service.description, locale as Locale),
+    locale: l,
+    title: seo?.title ?? loc(service.title, l),
+    description: seo?.description ?? loc(service.description, l),
     path: `/services/${slug}`,
+    absoluteTitle: Boolean(seo),
   });
 }
 
@@ -54,8 +58,10 @@ export default async function ServiceDetailPage({
   const tn = await getTranslations("nav");
   const children = getChildServices(slug);
   const servicePath = `/services/${slug}`;
+  const seo = l === "en" ? getServiceSeo(slug) : undefined;
   const serviceTitle = loc(service.title, l);
   const serviceDescription = loc(service.description, l);
+  const breadcrumbLabel = seo?.breadcrumbName ?? serviceTitle;
   const faqItems = service.faqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }));
 
   return (
@@ -64,8 +70,12 @@ export default async function ServiceDetailPage({
         data={breadcrumbJsonLd(
           [
             { name: tn("home"), path: "" },
-            { name: tn("services"), path: "/services" },
-            { name: serviceTitle },
+            ...(seo
+              ? [{ name: breadcrumbLabel, path: servicePath }]
+              : [
+                  { name: tn("services"), path: "/services" },
+                  { name: breadcrumbLabel },
+                ]),
           ],
           l,
         )}

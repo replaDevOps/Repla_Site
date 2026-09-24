@@ -3,8 +3,9 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { PageHero } from "@/components/ui/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { companyCopy } from "@/content/company";
+import { staticPageSeo } from "@/content/seo";
 import { loc, type Locale } from "@/content/types";
-import { contactPageJsonLd, pageMetadata } from "@/lib/metadata";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/metadata";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -16,19 +17,15 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   const l = locale as Locale;
-  const seoTitle = l === "en" ? t("contactSeoTitle") : t("contactTitle");
-  const meta = pageMetadata({
+  const seo = l === "en" ? staticPageSeo.contact : null;
+  const seoTitle = seo?.title ?? (l === "en" ? t("contactSeoTitle") : t("contactTitle"));
+  return pageMetadata({
     locale: l,
     title: seoTitle,
-    description: t("contactDescription"),
+    description: seo?.description ?? t("contactDescription"),
     path: "/contact",
+    absoluteTitle: Boolean(seo),
   });
-  return {
-    ...meta,
-    title: { absolute: seoTitle },
-    openGraph: { ...meta.openGraph, title: seoTitle },
-    twitter: { ...meta.twitter, title: seoTitle },
-  };
 }
 
 export default async function ContactPage({
@@ -41,10 +38,21 @@ export default async function ContactPage({
   const l = locale as Locale;
   const tn = await getTranslations("nav");
   const tm = await getTranslations("meta");
+  const contactSeo = l === "en" ? staticPageSeo.contact : null;
 
   return (
     <>
-      <JsonLd data={contactPageJsonLd(l)} />
+      {contactSeo ? (
+        <JsonLd
+          data={breadcrumbJsonLd(
+            [
+              { name: "Home", path: "" },
+              { name: contactSeo.breadcrumbName!, path: "/contact" },
+            ],
+            l,
+          )}
+        />
+      ) : null}
       <PageHero
         eyebrow={tn("contact")}
         title={tm("contactTitle")}

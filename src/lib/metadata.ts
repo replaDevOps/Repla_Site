@@ -35,6 +35,7 @@ export function pageMetadata({
   keywords,
   openGraphType = "website",
   noIndex = false,
+  absoluteTitle = false,
 }: {
   locale: Locale;
   title: string | L;
@@ -43,6 +44,7 @@ export function pageMetadata({
   keywords?: string[];
   openGraphType?: "website" | "article";
   noIndex?: boolean;
+  absoluteTitle?: boolean;
 }): Metadata {
   const t = typeof title === "string" ? title : loc(title, locale);
   const rawDescription = typeof description === "string" ? description : loc(description, locale);
@@ -50,10 +52,10 @@ export function pageMetadata({
   const normalized = path.startsWith("/") ? path : `/${path}`;
   const pagePath = normalized === "/" ? "" : normalized;
   const canonical = `${SITE_URL}/${locale}${pagePath}`;
-  const ogTitle = `${t} | ${COMPANY.shortName}`;
+  const ogTitle = absoluteTitle ? t : `${t} | ${COMPANY.shortName}`;
 
   return {
-    title: t,
+    title: absoluteTitle ? { absolute: t } : t,
     description: d,
     ...(keywords?.length ? { keywords: keywords.join(", ") } : {}),
     ...(noIndex ? { robots: { index: false, follow: true } } : {}),
@@ -83,21 +85,49 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: COMPANY.legalName,
-    alternateName: COMPANY.shortName,
-    url: SITE_URL,
+    name: "Repla Technologies",
+    alternateName: "Repla Technologies",
+    url: "https://www.replatechnologies.com",
     logo: `${SITE_URL}/logo.png`,
-    foundingDate: String(COMPANY.founded),
+    sameAs: [
+      "https://www.facebook.com/replatechnologies/",
+      "https://www.instagram.com/replatechnologies",
+      "https://www.youtube.com/@replasecuritytechnology6261",
+      "https://www.linkedin.com/company/replatech/",
+      "https://www.replatechnologies.com/",
+    ],
+  };
+}
+
+export function localBusinessJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Repla Technologies",
+    image: `${SITE_URL}/logo.png`,
+    url: `${SITE_URL}/`,
+    telephone: "+966556448298",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Riyadh - Taif Road",
+      streetAddress: "Taif Road",
       addressLocality: "Riyadh",
+      postalCode: "13782",
       addressCountry: "SA",
     },
-    email: [COMPANY.emailInfo, COMPANY.email],
-    telephone: COMPANY.phone,
-    sameAs: [COMPANY.linkedin, COMPANY.instagram, COMPANY.facebook, COMPANY.youtube],
-    areaServed: ["SA", "PK", "Worldwide"],
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "00:00",
+      closes: "23:59",
+    },
   };
 }
 

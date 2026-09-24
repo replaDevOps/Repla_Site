@@ -8,8 +8,9 @@ import { companyCopy } from "@/content/company";
 import { industries } from "@/content/industries";
 import { getFeaturedServices, getService } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
+import { staticPageSeo } from "@/content/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { pageMetadata, websiteJsonLd } from "@/lib/metadata";
+import { localBusinessJsonLd, pageMetadata, websiteJsonLd } from "@/lib/metadata";
 import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { Link } from "@/i18n/navigation";
@@ -44,19 +45,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const l = locale as Locale;
+  const seo = l === "en" ? staticPageSeo.home : null;
   const t = await getTranslations({ locale, namespace: "meta" });
-  const meta = pageMetadata({
-    locale: locale as Locale,
-    title: SITE_TITLE,
-    description: t("homeDescription"),
+  return pageMetadata({
+    locale: l,
+    title: seo?.title ?? SITE_TITLE,
+    description: seo?.description ?? t("homeDescription"),
     path: "/",
+    absoluteTitle: Boolean(seo),
   });
-  return {
-    ...meta,
-    title: { absolute: SITE_TITLE },
-    openGraph: { ...meta.openGraph, title: SITE_TITLE },
-    twitter: { ...meta.twitter, title: SITE_TITLE },
-  };
 }
 
 export default async function HomePage({
@@ -76,6 +74,7 @@ export default async function HomePage({
   return (
     <>
       <JsonLd data={websiteJsonLd(l)} />
+      <JsonLd data={localBusinessJsonLd()} />
       <section className="relative overflow-hidden grain">
         <div className="pointer-events-none absolute inset-0">
           <div className="glow-orb absolute -top-32 start-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rtl:translate-x-1/2" />
