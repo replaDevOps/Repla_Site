@@ -5,6 +5,7 @@ import { loc, type Locale } from "@/content/types";
 import { solutions } from "@/content/solutions";
 import { Link } from "@/i18n/navigation";
 import { pageMetadata } from "@/lib/metadata";
+import { solutionPagePath } from "@/lib/seo-routes";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -49,7 +50,7 @@ export default async function SolutionsPage({
           {solutions.map((s, i) => (
             <Reveal key={s.slug} delay={i * 0.04}>
               <Link
-                href={`/solutions/${s.slug}`}
+                href={solutionPagePath(s.slug)}
                 className="card-hover block h-full rounded-2xl border border-line bg-surface p-6"
               >
               <Icon name={s.icon} className="h-6 w-6 text-brand" />

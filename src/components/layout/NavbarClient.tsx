@@ -5,6 +5,7 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { COMPANY } from "@/lib/site";
+import { CONTACT_PUBLIC_PATH, servicePagePath, solutionPagePath } from "@/lib/seo-routes";
 import { cn } from "@/lib/cn";
 import { ArrowRight, ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
@@ -35,7 +36,7 @@ const COMPANY_LINKS = [
   { href: "/team", labelKey: "team" as const, icon: "Users" },
   { href: "/portfolio", labelKey: "portfolio" as const, icon: "FolderKanban" },
   { href: "/careers", labelKey: "careers" as const, icon: "UserPlus" },
-  { href: "/contact", labelKey: "contact" as const, icon: "Mail" },
+  { href: CONTACT_PUBLIC_PATH, labelKey: "contact" as const, icon: "Mail" },
 ];
 
 export function NavbarClient({
@@ -210,7 +211,7 @@ export function NavbarClient({
                 {featured.map((s) => (
                   <li key={s.slug}>
                     <Link
-                      href={`/services/${s.slug}`}
+                      href={servicePagePath(s.slug)}
                       className="flex items-start gap-3.5 rounded-xl px-3 py-3 transition-colors hover:bg-foreground/[0.04]"
                     >
                       <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
@@ -263,7 +264,7 @@ export function NavbarClient({
               {solutions.map((s) => (
                 <li key={s.slug}>
                   <Link
-                    href={`/solutions/${s.slug}`}
+                    href={solutionPagePath(s.slug)}
                     className="flex items-start gap-3.5 rounded-xl px-3 py-3 transition-colors hover:bg-foreground/[0.04]"
                   >
                     <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
@@ -309,7 +310,7 @@ export function NavbarClient({
               </div>
             </div>
           </Mega>
-          <NavLink href="/contact" active={pathname === "/contact"}>
+          <NavLink href={CONTACT_PUBLIC_PATH} active={pathname === CONTACT_PUBLIC_PATH}>
             {t("contact")}
           </NavLink>
         </nav>
@@ -356,7 +357,7 @@ export function NavbarClient({
                 onToggle={() => toggleMobileSection("services")}
               >
                 {featured.slice(0, 8).map((s) => (
-                  <MobileSubLink key={s.slug} href={`/services/${s.slug}`}>
+                  <MobileSubLink key={s.slug} href={servicePagePath(s.slug)}>
                     {s.shortTitle}
                   </MobileSubLink>
                 ))}
@@ -382,7 +383,7 @@ export function NavbarClient({
                 onToggle={() => toggleMobileSection("solutions")}
               >
                 {solutions.map((s) => (
-                  <MobileSubLink key={s.slug} href={`/solutions/${s.slug}`}>
+                  <MobileSubLink key={s.slug} href={solutionPagePath(s.slug)}>
                     {s.title}
                   </MobileSubLink>
                 ))}
@@ -400,7 +401,7 @@ export function NavbarClient({
                 <MobileSubLink href="/careers">{t("careers")}</MobileSubLink>
               </MobileAccordion>
 
-              <MobileNavLink href="/contact" active={pathname === "/contact"}>
+              <MobileNavLink href={CONTACT_PUBLIC_PATH} active={pathname === CONTACT_PUBLIC_PATH}>
                 {t("contact")}
               </MobileNavLink>
             </nav>

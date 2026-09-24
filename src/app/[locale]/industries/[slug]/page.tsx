@@ -6,6 +6,7 @@ import { getIndustry, industries } from "@/content/industries";
 import { getService } from "@/content/services";
 import { loc, locList, type Locale } from "@/content/types";
 import { Link } from "@/i18n/navigation";
+import { CONTACT_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
 import { routing } from "@/i18n/routing";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd, faqPageJsonLd, pageMetadata, webPageJsonLd } from "@/lib/metadata";
@@ -168,7 +169,7 @@ export default async function IndustryDetailPage({
               return (
                 <li key={s}>
                   <Link
-                    href={`/services/${s}`}
+                    href={servicePagePath(s)}
                     className="inline-flex rounded-full border border-line px-3 py-1 text-sm hover:border-brand/50"
                   >
                     {loc(svc.shortTitle, l)}
@@ -178,7 +179,7 @@ export default async function IndustryDetailPage({
             })}
           </ul>
           <div className="mt-8">
-            <ButtonLink href="/contact">{tn("startProject")}</ButtonLink>
+            <ButtonLink href={CONTACT_PUBLIC_PATH}>{tn("startProject")}</ButtonLink>
           </div>
         </section>
 

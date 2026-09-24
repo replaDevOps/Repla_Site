@@ -4,6 +4,7 @@ import { getFeaturedServices } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
 import { companyCopy } from "@/content/company";
 import { Link } from "@/i18n/navigation";
+import { CONTACT_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
 import { COMPANY } from "@/lib/site";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Mail, MapPin, Phone } from "lucide-react";
@@ -34,7 +35,7 @@ export async function Footer() {
     { href: "/about", label: tn("about") },
     { href: "/team", label: tn("team") },
     { href: "/careers", label: tn("careers") },
-    { href: "/contact", label: tn("contact") },
+    { href: CONTACT_PUBLIC_PATH, label: tn("contact") },
   ];
 
   const resourceLinks = [
@@ -72,7 +73,7 @@ export async function Footer() {
               {t("ctaBody")}
             </p>
             <div className="relative mt-7 flex flex-wrap items-center justify-center gap-3">
-              <ButtonLink href="/contact" size="lg">
+              <ButtonLink href={CONTACT_PUBLIC_PATH} size="lg">
                 {t("getStarted")}
               </ButtonLink>
               <FooterExploreServicesButton label={tn("exploreServices")} />
@@ -153,23 +154,23 @@ export async function Footer() {
             <ul className="mt-5 space-y-2.5 text-sm">
               {featured.map((s) => (
                 <li key={s.slug}>
-                  <Link href={`/services/${s.slug}`} className="footer-link">
+                  <Link href={servicePagePath(s.slug)} className="footer-link">
                     {loc(s.shortTitle, locale)}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/services/ui-ux-design" className="footer-link">
+                <Link href={servicePagePath("ui-ux-design")} className="footer-link">
                   UI/UX
                 </Link>
               </li>
               <li>
-                <Link href="/services/iot-embedded-systems" className="footer-link">
+                <Link href={servicePagePath("iot-embedded-systems")} className="footer-link">
                   IoT
                 </Link>
               </li>
               <li>
-                <Link href="/services/blockchain-web3" className="footer-link">
+                <Link href={servicePagePath("blockchain-web3")} className="footer-link">
                   Web3
                 </Link>
               </li>

@@ -14,6 +14,7 @@ import { localBusinessJsonLd, pageMetadata, websiteJsonLd } from "@/lib/metadata
 import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { Link } from "@/i18n/navigation";
+import { CONTACT_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
@@ -98,7 +99,7 @@ export default async function HomePage({
               <ButtonLink href="/services" size="lg">
                 {tn("exploreServices")}
               </ButtonLink>
-              <ButtonLink href="/contact" variant="secondary" size="lg">
+              <ButtonLink href={CONTACT_PUBLIC_PATH} variant="secondary" size="lg">
                 {tn("contact")}
               </ButtonLink>
             </div>
@@ -110,7 +111,7 @@ export default async function HomePage({
                 {heroServices.map((s, i) => (
                   <li key={s.slug} style={{ animationDelay: `${i * 0.1}s` }} className="card-enter">
                     <Link
-                      href={`/services/${s.slug}`}
+                      href={servicePagePath(s.slug)}
                       className="card-hover flex items-center gap-3 rounded-xl border border-line bg-foreground/[0.04] px-3 py-3 transition-colors hover:border-brand/40"
                     >
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand/15 text-brand">
@@ -174,7 +175,7 @@ export default async function HomePage({
             {featured.map((s, i) => (
               <Reveal key={s.slug} delay={i * 0.04}>
                 <ServiceCard
-                  href={`/services/${s.slug}`}
+                  href={servicePagePath(s.slug)}
                   icon={s.icon}
                   title={loc(s.title, l)}
                   description={loc(s.description, l)}

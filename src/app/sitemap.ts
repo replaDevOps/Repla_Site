@@ -4,6 +4,11 @@ import { services } from "@/content/services";
 import { solutions } from "@/content/solutions";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
+import {
+  CONTACT_PUBLIC_PATH,
+  getServicePublicSlug,
+  getSolutionPublicSlug,
+} from "@/lib/seo-routes";
 import type { MetadataRoute } from "next";
 
 const staticPaths = [
@@ -14,7 +19,7 @@ const staticPaths = [
   "/solutions",
   "/portfolio",
   "/team",
-  "/contact",
+  "/contact-repla-technologies",
   "/careers",
   "/insights",
   "/faq",
@@ -24,7 +29,7 @@ const staticPaths = [
 
 const priorityFor = (path: string) => {
   if (path === "") return 1;
-  if (path === "/services" || path === "/contact") return 0.9;
+  if (path === "/services" || path === "/contact-repla-technologies") return 0.9;
   if (path.startsWith("/services/")) return 0.8;
   if (path.startsWith("/industries/")) return 0.7;
   if (path.startsWith("/solutions/")) return 0.7;
@@ -36,9 +41,9 @@ const priorityFor = (path: string) => {
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     ...staticPaths,
-    ...services.map((s) => `/services/${s.slug}`),
+    ...services.map((s) => `/services/${getServicePublicSlug(s.slug)}`),
     ...industries.map((i) => `/industries/${i.slug}`),
-    ...solutions.map((s) => `/solutions/${s.slug}`),
+    ...solutions.map((s) => `/solutions/${getSolutionPublicSlug(s.slug)}`),
     ...insights.map((i) => `/insights/${i.slug}`),
   ];
 

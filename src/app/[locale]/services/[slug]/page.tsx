@@ -14,6 +14,12 @@ import {
   pageMetadata,
   serviceJsonLd,
 } from "@/lib/metadata";
+import {
+  CONTACT_PUBLIC_PATH,
+  getServicePublicSlug,
+  resolveServiceContentSlug,
+  servicePagePath,
+} from "@/lib/seo-routes";
 import { routing } from "@/i18n/routing";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -21,7 +27,7 @@ import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    services.map((s) => ({ locale, slug: s.slug })),
+    services.map((s) => ({ locale, slug: getServicePublicSlug(s.slug) })),
   );
 }
 
@@ -31,15 +37,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const service = getService(slug);
+  const contentSlug = resolveServiceContentSlug(slug);
+  const service = getService(contentSlug);
   if (!service) return { robots: { index: false, follow: false } };
   const l = locale as Locale;
-  const seo = l === "en" ? getServiceSeo(slug) : undefined;
+  const seo = l === "en" ? getServiceSeo(contentSlug) : undefined;
   return pageMetadata({
     locale: l,
     title: seo?.title ?? loc(service.title, l),
     description: seo?.description ?? loc(service.description, l),
-    path: `/services/${slug}`,
+    path: servicePagePath(contentSlug),
     absoluteTitle: Boolean(seo),
   });
 }
@@ -49,16 +56,17 @@ export default async function ServiceDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale, slug: paramSlug } = await params;
   setRequestLocale(locale);
-  const service = getService(slug);
+  const contentSlug = resolveServiceContentSlug(paramSlug);
+  const service = getService(contentSlug);
   if (!service) notFound();
   const l = locale as Locale;
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
-  const children = getChildServices(slug);
-  const servicePath = `/services/${slug}`;
-  const seo = l === "en" ? getServiceSeo(slug) : undefined;
+  const children = getChildServices(contentSlug);
+  const servicePath = servicePagePath(contentSlug);
+  const seo = l === "en" ? getServiceSeo(contentSlug) : undefined;
   const serviceTitle = loc(service.title, l);
   const serviceDescription = loc(service.description, l);
   const breadcrumbLabel = seo?.breadcrumbName ?? serviceTitle;
@@ -179,7 +187,7 @@ export default async function ServiceDetailPage({
                 <ul className="mt-3 space-y-2 text-sm">
                   {children.map((c) => (
                     <li key={c.slug}>
-                      <Link href={`/services/${c.slug}`} className="hover:text-brand">
+                      <Link href={servicePagePath(c.slug)} className="hover:text-brand">
                         {loc(c.title, l)}
                       </Link>
                     </li>
@@ -187,7 +195,7 @@ export default async function ServiceDetailPage({
                 </ul>
               </div>
             ) : null}
-            <ButtonLink href="/contact">{tn("startProject")}</ButtonLink>
+            <ButtonLink href={CONTACT_PUBLIC_PATH}>{tn("startProject")}</ButtonLink>
           </aside>
         </div>
       </article>

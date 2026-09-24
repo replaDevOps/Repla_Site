@@ -3,6 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { companyCopy } from "@/content/company";
 import { loc, type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
+import { CONTACT_PUBLIC_PATH } from "@/lib/seo-routes";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -52,7 +53,7 @@ export default async function TeamPage({
           title={loc(companyCopy.emptyTeamTitle, l)}
           body={loc(companyCopy.emptyTeamBody, l)}
           cta={te("cta")}
-          href="/contact"
+          href={CONTACT_PUBLIC_PATH}
         />
       </section>
     </>

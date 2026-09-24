@@ -10,13 +10,20 @@ import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from "@/lib/metadata";
+import {
+  CONTACT_PUBLIC_PATH,
+  getSolutionPublicSlug,
+  resolveSolutionContentSlug,
+  servicePagePath,
+  solutionPagePath,
+} from "@/lib/seo-routes";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    solutions.map((s) => ({ locale, slug: s.slug })),
+    solutions.map((s) => ({ locale, slug: getSolutionPublicSlug(s.slug) })),
   );
 }
 
@@ -26,15 +33,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const solution = getSolution(slug);
+  const contentSlug = resolveSolutionContentSlug(slug);
+  const solution = getSolution(contentSlug);
   if (!solution) return { robots: { index: false, follow: false } };
   const l = locale as Locale;
-  const seo = l === "en" ? getSolutionSeo(slug) : undefined;
+  const seo = l === "en" ? getSolutionSeo(contentSlug) : undefined;
   return pageMetadata({
     locale: l,
     title: seo?.title ?? loc(solution.title, l),
     description: seo?.description ?? loc(solution.description, l),
-    path: `/solutions/${slug}`,
+    path: solutionPagePath(contentSlug),
     absoluteTitle: Boolean(seo),
   });
 }
@@ -44,16 +52,17 @@ export default async function SolutionDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale, slug: paramSlug } = await params;
   setRequestLocale(locale);
-  const solution = getSolution(slug);
+  const contentSlug = resolveSolutionContentSlug(paramSlug);
+  const solution = getSolution(contentSlug);
   if (!solution) notFound();
   const l = locale as Locale;
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
   const tm = await getTranslations("meta");
-  const solutionPath = `/solutions/${slug}`;
-  const seo = l === "en" ? getSolutionSeo(slug) : undefined;
+  const solutionPath = solutionPagePath(contentSlug);
+  const seo = l === "en" ? getSolutionSeo(contentSlug) : undefined;
   const solutionTitle = loc(solution.title, l);
   const solutionDescription = loc(solution.description, l);
   const breadcrumbLabel = seo?.breadcrumbName ?? solutionTitle;
@@ -105,7 +114,7 @@ export default async function SolutionDetailPage({
                 if (!svc) return null;
                 return (
                   <li key={s}>
-                    <Link href={`/services/${s}`} className="hover:text-brand">
+                    <Link href={servicePagePath(s)} className="hover:text-brand">
                       {loc(svc.title, l)}
                     </Link>
                   </li>
@@ -131,7 +140,7 @@ export default async function SolutionDetailPage({
           </div>
         </div>
         <div className="mt-8">
-          <ButtonLink href="/contact">{tn("startProject")}</ButtonLink>
+          <ButtonLink href={CONTACT_PUBLIC_PATH}>{tn("startProject")}</ButtonLink>
         </div>
       </article>
     </>

@@ -1,4 +1,5 @@
 import { L, LL, type Service } from "./types";
+import { resolveServiceContentSlug } from "@/lib/seo-routes";
 
 const faq = (qEn: string, qAr: string, aEn: string, aAr: string) => ({
   q: L(qEn, qAr),
@@ -1456,7 +1457,8 @@ export const featuredServiceSlugs = [
 ] as const;
 
 export function getService(slug: string) {
-  return services.find((s) => s.slug === slug);
+  const contentSlug = resolveServiceContentSlug(slug);
+  return services.find((s) => s.slug === contentSlug);
 }
 
 export function getFeaturedServices() {
