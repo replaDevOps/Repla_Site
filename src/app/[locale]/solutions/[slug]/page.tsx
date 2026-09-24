@@ -2,6 +2,7 @@ import { Icon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 import { getSolution, solutions } from "@/content/solutions";
+import { getSolutionSeo } from "@/content/seo";
 import { getService } from "@/content/services";
 import { getIndustry } from "@/content/industries";
 import { loc, locList, type Locale } from "@/content/types";
@@ -27,11 +28,14 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const solution = getSolution(slug);
   if (!solution) return { robots: { index: false, follow: false } };
+  const l = locale as Locale;
+  const seo = l === "en" ? getSolutionSeo(slug) : undefined;
   return pageMetadata({
-    locale: locale as Locale,
-    title: loc(solution.title, locale as Locale),
-    description: loc(solution.description, locale as Locale),
+    locale: l,
+    title: seo?.title ?? loc(solution.title, l),
+    description: seo?.description ?? loc(solution.description, l),
     path: `/solutions/${slug}`,
+    absoluteTitle: Boolean(seo),
   });
 }
 
@@ -49,8 +53,10 @@ export default async function SolutionDetailPage({
   const tn = await getTranslations("nav");
   const tm = await getTranslations("meta");
   const solutionPath = `/solutions/${slug}`;
+  const seo = l === "en" ? getSolutionSeo(slug) : undefined;
   const solutionTitle = loc(solution.title, l);
   const solutionDescription = loc(solution.description, l);
+  const breadcrumbLabel = seo?.breadcrumbName ?? solutionTitle;
 
   return (
     <>
@@ -58,8 +64,12 @@ export default async function SolutionDetailPage({
         data={breadcrumbJsonLd(
           [
             { name: tn("home"), path: "" },
-            { name: tm("solutionsTitle"), path: "/solutions" },
-            { name: solutionTitle },
+            ...(seo
+              ? [{ name: breadcrumbLabel, path: solutionPath }]
+              : [
+                  { name: tm("solutionsTitle"), path: "/solutions" },
+                  { name: breadcrumbLabel },
+                ]),
           ],
           l,
         )}

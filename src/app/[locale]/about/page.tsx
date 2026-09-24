@@ -3,8 +3,10 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { companyCopy } from "@/content/company";
+import { staticPageSeo } from "@/content/seo";
 import { loc, locList, type Locale } from "@/content/types";
-import { pageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/metadata";
 import { TECHNOLOGIES } from "@/lib/site";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
@@ -16,11 +18,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
+  const l = locale as Locale;
+  const seo = l === "en" ? staticPageSeo.about : null;
   return pageMetadata({
-    locale: locale as Locale,
-    title: t("aboutTitle"),
-    description: t("aboutDescription"),
+    locale: l,
+    title: seo?.title ?? t("aboutTitle"),
+    description: seo?.description ?? t("aboutDescription"),
     path: "/about",
+    absoluteTitle: Boolean(seo),
   });
 }
 
@@ -35,9 +40,21 @@ export default async function AboutPage({
   const tn = await getTranslations("nav");
   const tc = await getTranslations("common");
   const tm = await getTranslations("meta");
+  const aboutSeo = l === "en" ? staticPageSeo.about : null;
 
   return (
     <>
+      {aboutSeo ? (
+        <JsonLd
+          data={breadcrumbJsonLd(
+            [
+              { name: "Home", path: "" },
+              { name: aboutSeo.breadcrumbName!, path: "/about" },
+            ],
+            l,
+          )}
+        />
+      ) : null}
       <PageHero
         eyebrow={tn("about")}
         title={tm("aboutTitle")}
