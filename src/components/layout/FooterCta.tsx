@@ -2,11 +2,13 @@
 
 import { usePathname } from "@/i18n/navigation";
 import { ButtonLink } from "@/components/ui/Button";
+import { CONTACT_PUBLIC_PATH } from "@/lib/seo-routes";
 import { ReactNode } from "react";
 
 export function FooterCta({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const isContactPage = pathname === "/contact";
+  const isContactPage =
+    pathname === CONTACT_PUBLIC_PATH || pathname === "/contact";
 
   if (isContactPage) {
     return null;

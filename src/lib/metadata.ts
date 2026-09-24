@@ -1,6 +1,7 @@
 import type { Locale } from "@/content/types";
 import { loc, type L } from "@/content/types";
 import { COMPANY, SITE_URL } from "@/lib/site";
+import { CONTACT_PUBLIC_PATH } from "@/lib/seo-routes";
 import type { Metadata } from "next";
 
 const OG_IMAGE = {
@@ -246,7 +247,7 @@ export function contactPageJsonLd(locale: Locale) {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     name: locale === "ar" ? "اتصل بنا" : "Contact Us",
-    url: `${SITE_URL}/${locale}/contact`,
+    url: `${SITE_URL}/${locale}${CONTACT_PUBLIC_PATH}`,
     about: { "@type": "Organization", name: COMPANY.legalName },
   };
 }

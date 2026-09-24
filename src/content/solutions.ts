@@ -1,4 +1,5 @@
 import { L, LL, type Solution } from "./types";
+import { resolveSolutionContentSlug } from "@/lib/seo-routes";
 
 export const solutions: Solution[] = [
   {
@@ -100,5 +101,6 @@ export const solutions: Solution[] = [
 ];
 
 export function getSolution(slug: string) {
-  return solutions.find((s) => s.slug === slug);
+  const contentSlug = resolveSolutionContentSlug(slug);
+  return solutions.find((s) => s.slug === contentSlug);
 }

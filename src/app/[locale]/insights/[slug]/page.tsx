@@ -3,6 +3,7 @@ import { getInsight, insights } from "@/content/insights";
 import { getService } from "@/content/services";
 import { loc, locList, type Locale } from "@/content/types";
 import { Link } from "@/i18n/navigation";
+import { servicePagePath } from "@/lib/seo-routes";
 import { routing } from "@/i18n/routing";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleJsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/metadata";
@@ -85,7 +86,7 @@ export default async function InsightArticlePage({
             if (!svc) return null;
             return (
               <li key={s}>
-                <Link href={`/services/${s}`} className="text-brand hover:underline">
+                <Link href={servicePagePath(s)} className="text-brand hover:underline">
                   {loc(svc.title, l)}
                 </Link>
               </li>

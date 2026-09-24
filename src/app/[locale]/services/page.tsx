@@ -4,6 +4,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { getCatalogServices } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
+import { servicePagePath } from "@/lib/seo-routes";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -77,7 +78,7 @@ export default async function ServicesPage({
                 from={i % 2 === 0 ? "start" : "end"}
               >
                 <ServiceCard
-                  href={`/services/${s.slug}`}
+                  href={servicePagePath(s.slug)}
                   icon={s.icon}
                   title={loc(s.title, l)}
                   description={loc(s.description, l)}
@@ -103,7 +104,7 @@ export default async function ServicesPage({
                 from={i % 2 === 0 ? "start" : "end"}
               >
                 <ServiceCard
-                  href={`/services/${s.slug}`}
+                  href={servicePagePath(s.slug)}
                   icon={s.icon}
                   title={loc(s.title, l)}
                   description={loc(s.description, l)}
