@@ -28,6 +28,8 @@ export type SolutionContentSlug = keyof typeof SOLUTION_PUBLIC_SLUGS;
 
 export const CONTACT_PUBLIC_PATH = "/contact-repla-technologies";
 export const LEGACY_CONTACT_PATH = "/contact";
+export const BLOG_PUBLIC_PATH = "/blog";
+export const LEGACY_INSIGHTS_PATH = "/insights";
 
 const serviceReverse = Object.fromEntries(
   Object.entries(SERVICE_PUBLIC_SLUGS).map(([content, pub]) => [pub, content]),
@@ -75,6 +77,18 @@ export function buildSeoRedirects() {
     rules.push({
       source: `/${locale}${LEGACY_CONTACT_PATH}`,
       destination: `/${locale}${CONTACT_PUBLIC_PATH}`,
+      permanent: true,
+    });
+
+    rules.push({
+      source: `/${locale}${LEGACY_INSIGHTS_PATH}`,
+      destination: `/${locale}${BLOG_PUBLIC_PATH}`,
+      permanent: true,
+    });
+
+    rules.push({
+      source: `/${locale}${LEGACY_INSIGHTS_PATH}/:slug`,
+      destination: `/${locale}${BLOG_PUBLIC_PATH}/:slug`,
       permanent: true,
     });
 

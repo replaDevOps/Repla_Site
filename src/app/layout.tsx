@@ -1,4 +1,5 @@
 import { COMPANY, SITE_TITLE, SITE_URL } from "@/lib/site";
+import { rootHtmlClassName } from "@/lib/fonts";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
@@ -81,6 +82,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <html lang="en" className={rootHtmlClassName} suppressHydrationWarning>
+      <body className="h-full">{children}</body>
+    </html>
+  );
 }
 

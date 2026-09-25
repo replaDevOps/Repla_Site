@@ -1,0 +1,25 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { useEffect } from "react";
+
+import { suppressBenignStudioSseErrors } from "@/lib/studio/suppress-benign-sse-errors";
+import config from "@/sanity.config";
+
+const NextStudio = dynamic(
+  () => import("next-sanity/studio").then((mod) => mod.NextStudio),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-screen items-center justify-center bg-[#101112] text-sm text-white/70">
+        Loading Studio…
+      </div>
+    ),
+  },
+);
+
+export default function StudioClient() {
+  useEffect(() => suppressBenignStudioSseErrors(), []);
+
+  return <NextStudio config={config} history="hash" />;
+}
