@@ -4,7 +4,7 @@ import { getFeaturedServices } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
 import { companyCopy } from "@/content/company";
 import { Link } from "@/i18n/navigation";
-import { CONTACT_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
+import { CONTACT_PUBLIC_PATH, BLOG_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
 import { COMPANY } from "@/lib/site";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Mail, MapPin, Phone } from "lucide-react";
@@ -40,7 +40,7 @@ export async function Footer() {
 
   const resourceLinks = [
     { href: "/portfolio", label: tn("portfolio") },
-    { href: "/insights", label: tn("insights") },
+    { href: BLOG_PUBLIC_PATH, label: tn("blog") },
     { href: "/faq", label: tn("faq") },
   ];
 

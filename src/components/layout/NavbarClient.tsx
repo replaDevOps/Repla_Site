@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { COMPANY } from "@/lib/site";
-import { CONTACT_PUBLIC_PATH, servicePagePath, solutionPagePath } from "@/lib/seo-routes";
+import { CONTACT_PUBLIC_PATH, BLOG_PUBLIC_PATH, servicePagePath, solutionPagePath } from "@/lib/seo-routes";
 import { cn } from "@/lib/cn";
 import { ArrowRight, ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
@@ -35,6 +35,7 @@ const COMPANY_LINKS = [
   { href: "/industries", labelKey: "industries" as const, icon: "Globe" },
   { href: "/team", labelKey: "team" as const, icon: "Users" },
   { href: "/portfolio", labelKey: "portfolio" as const, icon: "FolderKanban" },
+  { href: BLOG_PUBLIC_PATH, labelKey: "blog" as const, icon: "FileCode" },
   { href: "/careers", labelKey: "careers" as const, icon: "UserPlus" },
   { href: CONTACT_PUBLIC_PATH, labelKey: "contact" as const, icon: "Mail" },
 ];
@@ -310,6 +311,9 @@ export function NavbarClient({
               </div>
             </div>
           </Mega>
+          <NavLink href={BLOG_PUBLIC_PATH} active={pathname === BLOG_PUBLIC_PATH || pathname.startsWith("/blog/")}>
+            {t("blog")}
+          </NavLink>
           <NavLink href={CONTACT_PUBLIC_PATH} active={pathname === CONTACT_PUBLIC_PATH}>
             {t("contact")}
           </NavLink>
@@ -398,8 +402,16 @@ export function NavbarClient({
                 <MobileSubLink href="/about">{t("about")}</MobileSubLink>
                 <MobileSubLink href="/team">{t("team")}</MobileSubLink>
                 <MobileSubLink href="/portfolio">{t("portfolio")}</MobileSubLink>
+                <MobileSubLink href={BLOG_PUBLIC_PATH}>{t("blog")}</MobileSubLink>
                 <MobileSubLink href="/careers">{t("careers")}</MobileSubLink>
               </MobileAccordion>
+
+              <MobileNavLink
+                href={BLOG_PUBLIC_PATH}
+                active={pathname === BLOG_PUBLIC_PATH || pathname.startsWith("/blog/")}
+              >
+                {t("blog")}
+              </MobileNavLink>
 
               <MobileNavLink href={CONTACT_PUBLIC_PATH} active={pathname === CONTACT_PUBLIC_PATH}>
                 {t("contact")}
