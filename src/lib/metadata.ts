@@ -37,6 +37,7 @@ export function pageMetadata({
   openGraphType = "website",
   noIndex = false,
   absoluteTitle = false,
+  descriptionMax = 155,
 }: {
   locale: Locale;
   title: string | L;
@@ -46,10 +47,11 @@ export function pageMetadata({
   openGraphType?: "website" | "article";
   noIndex?: boolean;
   absoluteTitle?: boolean;
+  descriptionMax?: number;
 }): Metadata {
   const t = typeof title === "string" ? title : loc(title, locale);
   const rawDescription = typeof description === "string" ? description : loc(description, locale);
-  const d = seoDescription(rawDescription);
+  const d = seoDescription(rawDescription, descriptionMax);
   const normalized = path.startsWith("/") ? path : `/${path}`;
   const pagePath = normalized === "/" ? "" : normalized;
   const canonical = `${SITE_URL}/${locale}${pagePath}`;
@@ -150,12 +152,20 @@ export function breadcrumbJsonLd(
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.name,
-      ...(item.path ? { item: `${SITE_URL}/${locale}${item.path}` } : {}),
-    })),
+    itemListElement: items.map((item, index) => {
+      const url =
+        item.path === undefined
+          ? undefined
+          : item.path === ""
+            ? `${SITE_URL}/${locale}`
+            : `${SITE_URL}/${locale}${item.path}`;
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        ...(url ? { item: url } : {}),
+      };
+    }),
   };
 }
 

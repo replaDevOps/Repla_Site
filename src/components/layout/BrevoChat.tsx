@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-const BREVO_CONVERSATIONS_ID = "6aa91240e32c610fca085ce1";
+const BREVO_CONVERSATIONS_ID = "6ab515c1aab87bb2310a747c";
 const BREVO_CONVERSATIONS_SCRIPT_ID = "brevo-conversations-js";
 
 /** Loads the Brevo Conversations live-chat widget once, globally. */

@@ -38,7 +38,7 @@ export function BlogSidebar({
   const visibleCategories = categories.filter((category) => (category.postCount ?? 0) > 0);
 
   return (
-    <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+    <aside className="min-w-0 space-y-6 lg:sticky lg:top-28 lg:self-start">
       {toc?.length && labels.inThisArticle ? (
         <BlogTableOfContents title={labels.inThisArticle} items={toc} />
       ) : null}

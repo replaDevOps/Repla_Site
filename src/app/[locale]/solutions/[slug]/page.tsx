@@ -13,6 +13,7 @@ import { breadcrumbJsonLd, pageMetadata, webPageJsonLd } from "@/lib/metadata";
 import {
   CONTACT_PUBLIC_PATH,
   getSolutionPublicSlug,
+  industryPagePath,
   resolveSolutionContentSlug,
   servicePagePath,
   solutionPagePath,
@@ -130,7 +131,7 @@ export default async function SolutionDetailPage({
                 if (!ind) return null;
                 return (
                   <li key={s}>
-                    <Link href={`/industries/${s}`} className="hover:text-brand">
+                    <Link href={industryPagePath(s)} className="hover:text-brand">
                       {loc(ind.title, l)}
                     </Link>
                   </li>

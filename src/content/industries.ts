@@ -1,4 +1,5 @@
 import { L, LL, type Industry } from "./types";
+import { resolveIndustryContentSlug } from "@/lib/seo-routes";
 
 export const industries: Industry[] = [
   {
@@ -3617,5 +3618,6 @@ export const industries: Industry[] = [
 ];
 
 export function getIndustry(slug: string) {
-  return industries.find((i) => i.slug === slug);
+  const contentSlug = resolveIndustryContentSlug(slug);
+  return industries.find((i) => i.slug === contentSlug);
 }

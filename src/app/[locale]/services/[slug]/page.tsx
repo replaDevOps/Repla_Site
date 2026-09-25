@@ -17,6 +17,7 @@ import {
 import {
   CONTACT_PUBLIC_PATH,
   getServicePublicSlug,
+  industryPagePath,
   resolveServiceContentSlug,
   servicePagePath,
 } from "@/lib/seo-routes";
@@ -173,7 +174,7 @@ export default async function ServiceDetailPage({
                   if (!ind) return null;
                   return (
                     <li key={slug}>
-                      <Link href={`/industries/${slug}`} className="hover:text-brand">
+                      <Link href={industryPagePath(slug)} className="hover:text-brand">
                         {loc(ind.title, l)}
                       </Link>
                     </li>

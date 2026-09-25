@@ -11,19 +11,27 @@ const headingClassName = "scroll-mt-28";
 const components: PortableTextComponents = {
   block: {
     h2: ({ children, value }) => (
-      <h2 id={value._key} className={`mt-10 font-display text-2xl font-semibold text-foreground ${headingClassName}`}>
+      <h2
+        id={value._key}
+        className={`mt-8 break-words font-display text-xl font-semibold text-foreground sm:mt-10 sm:text-2xl ${headingClassName}`}
+      >
         {children}
       </h2>
     ),
     h3: ({ children, value }) => (
-      <h3 id={value._key} className={`mt-8 font-display text-xl font-semibold text-foreground ${headingClassName}`}>
+      <h3
+        id={value._key}
+        className={`mt-6 break-words font-display text-lg font-semibold text-foreground sm:mt-8 sm:text-xl ${headingClassName}`}
+      >
         {children}
       </h3>
     ),
     blockquote: ({ children }) => (
       <blockquote className="border-s-4 border-brand/50 ps-4 italic text-muted">{children}</blockquote>
     ),
-    normal: ({ children }) => <p className="leading-relaxed text-foreground/80">{children}</p>,
+    normal: ({ children }) => (
+      <p className="break-words leading-relaxed text-foreground/80">{children}</p>
+    ),
   },
   list: {
     bullet: ({ children }) => <ul className="list-disc space-y-2 ps-6 text-foreground/80">{children}</ul>,
@@ -79,7 +87,7 @@ const components: PortableTextComponents = {
 export function PortableTextContent({ value }: { value: PortableTextBlock[] }) {
   if (!value.length) return null;
   return (
-    <div className="space-y-5">
+    <div className="max-w-full space-y-5 break-words [overflow-wrap:anywhere]">
       <PortableText value={value} components={components} />
     </div>
   );

@@ -4,6 +4,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { industries } from "@/content/industries";
 import { loc, type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
+import { industryPagePath } from "@/lib/seo-routes";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -51,7 +52,7 @@ export default async function IndustriesPage({
               from={i % 2 === 0 ? "start" : "end"}
             >
               <IndustryCard
-                href={`/industries/${ind.slug}`}
+                href={industryPagePath(ind.slug)}
                 icon={ind.icon}
                 title={loc(ind.title, l)}
                 tagline={loc(ind.tagline, l)}

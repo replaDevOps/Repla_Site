@@ -1,6 +1,8 @@
 import { SITE_URL } from "@/lib/site";
 import type { MetadataRoute } from "next";
 
+const SITEMAP_URL = "https://replatechnologies.com/sitemap.xml";
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
@@ -10,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: SITEMAP_URL,
     host: SITE_URL,
   };
 }

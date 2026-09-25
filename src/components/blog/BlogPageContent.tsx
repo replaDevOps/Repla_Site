@@ -102,14 +102,17 @@ export function BlogPageContent({
   const gridPosts = useMemo(() => {
     let filtered = filterPostsByCategory(posts, categorySlug);
     filtered = filterPostsBySearch(filtered, searchQuery, locale);
+    if (!categorySlug && !searchQuery.trim() && latestPost) {
+      filtered = filtered.filter((post) => post._id !== latestPost._id);
+    }
     return filtered;
-  }, [categorySlug, locale, posts, searchQuery]);
+  }, [categorySlug, latestPost, locale, posts, searchQuery]);
 
   const activeCategory = categories.find((category) => category.slug === categorySlug);
   const hasActiveFilters = Boolean(categorySlug || searchQuery.trim());
 
   return (
-    <div className="mx-auto max-w-7xl space-y-10 px-4 py-16 sm:px-6">
+    <div className="mx-auto max-w-7xl space-y-8 overflow-x-clip px-4 py-10 sm:space-y-10 sm:px-6 sm:py-16">
       {latestPost ? (
         <Reveal>
           <BlogLatestHero
@@ -135,8 +138,8 @@ export function BlogPageContent({
       />
 
       {hasActiveFilters ? (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-5 py-4">
-          <p className="text-sm text-muted">
+        <div className="flex flex-col gap-3 rounded-2xl border border-line bg-surface px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+          <p className="min-w-0 text-sm text-muted">
             {searchQuery.trim() ? (
               <>
                 {labels.searchResultsFor}{" "}
@@ -166,7 +169,7 @@ export function BlogPageContent({
               setSearchInput("");
               applyFilters(undefined, "");
             }}
-            className="text-sm text-brand hover:underline"
+            className="shrink-0 self-start text-sm text-brand hover:underline sm:self-auto"
           >
             {labels.clearFilter}
           </button>
@@ -174,8 +177,11 @@ export function BlogPageContent({
       ) : null}
 
       <section aria-labelledby="all-articles-heading">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-          <h2 id="all-articles-heading" className="font-display text-2xl font-semibold text-foreground">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-2 sm:mb-6 sm:gap-3">
+          <h2
+            id="all-articles-heading"
+            className="font-display text-xl font-semibold text-foreground sm:text-2xl"
+          >
             {labels.allArticles}
           </h2>
           <p className="text-sm text-muted">
@@ -184,11 +190,11 @@ export function BlogPageContent({
         </div>
 
         {gridPosts.length === 0 ? (
-          <p className="rounded-2xl border border-line bg-surface p-8 text-center text-muted">
+          <p className="rounded-2xl border border-line bg-surface p-6 text-center text-sm text-muted sm:p-8 sm:text-base">
             {labels.blogEmpty}
           </p>
         ) : (
-          <ul className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
             {gridPosts.map((post, i) => (
               <li key={post._id} className="h-full">
                 <Reveal delay={i * 0.03} className="h-full">
@@ -206,8 +212,8 @@ export function BlogPageContent({
         )}
       </section>
 
-      <section className="rounded-2xl border border-brand/20 bg-brand/5 p-6 sm:p-8">
-        <h2 className="font-display text-xl font-semibold text-foreground">{labels.needHelp}</h2>
+      <section className="rounded-2xl border border-brand/20 bg-brand/5 p-5 sm:p-8">
+        <h2 className="font-display text-lg font-semibold text-foreground sm:text-xl">{labels.needHelp}</h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{labels.contactCta}</p>
         <ButtonLink href={contactHref} className="mt-5" size="sm">
           {labels.contactUs}

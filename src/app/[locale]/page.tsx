@@ -14,7 +14,7 @@ import { localBusinessJsonLd, pageMetadata, websiteJsonLd } from "@/lib/metadata
 import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { Link } from "@/i18n/navigation";
-import { CONTACT_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
+import { CONTACT_PUBLIC_PATH, industryPagePath, servicePagePath } from "@/lib/seo-routes";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
@@ -204,7 +204,7 @@ export default async function HomePage({
           </IndustryReveal>
           <IndustryGrid
             items={industries.map((ind) => ({
-              href: `/industries/${ind.slug}`,
+              href: industryPagePath(ind.slug),
               icon: ind.icon,
               title: loc(ind.title, l),
               tagline: loc(ind.tagline, l),

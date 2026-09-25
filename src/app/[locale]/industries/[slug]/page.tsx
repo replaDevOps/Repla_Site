@@ -3,20 +3,27 @@ import { ButtonLink } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { getIndustry, industries } from "@/content/industries";
+import { getIndustrySeo } from "@/content/seo";
 import { getService } from "@/content/services";
 import { loc, locList, type Locale } from "@/content/types";
 import { Link } from "@/i18n/navigation";
-import { CONTACT_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
+import {
+  CONTACT_PUBLIC_PATH,
+  getIndustryPublicSlug,
+  industryPagePath,
+  resolveIndustryContentSlug,
+  servicePagePath,
+} from "@/lib/seo-routes";
 import { routing } from "@/i18n/routing";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd, faqPageJsonLd, pageMetadata, webPageJsonLd } from "@/lib/metadata";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    industries.map((i) => ({ locale, slug: i.slug })),
+    industries.map((i) => ({ locale, slug: getIndustryPublicSlug(i.slug) })),
   );
 }
 
@@ -26,14 +33,18 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const industry = getIndustry(slug);
+  const contentSlug = resolveIndustryContentSlug(slug);
+  const industry = getIndustry(contentSlug);
   if (!industry) return { robots: { index: false, follow: false } };
   const l = locale as Locale;
+  const seo = l === "en" ? getIndustrySeo(contentSlug) : undefined;
   return pageMetadata({
     locale: l,
-    title: loc(industry.metaTitle, l),
-    description: loc(industry.metaDescription, l),
-    path: `/industries/${slug}`,
+    title: seo?.title ?? loc(industry.metaTitle, l),
+    description: seo?.description ?? loc(industry.metaDescription, l),
+    path: industryPagePath(contentSlug),
+    absoluteTitle: Boolean(seo),
+    descriptionMax: seo ? 160 : 155,
   });
 }
 
@@ -42,16 +53,23 @@ export default async function IndustryDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale, slug: paramSlug } = await params;
   setRequestLocale(locale);
-  const industry = getIndustry(slug);
+  const contentSlug = resolveIndustryContentSlug(paramSlug);
+  const industry = getIndustry(contentSlug);
   if (!industry) notFound();
+  const publicSlug = getIndustryPublicSlug(contentSlug);
+  if (paramSlug !== publicSlug) {
+    permanentRedirect(`/${locale}/industries/${publicSlug}`);
+  }
   const l = locale as Locale;
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
-  const industryPath = `/industries/${slug}`;
+  const industryPath = industryPagePath(contentSlug);
+  const seo = l === "en" ? getIndustrySeo(contentSlug) : undefined;
   const industryName = loc(industry.title, l);
-  const industryDescription = loc(industry.metaDescription, l);
+  const industryDescription = seo?.description ?? loc(industry.metaDescription, l);
+  const breadcrumbLabel = seo?.breadcrumbName ?? industryName;
   const faqItems = industry.faqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }));
 
   return (
@@ -60,8 +78,12 @@ export default async function IndustryDetailPage({
         data={breadcrumbJsonLd(
           [
             { name: tn("home"), path: "" },
-            { name: tn("industries"), path: "/industries" },
-            { name: industryName },
+            ...(seo
+              ? [{ name: breadcrumbLabel, path: industryPath }]
+              : [
+                  { name: tn("industries"), path: "/industries" },
+                  { name: breadcrumbLabel },
+                ]),
           ],
           l,
         )}

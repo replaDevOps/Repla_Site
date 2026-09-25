@@ -44,7 +44,7 @@ export default async function BlogPage({
   const sortedPosts = sortPostsByDate(allPosts);
 
   return (
-    <>
+    <div className="overflow-x-clip">
       <PageHero eyebrow={tn("blog")} title={tm("blogTitle")} description={tm("blogDescription")} centered />
 
       <BlogPageContent
@@ -74,6 +74,6 @@ export default async function BlogPage({
           contactUs: tc("contactUs"),
         }}
       />
-    </>
+    </div>
   );
 }
