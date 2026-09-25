@@ -47,22 +47,24 @@ export function BlogPostCard({
     return (
       <Link
         href={`/blog/${post.slug}`}
-        className="card-hover group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface"
+        className="card-hover group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-line bg-surface"
       >
         {post.mainImage?.asset ? (
           <BlogCoverImage
             image={post.mainImage}
             aspectRatio="16 / 10"
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         ) : (
           <div className="aspect-[16/10] bg-surface-2" />
         )}
-        <div className="flex flex-1 flex-col p-5">
+        <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
           <BlogCategories categories={post.categories} locale={locale} />
-          <h3 className="mt-3 line-clamp-2 font-display text-lg font-semibold text-foreground">{title}</h3>
+          <h3 className="mt-3 line-clamp-2 break-words font-display text-base font-semibold text-foreground sm:text-lg">
+            {title}
+          </h3>
           <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">{excerpt}</p>
-          <div className="mt-4 flex items-center gap-2 text-xs text-muted">
+          <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
             {post.author?.name ? <span>{post.author.name}</span> : null}
             {post.author?.name && post.publishedAt ? <span aria-hidden>·</span> : null}
             {post.publishedAt ? (

@@ -117,8 +117,8 @@ export default async function BlogArticlePage({
         description={articleDescription}
         backLink={{ href: "/blog", label: tb("backToBlog") }}
       />
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <article>
+      <div className="mx-auto grid max-w-7xl gap-8 overflow-x-clip px-4 py-10 sm:gap-10 sm:px-6 sm:py-16 lg:grid-cols-[minmax(0,1fr)_min(100%,320px)] xl:grid-cols-[minmax(0,1fr)_320px]">
+        <article className="min-w-0">
           <div className="flex flex-wrap items-center gap-3">
             {post.featured ? (
               <span className="rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand">

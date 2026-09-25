@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { COMPANY } from "@/lib/site";
-import { CONTACT_PUBLIC_PATH, BLOG_PUBLIC_PATH, servicePagePath, solutionPagePath } from "@/lib/seo-routes";
+import { CONTACT_PUBLIC_PATH, BLOG_PUBLIC_PATH, industryPagePath, servicePagePath, solutionPagePath } from "@/lib/seo-routes";
 import { cn } from "@/lib/cn";
 import { ArrowRight, ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
@@ -44,12 +44,10 @@ export function NavbarClient({
   featured,
   industries,
   solutions,
-  technologiesPreview,
 }: {
   featured: NavEntry[];
   industries: NavEntry[];
   solutions: NavEntry[];
-  technologiesPreview: string;
 }) {
   const t = useTranslations("nav");
   const locale = useLocale();
@@ -241,7 +239,7 @@ export function NavbarClient({
               {industries.map((i) => (
                 <li key={i.slug}>
                   <Link
-                    href={`/industries/${i.slug}`}
+                    href={industryPagePath(i.slug)}
                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
                   >
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
@@ -286,30 +284,23 @@ export function NavbarClient({
             open={open === "company"}
             onOpen={() => setOpen("company")}
             onClose={() => setOpen(null)}
-            panelClassName="w-[min(700px,calc(100vw-2rem))]"
+            panelClassName="w-[min(720px,calc(100vw-2rem))]"
           >
-            <div className="grid gap-10 sm:grid-cols-2">
-              <ul className="space-y-1 text-sm">
-                {COMPANY_LINKS.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-foreground/[0.04]"
-                    >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
-                        <Icon name={item.icon} className="h-5 w-5" />
-                      </span>
-                      {t(item.labelKey)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <div>
-                <p className="text-sm text-muted">{t("partnersNote")}</p>
-                <p className="mt-4 text-xs uppercase tracking-widest text-muted">{t("technologies")}</p>
-                <p className="mt-2 text-sm leading-relaxed text-foreground/70">{technologiesPreview}</p>
-              </div>
-            </div>
+            <ul className="grid gap-x-2 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
+              {COMPANY_LINKS.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center gap-2.5 rounded-xl px-2 py-2 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
+                      <Icon name={item.icon} className="h-5 w-5" />
+                    </span>
+                    <span className="min-w-0">{t(item.labelKey)}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Mega>
           <NavLink href={BLOG_PUBLIC_PATH} active={pathname === BLOG_PUBLIC_PATH || pathname.startsWith("/blog/")}>
             {t("blog")}
@@ -374,7 +365,7 @@ export function NavbarClient({
                 onToggle={() => toggleMobileSection("industries")}
               >
                 {industries.slice(0, 8).map((i) => (
-                  <MobileSubLink key={i.slug} href={`/industries/${i.slug}`}>
+                  <MobileSubLink key={i.slug} href={industryPagePath(i.slug)}>
                     {i.title}
                   </MobileSubLink>
                 ))}

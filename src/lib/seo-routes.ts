@@ -23,8 +23,28 @@ export const SOLUTION_PUBLIC_SLUGS = {
   "custom-crm-erp": "custom-crm-and-erp-solution-in-riyadh",
 } as const;
 
+export const INDUSTRY_PUBLIC_SLUGS = {
+  healthcare: "healthcare-software-solution-in-riyadh",
+  "fintech-banking": "fintech-and-banking-solutions-in-riyadh",
+  education: "e-learning-platform-development-services-in-riyadh",
+  "real-estate": "real-estate-software-development-in-riyadh",
+  "retail-ecommerce": "e-commerce-software-development-in-riyadh",
+  manufacturing: "manufacturing-software-development-in-riyadh",
+  logistics: "logistics-software-solutions-development-in-riyadh",
+  "travel-hospitality": "hospitality-software-solutions-development-in-riyadh",
+  construction: "construction-software-development-in-riyadh",
+  government: "government-software-development-in-riyadh",
+  telecommunications: "telecommunications-software-development-in-riyadh",
+  energy: "energy-software-development-in-riyadh",
+  automotive: "automotive-software-development-in-riyadh",
+  insurance: "insurance-software-development-in-riyadh",
+  "ai-saas": "ai-saas-development-in-riyadh",
+  "b2b-software": "b2b-software-development-in-riyadh",
+} as const;
+
 export type ServiceContentSlug = keyof typeof SERVICE_PUBLIC_SLUGS;
 export type SolutionContentSlug = keyof typeof SOLUTION_PUBLIC_SLUGS;
+export type IndustryContentSlug = keyof typeof INDUSTRY_PUBLIC_SLUGS;
 
 export const CONTACT_PUBLIC_PATH = "/contact-repla-technologies";
 export const LEGACY_CONTACT_PATH = "/contact";
@@ -39,6 +59,10 @@ const solutionReverse = Object.fromEntries(
   Object.entries(SOLUTION_PUBLIC_SLUGS).map(([content, pub]) => [pub, content]),
 ) as Record<string, SolutionContentSlug>;
 
+const industryReverse = Object.fromEntries(
+  Object.entries(INDUSTRY_PUBLIC_SLUGS).map(([content, pub]) => [pub, content]),
+) as Record<string, IndustryContentSlug>;
+
 export function getServicePublicSlug(contentSlug: string): string {
   return (
     SERVICE_PUBLIC_SLUGS[contentSlug as ServiceContentSlug] ?? contentSlug
@@ -51,6 +75,12 @@ export function getSolutionPublicSlug(contentSlug: string): string {
   );
 }
 
+export function getIndustryPublicSlug(contentSlug: string): string {
+  return (
+    INDUSTRY_PUBLIC_SLUGS[contentSlug as IndustryContentSlug] ?? contentSlug
+  );
+}
+
 /** Resolve a URL param slug to the internal content slug. */
 export function resolveServiceContentSlug(paramSlug: string): string {
   return serviceReverse[paramSlug] ?? paramSlug;
@@ -60,12 +90,20 @@ export function resolveSolutionContentSlug(paramSlug: string): string {
   return solutionReverse[paramSlug] ?? paramSlug;
 }
 
+export function resolveIndustryContentSlug(paramSlug: string): string {
+  return industryReverse[paramSlug] ?? paramSlug;
+}
+
 export function servicePagePath(contentSlug: string): string {
   return `/services/${getServicePublicSlug(contentSlug)}`;
 }
 
 export function solutionPagePath(contentSlug: string): string {
   return `/solutions/${getSolutionPublicSlug(contentSlug)}`;
+}
+
+export function industryPagePath(contentSlug: string): string {
+  return `/industries/${getIndustryPublicSlug(contentSlug)}`;
 }
 
 /** Build permanent redirect rules for next.config (legacy → SEO URLs). */
@@ -106,6 +144,15 @@ export function buildSeoRedirects() {
       rules.push({
         source: `/${locale}/solutions/${contentSlug}`,
         destination: `/${locale}/solutions/${publicSlug}`,
+        permanent: true,
+      });
+    }
+
+    for (const [contentSlug, publicSlug] of Object.entries(INDUSTRY_PUBLIC_SLUGS)) {
+      if (contentSlug === publicSlug) continue;
+      rules.push({
+        source: `/${locale}/industries/${contentSlug}`,
+        destination: `/${locale}/industries/${publicSlug}`,
         permanent: true,
       });
     }

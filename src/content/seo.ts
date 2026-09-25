@@ -133,8 +133,111 @@ export const solutionSeo: Record<string, PageSeo> = {
   },
 };
 
+export const industrySeo: Record<string, PageSeo> = {
+  healthcare: {
+    title: "Healthcare Software Solution in Riyadh | Repla Tech",
+    description:
+      "Looking for a reliable Healthcare Software Solution in Riyadh? We build secure, scalable systems for hospitals & clinics. Get a free demo today!",
+    breadcrumbName: "Healthcare Software Solution in Riyadh",
+  },
+  "fintech-banking": {
+    title: "FinTech and Banking Solutions in Riyadh | Repla Tech",
+    description:
+      "Discover expert FinTech and Banking Solutions in Riyadh built for security, scalability, and compliance. Partner with Repla Technologies today.",
+    breadcrumbName: "FinTech and Banking Solutions in Riyadh",
+  },
+  education: {
+    title: "E-Learning Platform Development Services in Riyadh",
+    description:
+      "Looking for E-Learning Platform Development in Riyadh? We design secure, scalable, and engaging learning platforms tailored to your business goals.",
+    breadcrumbName: "E-Learning Platform Development in Riyadh",
+  },
+  "real-estate": {
+    title: "Real Estate Software Development in Riyadh | Repla",
+    description:
+      "Custom real estate software development in Riyadh. Repla builds scalable property management & CRM solutions tailored to Saudi market needs.",
+    breadcrumbName: "Real Estate Software Development in Riyadh",
+  },
+  "retail-ecommerce": {
+    title: "E-commerce Software Development in Riyadh | Experts",
+    description:
+      "Get custom e-commerce software development in Riyadh built for growth, security & scale. Trusted local experts. Get a free consultation today!",
+    breadcrumbName: "E-commerce Software Development in Riyadh",
+  },
+  manufacturing: {
+    title: "Manufacturing Software Development in Riyadh | Repla",
+    description:
+      "Expert manufacturing software development in Riyadh. Custom solutions to streamline production, boost efficiency & scale your operations. Get a quote!",
+    breadcrumbName: "Manufacturing Software Development in Riyadh",
+  },
+  logistics: {
+    title: "Logistics Software Solutions Development in Riyadh | Repla Tech",
+    description:
+      "Expert logistics software solutions development in Riyadh. Custom fleet, warehouse & supply chain systems built to scale your business efficiently",
+    breadcrumbName: "Logistics & Supply Chain Software Solutions",
+  },
+  "travel-hospitality": {
+    title: "Hospitality Software Solutions Development in Riyadh",
+    description:
+      "Custom Hospitality Software Solutions Development in Riyadh — hotel, restaurant & resort systems built to boost efficiency, bookings & guest experience.",
+    breadcrumbName: "Hospitality Software Solutions Development in Riyadh",
+  },
+  construction: {
+    title: "Construction Software Development in Riyadh | Repla",
+    description:
+      "Custom construction software development in Riyadh — streamline projects, boost efficiency & scale your construction business with Repla's expert solutions.",
+    breadcrumbName: "Construction Software Development in Riyadh",
+  },
+  government: {
+    title: "Government Software Development in Riyadh | Repla Technologies",
+    description:
+      "Repla Technologies delivers secure, scalable government software development in Riyadh, helping public sector agencies digitize services efficiently.",
+    breadcrumbName: "Government Software Development in Riyadh",
+  },
+  telecommunications: {
+    title: "Telecommunications Software Development in Riyadh",
+    description:
+      "Expert Telecommunications Software Development in Riyadh — custom telecom solutions, network systems & scalable software built for KSA businesses.",
+    breadcrumbName: "Telecommunications Software Development in Riyadh",
+  },
+  energy: {
+    title: "Energy Software Development in Riyadh | Expert Solutions",
+    description:
+      "Leading Energy Software Development in Riyadh. Custom, scalable solutions to optimize operations, boost efficiency & drive growth. Get a free quote!",
+    breadcrumbName: "Energy Software Development in Riyadh",
+  },
+  automotive: {
+    title: "Automotive Software Development in Riyadh | Repla",
+    description:
+      "Expert automotive software development in Riyadh. Repla builds custom, scalable solutions for dealerships, fleets & auto businesses. Get a free quote!",
+    breadcrumbName: "Automotive Software Development in Riyadh",
+  },
+  insurance: {
+    title: "Insurance Software Development in Riyadh | Expert Solutions",
+    description:
+      "Custom Insurance Software Development in Riyadh for insurers & brokers automate claims, policies & compliance. Get a free consultation today!",
+    breadcrumbName: "Insurance Software Development in Riyadh",
+  },
+  "ai-saas": {
+    title: "AI SaaS Development in Riyadh | Custom AI Solutions",
+    description:
+      "Looking for AI SaaS development in Riyadh? We build custom, scalable AI-powered SaaS solutions tailored to your business needs. Get a free consult today!",
+    breadcrumbName: "AI SaaS Development in Riyadh",
+  },
+  "b2b-software": {
+    title: "B2B Software Development in Riyadh | Repla Technologies",
+    description:
+      "Looking for B2B Software Development in Riyadh? We deliver custom, scalable software solutions to help businesses grow across Saudi Arabia.",
+    breadcrumbName: "B2B Software Development in Riyadh",
+  },
+};
+
 export function getServiceSeo(slug: string): PageSeo | undefined {
   return serviceSeo[slug];
+}
+
+export function getIndustrySeo(slug: string): PageSeo | undefined {
+  return industrySeo[slug];
 }
 
 export function getSolutionSeo(slug: string): PageSeo | undefined {

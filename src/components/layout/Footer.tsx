@@ -4,7 +4,7 @@ import { getFeaturedServices } from "@/content/services";
 import { loc, type Locale } from "@/content/types";
 import { companyCopy } from "@/content/company";
 import { Link } from "@/i18n/navigation";
-import { CONTACT_PUBLIC_PATH, BLOG_PUBLIC_PATH, servicePagePath } from "@/lib/seo-routes";
+import { CONTACT_PUBLIC_PATH, BLOG_PUBLIC_PATH, industryPagePath, servicePagePath } from "@/lib/seo-routes";
 import { COMPANY } from "@/lib/site";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Mail, MapPin, Phone } from "lucide-react";
@@ -182,7 +182,7 @@ export async function Footer() {
             <ul className="mt-5 space-y-2.5 text-sm">
               {featuredIndustries.map((industry) => (
                 <li key={industry.slug}>
-                  <Link href={`/industries/${industry.slug}`} className="footer-link">
+                  <Link href={industryPagePath(industry.slug)} className="footer-link">
                     {loc(industry.title, locale)}
                   </Link>
                 </li>

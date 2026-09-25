@@ -3,7 +3,6 @@ import { industries } from "@/content/industries";
 import { services } from "@/content/services";
 import { solutions } from "@/content/solutions";
 import { loc, type L, type Locale } from "@/content/types";
-import { TECHNOLOGIES } from "@/lib/site";
 import { getLocale } from "next-intl/server";
 
 const featuredNav = [
@@ -51,7 +50,6 @@ export async function Navbar() {
       featured={featured}
       industries={industries.map((i) => toEntry(i, locale))}
       solutions={solutions.map((s) => toEntry(s, locale))}
-      technologiesPreview={TECHNOLOGIES.slice(0, 6).join(" · ")}
     />
   );
 }

@@ -29,49 +29,49 @@ export function BlogFilterBar({
 }: BlogFilterBarProps) {
   const visibleCategories = categories.filter((category) => (category.postCount ?? 0) > 0);
 
+  const pillClass = (isActive: boolean) =>
+    cn(
+      "shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors sm:px-4",
+      isActive
+        ? "bg-brand text-white"
+        : "border border-line bg-surface text-foreground/80 hover:border-brand/30 hover:text-foreground",
+    );
+
   return (
     <section
       aria-label={labels.searchArticles}
-      className="rounded-2xl border border-line bg-surface-2 px-4 py-4 sm:px-5"
+      className="rounded-2xl border border-line bg-surface-2 px-3 py-4 sm:px-5"
     >
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex min-w-0 flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => onCategoryChange(undefined)}
-            className={cn(
-              "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-              !activeCategory
-                ? "bg-brand text-white"
-                : "border border-line bg-surface text-foreground/80 hover:border-brand/30 hover:text-foreground",
-            )}
-          >
-            {labels.allCategories}
-          </button>
-          {visibleCategories.map((category) => {
-            const label = pickLocale(category.title, locale);
-            if (!label || !category.slug) return null;
-            const isActive = activeCategory === category.slug;
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0 lg:flex-1">
+          <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-wrap lg:overflow-visible [&::-webkit-scrollbar]:hidden">
+            <button
+              type="button"
+              onClick={() => onCategoryChange(undefined)}
+              className={pillClass(!activeCategory)}
+            >
+              {labels.allCategories}
+            </button>
+            {visibleCategories.map((category) => {
+              const label = pickLocale(category.title, locale);
+              if (!label || !category.slug) return null;
+              const isActive = activeCategory === category.slug;
 
-            return (
-              <button
-                key={category.slug}
-                type="button"
-                onClick={() => onCategoryChange(category.slug)}
-                className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-brand text-white"
-                    : "border border-line bg-surface text-foreground/80 hover:border-brand/30 hover:text-foreground",
-                )}
-              >
-                {label}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={category.slug}
+                  type="button"
+                  onClick={() => onCategoryChange(category.slug)}
+                  className={pillClass(isActive)}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        <label className="relative block w-full min-w-0 sm:max-w-xs lg:max-w-sm">
+        <label className="relative block w-full min-w-0 shrink-0 lg:max-w-sm">
           <span className="sr-only">{labels.searchArticles}</span>
           <svg
             aria-hidden

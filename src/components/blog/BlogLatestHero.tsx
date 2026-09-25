@@ -40,7 +40,7 @@ export function BlogLatestHero({ post, locale, label, readArticleLabel }: BlogLa
       </p>
       <Link
         href={`/blog/${post.slug}`}
-        className="card-hover group grid overflow-hidden rounded-3xl border border-line bg-surface lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
+        className="card-hover group grid min-w-0 overflow-hidden rounded-2xl border border-line bg-surface sm:rounded-3xl lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
       >
         {post.mainImage?.asset ? (
           <BlogCoverImage
@@ -48,23 +48,25 @@ export function BlogLatestHero({ post, locale, label, readArticleLabel }: BlogLa
             priority
             aspectRatio="16 / 10"
             sizes="(max-width: 1024px) 100vw, 640px"
-            className="min-h-[240px] lg:min-h-[360px]"
+            className="min-h-[180px] sm:min-h-[220px] lg:min-h-[360px]"
           />
         ) : (
-          <div className="min-h-[240px] bg-surface-2 lg:min-h-[360px]" />
+          <div className="min-h-[180px] bg-surface-2 sm:min-h-[220px] lg:min-h-[360px]" />
         )}
-        <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
+        <div className="flex min-w-0 flex-col justify-center p-4 sm:p-6 lg:p-10">
           <BlogCategories categories={post.categories} locale={locale} />
-          <h2 className="mt-4 font-display text-2xl font-bold text-foreground sm:text-3xl lg:text-4xl">
+          <h2 className="mt-3 break-words font-display text-xl font-bold text-foreground sm:mt-4 sm:text-2xl lg:text-4xl">
             {title}
           </h2>
-          <p className="mt-4 line-clamp-4 text-base leading-relaxed text-muted">{excerpt}</p>
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
+          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted sm:mt-4 sm:line-clamp-4 sm:text-base">
+            {excerpt}
+          </p>
+          <div className="mt-5 flex flex-col gap-4 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
               <AuthorAvatar name={post.author?.name} />
               <div className="min-w-0">
                 {post.author?.name ? (
-                  <p className="text-sm font-medium text-foreground">{post.author.name}</p>
+                  <p className="truncate text-sm font-medium text-foreground">{post.author.name}</p>
                 ) : null}
                 {post.publishedAt ? (
                   <time dateTime={post.publishedAt} className="block text-xs text-muted">
@@ -73,7 +75,7 @@ export function BlogLatestHero({ post, locale, label, readArticleLabel }: BlogLa
                 ) : null}
               </div>
             </div>
-            <span className="text-sm font-medium text-brand transition-colors group-hover:underline">
+            <span className="text-sm font-medium text-brand transition-colors group-hover:underline sm:shrink-0">
               {readArticleLabel}
             </span>
           </div>
