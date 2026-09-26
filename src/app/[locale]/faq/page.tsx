@@ -5,8 +5,11 @@ import { companyCopy } from "@/content/company";
 import { generalFaqs } from "@/content/faqs";
 import { loc, type Locale } from "@/content/types";
 import { faqPageJsonLd, pageMetadata } from "@/lib/metadata";
+import { getFaqs, mapFaqsToAccordionItems } from "@/sanity/lib/faqs";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
+
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -33,7 +36,10 @@ export default async function FaqPage({
   const l = locale as Locale;
   const tn = await getTranslations("nav");
   const tm = await getTranslations("meta");
-  const faqItems = generalFaqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }));
+  const sanityFaqs = await getFaqs();
+  const faqItems = sanityFaqs.length
+    ? mapFaqsToAccordionItems(sanityFaqs, l)
+    : generalFaqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }));
 
   return (
     <>

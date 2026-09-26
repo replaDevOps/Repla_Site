@@ -38,11 +38,7 @@ export const metadata: Metadata = {
   category: "technology",
   manifest: "/site.webmanifest",
   icons: {
-    icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-    ],
+    icon: "/icon.png",
     apple: "/apple-icon.png",
   },
   openGraph: {
@@ -83,7 +79,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={rootHtmlClassName} suppressHydrationWarning>
+    <html lang="en" className={`${rootHtmlClassName} light`} suppressHydrationWarning>
       <body className="h-full">{children}</body>
     </html>
   );

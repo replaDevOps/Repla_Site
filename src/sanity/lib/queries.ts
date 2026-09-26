@@ -101,3 +101,12 @@ export const postBySlugQuery = groq`
     }
   }
 `;
+
+export const faqsQuery = groq`
+  *[_type == "faq" && published != false] | order(order asc, _createdAt asc) {
+    _id,
+    question,
+    answer,
+    order
+  }
+`;
