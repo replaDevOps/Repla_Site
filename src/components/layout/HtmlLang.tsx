@@ -14,7 +14,7 @@ export function HtmlLang({
     const root = document.documentElement;
     root.lang = locale;
     root.dir = dir;
-    root.classList.add("dark", "h-full", "antialiased");
+    root.classList.add("h-full", "antialiased");
 
     if (locale === "ar") {
       root.classList.add(notoArabic.variable);

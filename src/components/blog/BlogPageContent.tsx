@@ -112,7 +112,7 @@ export function BlogPageContent({
   const hasActiveFilters = Boolean(categorySlug || searchQuery.trim());
 
   return (
-    <div className="mx-auto max-w-7xl space-y-8 overflow-x-clip px-4 py-10 sm:space-y-10 sm:px-6 sm:py-16">
+    <div className="mx-auto max-w-7xl space-y-8 px-4 py-10 sm:space-y-10 sm:px-6 sm:py-16">
       {latestPost ? (
         <Reveal>
           <BlogLatestHero

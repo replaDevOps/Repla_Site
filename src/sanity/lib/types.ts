@@ -56,3 +56,10 @@ export type SanityPost = SanityPostListItem & {
     ar?: PortableTextBlock[];
   };
 };
+
+export type SanityFaq = {
+  _id: string;
+  question: LocaleField;
+  answer: LocaleField;
+  order?: number;
+};
