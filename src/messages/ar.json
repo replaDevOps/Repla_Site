@@ -257,7 +257,17 @@
     "brandsTitle": "<brand>REPLA</brand> موثوقة لتقديم التميز عالمياً",
     "brandsBody": "REPLA Technologies شريك تقني متكامل مقره الرياض، موثوق لدى مؤسسات في السعودية والعالم. من الذكاء الاصطناعي والبرمجيات المخصصة إلى الويب والجوال والسحابة، نبني حلولاً تحقق أثراً قابلاً للقياس.",
     "finalCta": "مستعدون لتحويل عملكم؟",
-    "finalCtaSub": "لنناقش كيف يمكن لـ REPLA Technologies مساعدتكم في بناء المستقبل."
+    "finalCtaSub": "لنناقش كيف يمكن لـ REPLA Technologies مساعدتكم في بناء المستقبل.",
+    "testimonialsEyebrow": "آراء العملاء",
+    "testimonialsTitle": "ماذا يقول عملاؤنا",
+    "testimonialsSubtitle": "تجارب حقيقية من شركات وثقت بـ REPLA Technologies لتحويل أفكارها إلى منتجات رقمية.",
+    "testimonialsTrustScore": "5.0 رضا العملاء",
+    "testimonialsTrustLabel": "مؤشر رضا عملاء تجريبي",
+    "testimonialsDemoNote": "شهادات نموذجية للمعاينة. سيتم استبدالها بآراء عملاء موثّقة عند نشرها.",
+    "testimonialsCarouselLabel": "شهادات العملاء",
+    "testimonialsPrev": "الشهادات السابقة",
+    "testimonialsNext": "الشهادات التالية",
+    "testimonialsGoToSlide": "الانتقال إلى الشريحة {index}"
   },
   "notFound": {
     "code": "404",

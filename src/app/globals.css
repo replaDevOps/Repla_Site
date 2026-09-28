@@ -482,6 +482,84 @@ html.light .brand-float-plate {
   }
 }
 
+@keyframes testimonials-orb-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate(18px, -22px) scale(1.08);
+    opacity: 0.85;
+  }
+}
+
+@keyframes testimonials-orb-drift-alt {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-20px, 16px) scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes testimonials-shimmer {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.testimonials-bg-orb {
+  animation: testimonials-orb-drift 16s ease-in-out infinite;
+}
+
+.testimonials-bg-orb-alt {
+  animation: testimonials-orb-drift-alt 20s ease-in-out infinite;
+}
+
+.testimonials-bg-shimmer {
+  background: radial-gradient(
+    ellipse 80% 55% at 50% 45%,
+    color-mix(in srgb, var(--brand) 12%, transparent),
+    transparent 70%
+  );
+  animation: testimonials-shimmer 12s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-bg-orb,
+  .testimonials-bg-orb-alt,
+  .testimonials-bg-shimmer {
+    animation: none;
+  }
+}
+
+.testimonial-quote-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--brand) 40%, transparent) transparent;
+  padding-inline-end: 0.25rem;
+}
+
+.testimonial-quote-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.testimonial-quote-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.testimonial-quote-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--brand) 40%, transparent);
+  border-radius: 9999px;
+}
+
 .social-icon {
   position: relative;
   isolation: isolate;

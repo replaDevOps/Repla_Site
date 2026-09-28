@@ -45,7 +45,7 @@ export default async function FaqPage({
     <>
       <JsonLd data={faqPageJsonLd(faqItems)} />
       <PageHero eyebrow={tn("faq")} title={tm("faqTitle")} description={loc(companyCopy.faqIntro, l)} />
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6" aria-labelledby="faq-list-heading">
+      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6" aria-labelledby="faq-list-heading">
         <h2 id="faq-list-heading" className="sr-only">
           {tm("faqTitle")}
         </h2>
