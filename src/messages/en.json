@@ -258,7 +258,17 @@
     "brandsTitle": "<brand>REPLA</brand> is trusted to deliver excellence worldwide",
     "brandsBody": "REPLA Technologies is a full-service IT partner headquartered in Riyadh, trusted by organizations across Saudi Arabia and worldwide. From AI and custom software to web, mobile, and cloud delivery, we build solutions that create measurable impact.",
     "finalCta": "Ready to transform your business?",
-    "finalCtaSub": "Let’s discuss how REPLA Technologies can help you build the future."
+    "finalCtaSub": "Let’s discuss how REPLA Technologies can help you build the future.",
+    "testimonialsEyebrow": "Client feedback",
+    "testimonialsTitle": "What Our Clients Say",
+    "testimonialsSubtitle": "Real experiences from businesses that trusted Repla Technologies to bring their ideas to life.",
+    "testimonialsTrustScore": "5.0 Client Satisfaction",
+    "testimonialsTrustLabel": "Sample client satisfaction indicator",
+    "testimonialsDemoNote": "Sample testimonials shown for layout preview. Verified client reviews will replace these when published.",
+    "testimonialsCarouselLabel": "Client testimonials",
+    "testimonialsPrev": "Previous testimonials",
+    "testimonialsNext": "Next testimonials",
+    "testimonialsGoToSlide": "Go to testimonial slide {index}"
   },
   "notFound": {
     "code": "404",

@@ -15,6 +15,7 @@ import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { Link } from "@/i18n/navigation";
 import { CONTACT_PUBLIC_PATH, industryPagePath, servicePagePath } from "@/lib/seo-routes";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
@@ -212,6 +213,8 @@ export default async function HomePage({
           />
         </div>
       </section>
+
+      <TestimonialsSection locale={l} />
     </>
   );
 }
