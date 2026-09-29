@@ -1,8 +1,13 @@
 "use client";
 
 import { cn } from "@/lib/cn";
-import { ChevronDown } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
+
+const iconTransition =
+  "motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out";
+const panelTransition =
+  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]";
 
 export function FaqAccordion({
   items,
@@ -23,16 +28,33 @@ export function FaqAccordion({
               onClick={() => setOpen(isOpen ? null : i)}
             >
               <span className="min-w-0 flex-1 font-semibold text-foreground">{item.q}</span>
-              <ChevronDown
-                className={cn(
-                  "h-4 w-4 shrink-0 text-muted transition-transform",
-                  isOpen && "rotate-180",
-                )}
-              />
+              <span className="relative h-4 w-4 shrink-0" aria-hidden="true">
+                <Plus
+                  className={cn(
+                    "absolute inset-0 h-4 w-4 text-muted",
+                    iconTransition,
+                    isOpen ? "scale-75 opacity-0" : "scale-100 opacity-100",
+                  )}
+                />
+                <Minus
+                  className={cn(
+                    "absolute inset-0 h-4 w-4 text-muted",
+                    iconTransition,
+                    isOpen ? "scale-100 opacity-100" : "scale-75 opacity-0",
+                  )}
+                />
+              </span>
             </button>
-            {isOpen ? (
-              <p className="px-5 pb-5 text-sm leading-relaxed text-muted">{item.a}</p>
-            ) : null}
+            <div
+              className={cn(
+                panelTransition,
+                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+              )}
+            >
+              <div className="overflow-hidden">
+                <p className="px-5 pb-5 text-sm leading-relaxed text-muted">{item.a}</p>
+              </div>
+            </div>
           </div>
         );
       })}

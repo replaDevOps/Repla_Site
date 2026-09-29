@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { BlogFilterBar } from "@/components/blog/BlogFilterBar";
 import { BlogLatestHero } from "@/components/blog/BlogLatestHero";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
-import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import type { Locale } from "@/content/types";
 import { pickLocale } from "@/sanity/lib/locale";
@@ -33,11 +32,7 @@ type BlogPageContentProps = {
     featured: string;
     readMore: string;
     blogEmpty: string;
-    needHelp: string;
-    contactCta: string;
-    contactUs: string;
   };
-  contactHref: string;
 };
 
 function readFiltersFromUrl() {
@@ -65,7 +60,6 @@ export function BlogPageContent({
   initialCategory,
   initialQuery = "",
   labels,
-  contactHref,
 }: BlogPageContentProps) {
   const latestPost = posts[0] ?? null;
   const [categorySlug, setCategorySlug] = useState(initialCategory);
@@ -210,14 +204,6 @@ export function BlogPageContent({
             ))}
           </ul>
         )}
-      </section>
-
-      <section className="rounded-2xl border border-brand/20 bg-brand/5 p-5 sm:p-8">
-        <h2 className="font-display text-lg font-semibold text-foreground sm:text-xl">{labels.needHelp}</h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{labels.contactCta}</p>
-        <ButtonLink href={contactHref} className="mt-5" size="sm">
-          {labels.contactUs}
-        </ButtonLink>
       </section>
     </div>
   );
