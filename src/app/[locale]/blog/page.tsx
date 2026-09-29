@@ -2,7 +2,6 @@ import { BlogPageContent } from "@/components/blog/BlogPageContent";
 import { PageHero } from "@/components/ui/PageHero";
 import { type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
-import { CONTACT_PUBLIC_PATH } from "@/lib/seo-routes";
 import { getCategories, getPosts, sortPostsByDate } from "@/sanity/lib/posts";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
@@ -53,7 +52,6 @@ export default async function BlogPage({
         categories={categories}
         initialCategory={categorySlug}
         initialQuery={searchQuery ?? ""}
-        contactHref={CONTACT_PUBLIC_PATH}
         labels={{
           latestArticle: tb("latestArticle"),
           readArticle: tb("readArticle"),
@@ -69,9 +67,6 @@ export default async function BlogPage({
           featured: tb("featured"),
           readMore: tc("readMore"),
           blogEmpty: tc("blogEmpty"),
-          needHelp: tb("needHelp"),
-          contactCta: tb("contactCta"),
-          contactUs: tc("contactUs"),
         }}
       />
     </div>
