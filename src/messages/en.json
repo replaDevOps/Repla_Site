@@ -251,8 +251,12 @@
   "home": {
     "coreServices": "Our core services",
     "coreServicesSub": "End-to-end IT services designed for modern enterprises — from AI agents to dedicated development teams.",
+    "latestArticles": "Latest articles",
+    "latestArticlesSub": "Insights on AI, software delivery, and digital transformation from the REPLA team.",
+    "viewAllArticles": "View All Articles",
     "industries": "Industries we serve",
     "industriesSub": "Specialized solutions tailored to your sector’s unique challenges.",
+    "viewAllIndustries": "View All Industries",
     "aboutCta": "Read our story",
     "brandsEyebrow": "Trusted by global brands",
     "brandsTitle": "<brand>REPLA</brand> is trusted to deliver excellence worldwide",
@@ -268,7 +272,9 @@
     "testimonialsCarouselLabel": "Client testimonials",
     "testimonialsPrev": "Previous testimonials",
     "testimonialsNext": "Next testimonials",
-    "testimonialsGoToSlide": "Go to testimonial slide {index}"
+    "testimonialsGoToSlide": "Go to testimonial slide {index}",
+    "faqTitle": "Frequently asked questions",
+    "faqSubtitle": "Quick answers about our services, development process, technologies, and how we partner with your team."
   },
   "notFound": {
     "code": "404",

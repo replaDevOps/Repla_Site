@@ -46,3 +46,22 @@ export function getSanityImageUrl(
 export function urlForImage(source: Parameters<ReturnType<typeof createImageUrlBuilder>["image"]>[0]) {
   return builder.image(source);
 }
+
+/** Resolves alt and title for Sanity-backed images with SEO-friendly fallbacks. */
+export function resolveSanityImageAltTitle(
+  image?: SanityImage | null,
+  options?: {
+    alt?: string;
+    fallback?: string;
+    defaultText?: string;
+  },
+) {
+  const text =
+    options?.alt?.trim() ||
+    image?.alt?.trim() ||
+    options?.fallback?.trim() ||
+    options?.defaultText?.trim() ||
+    "REPLA Technologies blog image";
+
+  return { alt: text, title: text };
+}

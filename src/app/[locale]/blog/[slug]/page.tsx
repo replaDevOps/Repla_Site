@@ -130,6 +130,7 @@ export default async function BlogArticlePage({
           {post.mainImage?.asset ? (
             <BlogCoverImage
               image={post.mainImage}
+              fallbackLabel={`${articleTitle} cover image`}
               priority
               aspectRatio="16 / 9"
               className="mt-6 max-h-[28rem] rounded-2xl border border-line"
@@ -146,7 +147,7 @@ export default async function BlogArticlePage({
             ) : null}
           </p>
           <div className="mt-8">
-            <PortableTextContent value={bodyBlocks} />
+            <PortableTextContent value={bodyBlocks} articleTitle={articleTitle} />
           </div>
           {post.relatedServices?.length ? (
             <>

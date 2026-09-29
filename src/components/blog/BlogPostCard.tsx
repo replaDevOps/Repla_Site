@@ -52,6 +52,7 @@ export function BlogPostCard({
         {post.mainImage?.asset ? (
           <BlogCoverImage
             image={post.mainImage}
+            fallbackLabel={`${title} cover image`}
             aspectRatio="16 / 10"
             sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
@@ -85,6 +86,7 @@ export function BlogPostCard({
         {post.mainImage?.asset ? (
           <BlogCoverImage
             image={post.mainImage}
+            fallbackLabel={`${title} cover image`}
             priority
             aspectRatio="16 / 9"
             sizes="(max-width: 1024px) 100vw, 896px"
@@ -123,6 +125,7 @@ export function BlogPostCard({
         {post.mainImage?.asset ? (
           <BlogCoverImage
             image={post.mainImage}
+            fallbackLabel={`${title} cover image`}
             aspectRatio="4 / 3"
             className="w-full shrink-0 sm:w-40 md:w-48 lg:w-52"
             sizes="(max-width: 640px) 100vw, 208px"

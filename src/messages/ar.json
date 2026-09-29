@@ -250,8 +250,12 @@
   "home": {
     "coreServices": "خدماتنا الأساسية",
     "coreServicesSub": "خدمات تقنية معلومات شاملة للمؤسسات الحديثة — من وكلاء الذكاء الاصطناعي إلى فرق التطوير المخصصة.",
+    "latestArticles": "أحدث المقالات",
+    "latestArticlesSub": "رؤى حول الذكاء الاصطناعي وتسليم البرمجيات والتحول الرقمي من فريق REPLA.",
+    "viewAllArticles": "عرض جميع المقالات",
     "industries": "الصناعات التي نخدمها",
     "industriesSub": "حلول متخصصة مصممة لتحديات قطاعكم الفريدة.",
+    "viewAllIndustries": "عرض جميع الصناعات",
     "aboutCta": "اقرأوا قصتنا",
     "brandsEyebrow": "موثوقون من علامات عالمية",
     "brandsTitle": "<brand>REPLA</brand> موثوقة لتقديم التميز عالمياً",
@@ -267,7 +271,9 @@
     "testimonialsCarouselLabel": "شهادات العملاء",
     "testimonialsPrev": "الشهادات السابقة",
     "testimonialsNext": "الشهادات التالية",
-    "testimonialsGoToSlide": "الانتقال إلى الشريحة {index}"
+    "testimonialsGoToSlide": "الانتقال إلى الشريحة {index}",
+    "faqTitle": "الأسئلة الشائعة",
+    "faqSubtitle": "إجابات سريعة عن خدماتنا وعملية التطوير والتقنيات وكيف نتعاون مع فريقكم."
   },
   "notFound": {
     "code": "404",

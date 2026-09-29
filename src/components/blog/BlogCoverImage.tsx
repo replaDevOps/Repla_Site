@@ -1,12 +1,14 @@
 import Image from "next/image";
 
-import { getSanityImageDimensions, getSanityImageUrl } from "@/sanity/lib/image";
+import { getSanityImageDimensions, getSanityImageUrl, resolveSanityImageAltTitle } from "@/sanity/lib/image";
 import type { SanityImage } from "@/sanity/lib/types";
 import { cn } from "@/lib/cn";
 
 type BlogCoverImageProps = {
   image?: SanityImage | null;
   alt?: string;
+  /** Used when Sanity image alt and `alt` prop are both empty (e.g. post title). */
+  fallbackLabel?: string;
   className?: string;
   imageClassName?: string;
   priority?: boolean;
@@ -19,6 +21,7 @@ type BlogCoverImageProps = {
 export function BlogCoverImage({
   image,
   alt,
+  fallbackLabel,
   className,
   imageClassName,
   priority = false,
@@ -32,7 +35,11 @@ export function BlogCoverImage({
   const src = getSanityImageUrl(image, { width: targetWidth });
   if (!src) return null;
 
-  const imageAlt = alt ?? image.alt ?? "";
+  const { alt: imageAlt, title: imageTitle } = resolveSanityImageAltTitle(image, {
+    alt,
+    fallback: fallbackLabel,
+    defaultText: "REPLA Technologies blog cover image",
+  });
 
   return (
     <div
@@ -42,6 +49,7 @@ export function BlogCoverImage({
       <Image
         src={src}
         alt={imageAlt}
+        title={imageTitle}
         fill
         priority={priority}
         sizes={sizes}

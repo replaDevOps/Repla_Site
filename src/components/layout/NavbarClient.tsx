@@ -20,13 +20,13 @@ const BOOK_A_CALL_CLASSES = cn(
   "shadow-[0_0_0_1px_rgba(196,30,36,0.4),0_10px_30px_rgba(196,30,36,0.18)]",
 );
 
-const NAV_MOTION_EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
+const NAV_MOTION_EASE = "ease-[cubic-bezier(0.16,1,0.3,1)]";
 const NAV_CHEVRON_MOTION = cn(
-  "motion-safe:transition-transform motion-safe:duration-400",
+  "motion-safe:transition-transform motion-safe:duration-[650ms]",
   NAV_MOTION_EASE,
 );
 const NAV_ACCORDION_MOTION = cn(
-  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-[480ms]",
+  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-[780ms]",
   NAV_MOTION_EASE,
 );
 
