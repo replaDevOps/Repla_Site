@@ -20,6 +20,16 @@ const BOOK_A_CALL_CLASSES = cn(
   "shadow-[0_0_0_1px_rgba(196,30,36,0.4),0_10px_30px_rgba(196,30,36,0.18)]",
 );
 
+const NAV_MOTION_EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
+const NAV_CHEVRON_MOTION = cn(
+  "motion-safe:transition-transform motion-safe:duration-400",
+  NAV_MOTION_EASE,
+);
+const NAV_ACCORDION_MOTION = cn(
+  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-[480ms]",
+  NAV_MOTION_EASE,
+);
+
 /** Pre-localized nav entries built on the server, so content modules stay out of this bundle. */
 export type NavEntry = {
   slug: string;
@@ -62,7 +72,6 @@ export function NavbarClient({
 
   useEffect(() => {
     let frame = 0;
-    // Hysteresis avoids flicker when SmoothScroll eases past a single threshold.
     const sync = () => {
       frame = 0;
       const y = window.scrollY;
@@ -563,7 +572,7 @@ function Mega({
           onFocus={onOpen}
         >
           {label}
-          <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", open && "rotate-180")} />
+          <ChevronDown className={cn("h-3.5 w-3.5", NAV_CHEVRON_MOTION, open && "rotate-180")} />
         </Link>
       ) : (
         <button
@@ -575,7 +584,7 @@ function Mega({
           onFocus={onOpen}
         >
           {label}
-          <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", open && "rotate-180")} />
+          <ChevronDown className={cn("h-3.5 w-3.5", NAV_CHEVRON_MOTION, open && "rotate-180")} />
         </button>
       )}
       {open ? (
@@ -637,13 +646,13 @@ function MobileAccordion({
       >
         {label}
         <ChevronDown
-          className={cn("h-4 w-4 shrink-0 text-muted transition-transform duration-300", open && "rotate-180 text-brand")}
+          className={cn("h-4 w-4 shrink-0 text-muted", NAV_CHEVRON_MOTION, open && "rotate-180 text-brand")}
           aria-hidden="true"
         />
       </button>
       <div
         className={cn(
-          "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+          NAV_ACCORDION_MOTION,
           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
         )}
       >

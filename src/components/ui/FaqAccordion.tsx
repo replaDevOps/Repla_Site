@@ -4,10 +4,15 @@ import { cn } from "@/lib/cn";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
-const iconTransition =
-  "motion-safe:transition-[opacity,transform] motion-safe:duration-200 motion-safe:ease-out";
-const panelTransition =
-  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]";
+const FAQ_MOTION_EASE = "motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]";
+const iconTransition = cn(
+  "motion-safe:transition-[opacity,transform] motion-safe:duration-[400ms]",
+  FAQ_MOTION_EASE,
+);
+const panelTransition = cn(
+  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-[480ms]",
+  FAQ_MOTION_EASE,
+);
 
 export function FaqAccordion({
   items,
