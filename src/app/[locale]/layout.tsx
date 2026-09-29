@@ -4,7 +4,6 @@ import { HtmlLang } from "@/components/layout/HtmlLang";
 import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { Navbar } from "@/components/layout/Navbar";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { ThemeScript } from "@/components/theme/ThemeScript";
@@ -42,7 +41,6 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <LoadingScreen />
-            <SmoothScroll />
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />

@@ -96,11 +96,8 @@ export function BlogPageContent({
   const gridPosts = useMemo(() => {
     let filtered = filterPostsByCategory(posts, categorySlug);
     filtered = filterPostsBySearch(filtered, searchQuery, locale);
-    if (!categorySlug && !searchQuery.trim() && latestPost) {
-      filtered = filtered.filter((post) => post._id !== latestPost._id);
-    }
     return filtered;
-  }, [categorySlug, latestPost, locale, posts, searchQuery]);
+  }, [categorySlug, locale, posts, searchQuery]);
 
   const activeCategory = categories.find((category) => category.slug === categorySlug);
   const hasActiveFilters = Boolean(categorySlug || searchQuery.trim());
