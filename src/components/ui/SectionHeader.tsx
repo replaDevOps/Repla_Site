@@ -22,7 +22,12 @@ export function SectionHeader({
       )}
     >
       {eyebrow ? (
-        <p className="mb-3 text-xs font-medium uppercase tracking-[0.22em] text-brand">
+        <p
+          className={cn(
+            "mb-3 inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand",
+            align === "center" && "mx-auto",
+          )}
+        >
           {eyebrow}
         </p>
       ) : null}

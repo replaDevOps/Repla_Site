@@ -8,7 +8,7 @@ import { BlogTable } from "@/components/blog/BlogTable";
 
 const headingClassName = "scroll-mt-28";
 
-const components: PortableTextComponents = {
+const basePortableTextComponents: PortableTextComponents = {
   block: {
     h2: ({ children, value }) => (
       <h2
@@ -63,13 +63,6 @@ const components: PortableTextComponents = {
     },
   },
   types: {
-    image: ({ value }) => (
-      <BlogImage
-        image={value}
-        figureClassName="my-8 rounded-2xl border border-line"
-        sizes="(max-width: 768px) 100vw, 720px"
-      />
-    ),
     contentCallout: ({ value }) => (
       <BlogCallout
         title={value.title}
@@ -84,11 +77,34 @@ const components: PortableTextComponents = {
   },
 };
 
-export function PortableTextContent({ value }: { value: PortableTextBlock[] }) {
+function getPortableTextComponents(articleTitle?: string): PortableTextComponents {
+  return {
+    ...basePortableTextComponents,
+    types: {
+      ...basePortableTextComponents.types,
+      image: ({ value }) => (
+        <BlogImage
+          image={value}
+          fallbackLabel={articleTitle}
+          figureClassName="my-8 rounded-2xl border border-line"
+          sizes="(max-width: 768px) 100vw, 720px"
+        />
+      ),
+    },
+  };
+}
+
+export function PortableTextContent({
+  value,
+  articleTitle,
+}: {
+  value: PortableTextBlock[];
+  articleTitle?: string;
+}) {
   if (!value.length) return null;
   return (
     <div className="max-w-full space-y-5 break-words [overflow-wrap:anywhere]">
-      <PortableText value={value} components={components} />
+      <PortableText value={value} components={getPortableTextComponents(articleTitle)} />
     </div>
   );
 }

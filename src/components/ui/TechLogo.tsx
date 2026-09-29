@@ -38,12 +38,14 @@ export function TechLogo({ name, className }: { name: string; className?: string
   const src = LOGO_SRC[name as TechName];
   if (!src) return null;
 
+  const label = `${name} logo`;
+
   return (
     // eslint-disable-next-line @next/next/no-img-element -- static brand SVG marks with mixed viewBoxes
     <img
       src={src}
-      alt=""
-      aria-hidden="true"
+      alt={label}
+      title={name}
       className={cn("object-contain", name === "Next.js" && "dark:invert", className)}
     />
   );

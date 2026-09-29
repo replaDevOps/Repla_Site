@@ -15,6 +15,8 @@ import { SITE_H1, SITE_TITLE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { Link } from "@/i18n/navigation";
 import { CONTACT_PUBLIC_PATH, industryPagePath, servicePagePath } from "@/lib/seo-routes";
+import { HomeArticlesSection } from "@/components/home/HomeArticlesSection";
+import { HomeFaqSection } from "@/components/home/HomeFaqSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
@@ -40,6 +42,8 @@ const HERO_SERVICE_SLUGS = [
   "cybersecurity",
   "cloud-devops",
 ] as const;
+
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -194,6 +198,8 @@ export default async function HomePage({
         </div>
       </section>
 
+      <HomeArticlesSection locale={l} />
+
       <TrustedBrands />
 
       <WhyChooseSection locale={l} />
@@ -204,17 +210,24 @@ export default async function HomePage({
             <SectionHeader title={t("industries")} description={t("industriesSub")} />
           </IndustryReveal>
           <IndustryGrid
-            items={industries.map((ind) => ({
+            items={industries.slice(0, 8).map((ind) => ({
               href: industryPagePath(ind.slug),
               icon: ind.icon,
               title: loc(ind.title, l),
               tagline: loc(ind.tagline, l),
             }))}
           />
+          <div className="mt-10 flex justify-center">
+            <ButtonLink href="/industries" variant="secondary">
+              {t("viewAllIndustries")}
+            </ButtonLink>
+          </div>
         </div>
       </section>
 
       <TestimonialsSection locale={l} />
+
+      <HomeFaqSection locale={l} />
     </>
   );
 }

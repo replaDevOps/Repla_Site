@@ -4,13 +4,13 @@ import { cn } from "@/lib/cn";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
-const FAQ_MOTION_EASE = "motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]";
+const FAQ_MOTION_EASE = "motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)]";
 const iconTransition = cn(
-  "motion-safe:transition-[opacity,transform] motion-safe:duration-[400ms]",
+  "motion-safe:transition-[opacity,transform] motion-safe:duration-[650ms]",
   FAQ_MOTION_EASE,
 );
 const panelTransition = cn(
-  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-[480ms]",
+  "grid motion-safe:transition-[grid-template-rows,opacity] motion-safe:duration-[780ms]",
   FAQ_MOTION_EASE,
 );
 

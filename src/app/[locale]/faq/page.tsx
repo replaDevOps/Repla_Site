@@ -2,10 +2,9 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { PageHero } from "@/components/ui/PageHero";
 import { companyCopy } from "@/content/company";
-import { generalFaqs } from "@/content/faqs";
 import { loc, type Locale } from "@/content/types";
 import { faqPageJsonLd, pageMetadata } from "@/lib/metadata";
-import { getFaqs, mapFaqsToAccordionItems } from "@/sanity/lib/faqs";
+import { getFaqPageAccordionItems } from "@/sanity/lib/faqs";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -34,12 +33,11 @@ export default async function FaqPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const l = locale as Locale;
-  const tn = await getTranslations("nav");
-  const tm = await getTranslations("meta");
-  const sanityFaqs = await getFaqs();
-  const faqItems = sanityFaqs.length
-    ? mapFaqsToAccordionItems(sanityFaqs, l)
-    : generalFaqs.map((f) => ({ q: loc(f.q, l), a: loc(f.a, l) }));
+  const [faqItems, tn, tm] = await Promise.all([
+    getFaqPageAccordionItems(l),
+    getTranslations("nav"),
+    getTranslations("meta"),
+  ]);
 
   return (
     <>
