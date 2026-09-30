@@ -21,7 +21,7 @@ Open [http://localhost:3000](http://localhost:3000) — locale routing sends you
 
 ## Contact form
 
-The form validates on the client and posts to `/api/contact`. Email is sent only when `RESEND_API_KEY` is set. Without it, the UI states that delivery is not configured and points to `hr.replatech@gmail.com`.
+The form validates on the client and posts to `/api/contact`. Submissions are saved to Brevo when `BREVO_API_KEY` and `BREVO_CONTACT_LIST_ID` are set. Optional email notifications are sent when `RESEND_API_KEY` is set. Without either integration, the UI states that delivery is not configured and points to `hr.replatech@gmail.com`.
 
 See `.env.example`.
 
