@@ -28,7 +28,7 @@ export function FaqAccordion({
           <div key={item.q}>
             <button
               type="button"
-              className="relative flex w-full items-center justify-between gap-4 px-5 py-4 text-start btn-animate-soft"
+              className="relative flex w-full items-center justify-between gap-4 px-5 py-4 text-start"
               aria-expanded={isOpen}
               onClick={() => setOpen(isOpen ? null : i)}
             >

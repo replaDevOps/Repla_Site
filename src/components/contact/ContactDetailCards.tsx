@@ -65,14 +65,14 @@ export async function ContactDetailCards() {
     },
     {
       key: "email-info",
-      label: tc("email"),
+      label: tc("emailBusinessQueries"),
       value: COMPANY.emailInfo,
       href: `mailto:${COMPANY.emailInfo}`,
       icon: Mail,
     },
     {
       key: "email-hr",
-      label: tc("email"),
+      label: tc("emailGeneralQueries"),
       value: COMPANY.email,
       href: `mailto:${COMPANY.email}`,
       icon: Mail,

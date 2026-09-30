@@ -809,7 +809,6 @@ html.light .btn-slide-round.btn-primary::after {
     background-color 0.2s ease;
 }
 
-.scroll-to-top:hover .scroll-to-top-core,
 .scroll-to-top:focus-visible .scroll-to-top-core {
   transform: translateY(-2px);
   box-shadow:
@@ -913,7 +912,6 @@ html.light .btn-slide-round.btn-primary::after {
     transform: none;
   }
 
-  .scroll-to-top:hover .scroll-to-top-core,
   .scroll-to-top:focus-visible .scroll-to-top-core,
   .scroll-to-top:active .scroll-to-top-core {
     transform: none;

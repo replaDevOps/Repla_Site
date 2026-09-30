@@ -135,6 +135,8 @@
     "map": "Office location map",
     "phone": "Phone",
     "email": "Email",
+    "emailGeneralQueries": "Email ( For General Queries )",
+    "emailBusinessQueries": "Email ( For Business Queries )",
     "office": "Head office",
     "linkedin": "LinkedIn"
   },
