@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { COMPANY } from "@/lib/site";
 import {
   BUDGET_LABELS,
   INDUSTRY_LABELS,
@@ -9,6 +8,13 @@ import {
   TIMELINE_LABELS,
   labelOf,
 } from "@/lib/contact-options";
+import {
+  compactAttributes,
+  createOrUpdateBrevoContact,
+  getBrevoConfig,
+  splitFullName,
+} from "@/lib/brevo";
+import { COMPANY } from "@/lib/site";
 
 const optionalText = z.string().trim().max(160).optional();
 
@@ -32,36 +38,28 @@ function line(label: string, value: string | undefined) {
   return `${label}: ${v ? v : "—"}`;
 }
 
-export async function POST(request: Request) {
-  let json: unknown;
-  try {
-    json = await request.json();
-  } catch {
-    return NextResponse.json({ error: "invalid_json" }, { status: 400 });
-  }
+function buildBrevoAttributes(data: z.infer<typeof schema>) {
+  const { firstName, lastName } = splitFullName(data.fullName);
 
-  const parsed = schema.safeParse(json);
-  if (!parsed.success) {
-    return NextResponse.json(
-      { error: "invalid", issues: parsed.error.flatten() },
-      { status: 400 },
-    );
-  }
+  return compactAttributes({
+    FIRSTNAME: firstName,
+    LASTNAME: lastName,
+    SMS: data.phone,
+    COMPANY: data.company,
+    SERVICE: data.service ? labelOf(SERVICE_LABELS, data.service) : undefined,
+    INDUSTRY: data.industry ? labelOf(INDUSTRY_LABELS, data.industry) : undefined,
+    BUDGET: data.budget ? labelOf(BUDGET_LABELS, data.budget) : undefined,
+    TIMELINE: data.timeline ? labelOf(TIMELINE_LABELS, data.timeline) : undefined,
+    SOURCE: data.source ? labelOf(SOURCE_LABELS, data.source) : undefined,
+    SUBJECT: data.subject,
+    MESSAGE: data.message,
+  });
+}
 
-  const key = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL ?? COMPANY.email;
+async function sendResendNotification(data: z.infer<typeof schema>, to: string) {
+  const key = process.env.RESEND_API_KEY?.trim();
+  if (!key) return { ok: true as const, skipped: true as const };
 
-  if (!key) {
-    return NextResponse.json(
-      {
-        error: "not_configured",
-        message: `Email delivery is not configured. Write to ${to}.`,
-      },
-      { status: 503 },
-    );
-  }
-
-  const data = parsed.data;
   const details = [
     line("Name", data.fullName),
     line("Email", data.email),
@@ -91,7 +89,67 @@ export async function POST(request: Request) {
     }),
   });
 
-  if (!res.ok) {
+  if (res.ok) return { ok: true as const, skipped: false as const };
+  return { ok: false as const, skipped: false as const };
+}
+
+export async function POST(request: Request) {
+  let json: unknown;
+  try {
+    json = await request.json();
+  } catch {
+    return NextResponse.json({ error: "invalid_json" }, { status: 400 });
+  }
+
+  const parsed = schema.safeParse(json);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "invalid", issues: parsed.error.flatten() },
+      { status: 400 },
+    );
+  }
+
+  const data = parsed.data;
+  const to = process.env.CONTACT_TO_EMAIL ?? COMPANY.email;
+  const brevo = getBrevoConfig();
+  const hasResend = Boolean(process.env.RESEND_API_KEY?.trim());
+
+  if (!brevo && !hasResend) {
+    return NextResponse.json(
+      {
+        error: "not_configured",
+        message: `Contact delivery is not configured. Write to ${to}.`,
+      },
+      { status: 503 },
+    );
+  }
+
+  if (brevo) {
+    const result = await createOrUpdateBrevoContact(
+      {
+        email: data.email,
+        attributes: buildBrevoAttributes(data),
+        listIds: [brevo.listId],
+      },
+      brevo.apiKey,
+    );
+
+    if (!result.ok) {
+      console.error("[contact] Brevo sync failed:", result.status, result.message);
+      return NextResponse.json({ error: "brevo_failed" }, { status: 502 });
+    }
+
+    const emailResult = await sendResendNotification(data, to);
+    if (!emailResult.ok && !emailResult.skipped) {
+      console.error("[contact] Brevo saved but optional email notification failed");
+    }
+
+    return NextResponse.json({ ok: true });
+  }
+
+  const emailResult = await sendResendNotification(data, to);
+  if (!emailResult.ok && !emailResult.skipped) {
+    console.error("[contact] Email notification failed");
     return NextResponse.json({ error: "delivery_failed" }, { status: 502 });
   }
 
