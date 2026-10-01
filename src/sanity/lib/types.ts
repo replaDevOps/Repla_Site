@@ -57,6 +57,14 @@ export type SanityPost = SanityPostListItem & {
   };
 };
 
+export type SanityTeamMember = {
+  _id: string;
+  name: string;
+  role: string;
+  order?: number;
+  image?: SanityImage;
+};
+
 export type SanityFaq = {
   _id: string;
   question: LocaleField;

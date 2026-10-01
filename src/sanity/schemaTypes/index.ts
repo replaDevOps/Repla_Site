@@ -7,6 +7,7 @@ import { category } from "@/sanity/schemaTypes/category";
 import { faq } from "@/sanity/schemaTypes/faq";
 import { localeString, localeText } from "@/sanity/schemaTypes/localeString";
 import { post } from "@/sanity/schemaTypes/post";
+import { teamMember } from "@/sanity/schemaTypes/teamMember";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,5 +22,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     author,
     category,
     faq,
+    teamMember,
   ],
 };
