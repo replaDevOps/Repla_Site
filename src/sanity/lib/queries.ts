@@ -102,6 +102,19 @@ export const postBySlugQuery = groq`
   }
 `;
 
+export const teamMembersQuery = groq`
+  *[_type == "teamMember" && defined(name) && defined(role) && defined(image.asset)]
+    | order(order asc, _createdAt asc) {
+    _id,
+    name,
+    role,
+    order,
+    image {
+      ${imageFields}
+    }
+  }
+`;
+
 export const faqsQuery = groq`
   *[_type == "faq" && published != false] | order(order asc, _createdAt asc) {
     _id,

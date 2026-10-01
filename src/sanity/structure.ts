@@ -24,8 +24,16 @@ export const structure: StructureResolver = (S) =>
             .title("FAQs")
             .defaultOrdering([{ field: "order", direction: "asc" }]),
         ),
+      S.listItem()
+        .title("Team Members")
+        .schemaType("teamMember")
+        .child(
+          S.documentTypeList("teamMember")
+            .title("Team Members")
+            .defaultOrdering([{ field: "order", direction: "asc" }]),
+        ),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (item) => !["post", "author", "category", "faq"].includes(item.getId() ?? ""),
+        (item) => !["post", "author", "category", "faq", "teamMember"].includes(item.getId() ?? ""),
       ),
     ]);
