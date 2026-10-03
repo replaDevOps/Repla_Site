@@ -42,7 +42,6 @@ export async function Footer() {
     { href: "/portfolio", label: tn("portfolio") },
     { href: BLOG_PUBLIC_PATH, label: tn("blog") },
     { href: "/faq", label: tn("faq") },
-    { href: "/team", label: tn("team") },
   ];
 
   return (

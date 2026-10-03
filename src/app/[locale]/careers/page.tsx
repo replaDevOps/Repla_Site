@@ -1,4 +1,4 @@
-import { ContactForm } from "@/components/forms/ContactForm";
+import { CareerForm } from "@/components/forms/CareerForm";
 import { Reveal } from "@/components/ui/Reveal";
 import { PageHero } from "@/components/ui/PageHero";
 import { companyCopy } from "@/content/company";
@@ -107,10 +107,7 @@ export default async function CareersPage({
           </div>
 
           <Reveal delay={0.1} className="min-w-0 lg:sticky lg:top-28">
-            <ContactForm
-              variant="careers"
-              defaultSubject={l === "en" ? "Open application — careers" : "طلب مفتوح — وظائف"}
-            />
+            <CareerForm />
           </Reveal>
         </div>
       </section>
