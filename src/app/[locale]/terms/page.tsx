@@ -1,6 +1,6 @@
-import { PageHero } from "@/components/ui/PageHero";
+import { LegalArticle } from "@/components/legal/LegalArticle";
 import { terms } from "@/content/legal";
-import { loc, locList, type Locale } from "@/content/types";
+import { loc, type Locale } from "@/content/types";
 import { pageMetadata } from "@/lib/metadata";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
@@ -30,20 +30,11 @@ export default async function TermsPage({
   const l = locale as Locale;
 
   return (
-    <>
-      <PageHero title={loc(terms.title, l)} description={loc(terms.updated, l)} />
-      <article className="mx-auto max-w-3xl space-y-10 px-4 py-16 sm:px-6">
-        {terms.sections.map((section) => (
-          <section key={section.title.en}>
-            <h2 className="font-display text-2xl font-semibold text-foreground">{loc(section.title, l)}</h2>
-            {locList(section.body, l).map((p) => (
-              <p key={p.slice(0, 20)} className="mt-3 leading-relaxed text-muted">
-                {p}
-              </p>
-            ))}
-          </section>
-        ))}
-      </article>
-    </>
+    <LegalArticle
+      locale={l}
+      title={loc(terms.title, l)}
+      updated={loc(terms.updated, l)}
+      sections={terms.sections}
+    />
   );
 }
