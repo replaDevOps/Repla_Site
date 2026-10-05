@@ -45,10 +45,7 @@ const COMPANY_LINKS = [
   { href: "/services", labelKey: "services" as const, icon: "Briefcase" },
   { href: "/industries", labelKey: "industries" as const, icon: "Globe" },
   { href: "/team", labelKey: "team" as const, icon: "Users" },
-  { href: "/portfolio", labelKey: "portfolio" as const, icon: "FolderKanban" },
-  { href: BLOG_PUBLIC_PATH, labelKey: "blog" as const, icon: "FileCode" },
   { href: "/careers", labelKey: "careers" as const, icon: "UserPlus" },
-  { href: CONTACT_PUBLIC_PATH, labelKey: "contact" as const, icon: "Mail" },
 ];
 
 export function NavbarClient({
@@ -295,14 +292,15 @@ export function NavbarClient({
             open={open === "company"}
             onOpen={() => setOpen("company")}
             onClose={() => setOpen(null)}
-            panelClassName="w-[min(720px,calc(100vw-2rem))]"
+            panelClassName="w-[min(280px,calc(100vw-2rem))] pt-2"
+            panelInnerClassName="px-3 py-2"
           >
-            <ul className="grid gap-x-2 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="flex flex-col gap-0.5">
               {COMPANY_LINKS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="flex items-center gap-2.5 rounded-xl px-2 py-2 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
+                    className="flex items-center gap-2.5 rounded-xl px-2 py-1.5 text-sm text-foreground/90 transition-colors hover:bg-foreground/[0.04]"
                   >
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-foreground/[0.03] text-foreground/60">
                       <Icon name={item.icon} className="h-5 w-5" />
@@ -315,6 +313,9 @@ export function NavbarClient({
           </Mega>
           <NavLink href={BLOG_PUBLIC_PATH} active={pathname === BLOG_PUBLIC_PATH || pathname.startsWith("/blog/")}>
             {t("blog")}
+          </NavLink>
+          <NavLink href="/portfolio" active={pathname === "/portfolio"}>
+            {t("portfolio")}
           </NavLink>
           <NavLink href={CONTACT_PUBLIC_PATH} active={pathname === CONTACT_PUBLIC_PATH}>
             {t("contact")}
@@ -403,8 +404,6 @@ export function NavbarClient({
               >
                 <MobileSubLink href="/about">{t("about")}</MobileSubLink>
                 <MobileSubLink href="/team">{t("team")}</MobileSubLink>
-                <MobileSubLink href="/portfolio">{t("portfolio")}</MobileSubLink>
-                <MobileSubLink href={BLOG_PUBLIC_PATH}>{t("blog")}</MobileSubLink>
                 <MobileSubLink href="/careers">{t("careers")}</MobileSubLink>
               </MobileAccordion>
 
@@ -413,6 +412,10 @@ export function NavbarClient({
                 active={pathname === BLOG_PUBLIC_PATH || pathname.startsWith("/blog/")}
               >
                 {t("blog")}
+              </MobileNavLink>
+
+              <MobileNavLink href="/portfolio" active={pathname === "/portfolio"}>
+                {t("portfolio")}
               </MobileNavLink>
 
               <MobileNavLink href={CONTACT_PUBLIC_PATH} active={pathname === CONTACT_PUBLIC_PATH}>
@@ -499,7 +502,7 @@ function NavLink({
     <Link
       href={href}
       className={cn(
-        "relative rounded-full px-2 py-2 text-[13px] font-medium btn-animate-soft xl:px-3 xl:text-sm",
+        "relative rounded-full px-2 py-2 text-[13px] font-medium xl:px-3 xl:text-sm",
         active ? "text-brand" : "text-foreground/80 hover:text-foreground",
       )}
     >
@@ -516,6 +519,7 @@ function Mega({
   onOpen,
   onClose,
   panelClassName,
+  panelInnerClassName,
   children,
 }: {
   id: string;
@@ -525,6 +529,7 @@ function Mega({
   onOpen: () => void;
   onClose: () => void;
   panelClassName?: string;
+  panelInnerClassName?: string;
   children: React.ReactNode;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -554,7 +559,7 @@ function Mega({
   }, [open]);
 
   const triggerClass = cn(
-    "relative inline-flex items-center gap-1 rounded-full px-2 py-2 text-[13px] font-medium text-foreground/80 btn-animate-soft hover:text-foreground xl:px-3 xl:text-sm",
+    "relative inline-flex items-center gap-1 rounded-full px-2 py-2 text-[13px] font-medium text-foreground/80 hover:text-foreground xl:px-3 xl:text-sm",
     open && "text-foreground",
   );
 
@@ -598,7 +603,9 @@ function Mega({
             panelClassName ?? "w-[min(720px,calc(100vw-2rem))]",
           )}
         >
-          <div className="nav-panel rounded-2xl p-7 lg:p-8">{children}</div>
+          <div className={cn("nav-panel rounded-2xl", panelInnerClassName ?? "p-7 lg:p-8")}>
+            {children}
+          </div>
         </div>
       ) : null}
     </div>
