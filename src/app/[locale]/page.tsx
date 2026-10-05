@@ -108,6 +108,9 @@ export default async function HomePage({
               <ButtonLink href={CONTACT_PUBLIC_PATH} variant="secondary" size="lg">
                 {tn("contact")}
               </ButtonLink>
+              <ButtonLink href="/careers" variant="secondary" size="lg">
+                {t("buildYourCareer")}
+              </ButtonLink>
             </div>
           </div>
           <div className="relative min-w-0">
