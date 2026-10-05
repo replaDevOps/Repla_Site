@@ -45,7 +45,7 @@ const basePortableTextComponents: PortableTextComponents = {
     strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
     em: ({ children }) => <em>{children}</em>,
     code: ({ children }) => (
-      <code className="rounded bg-surface-2 px-1.5 py-0.5 text-sm text-foreground">{children}</code>
+      <code className="break-all rounded bg-surface-2 px-1.5 py-0.5 text-sm text-foreground">{children}</code>
     ),
     link: ({ children, value }) => {
       const href = value?.href;

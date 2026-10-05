@@ -14,7 +14,7 @@ export async function TrustedBrands() {
         <div className="glow-orb absolute end-[12%] top-1/2 h-[28rem] w-[28rem] -translate-y-1/2 opacity-50" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-8 lg:py-28">
+      <div className="relative mx-auto grid min-w-0 max-w-7xl items-center gap-10 px-4 py-14 sm:gap-12 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-8 lg:py-28">
         <div className="max-w-xl">
           <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-brand">
             <span className="relative inline-block pb-2 after:absolute after:bottom-0 after:start-0 after:h-0.5 after:w-10 after:rounded-full after:bg-brand">

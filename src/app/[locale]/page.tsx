@@ -16,6 +16,7 @@ import { Icon } from "@/components/icons";
 import { Link } from "@/i18n/navigation";
 import { CONTACT_PUBLIC_PATH, industryPagePath, servicePagePath } from "@/lib/seo-routes";
 import { HomeArticlesSection } from "@/components/home/HomeArticlesSection";
+import { HomePortfolioSection } from "@/components/home/HomePortfolioSection";
 import { HomeFaqSection } from "@/components/home/HomeFaqSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -83,7 +84,7 @@ export default async function HomePage({
       <JsonLd data={localBusinessJsonLd()} />
       <section className="relative overflow-hidden grain">
         <div className="pointer-events-none absolute inset-0">
-          <div className="glow-orb absolute -top-32 start-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rtl:translate-x-1/2" />
+          <div className="glow-orb absolute -top-24 start-1/2 h-[22rem] w-[22rem] -translate-x-1/2 sm:-top-32 sm:h-[32rem] sm:w-[32rem] rtl:translate-x-1/2" />
           <div className="absolute inset-0 grid-bg" />
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:gap-12 sm:px-6 sm:py-20 lg:grid-cols-2 lg:py-28">
@@ -147,7 +148,7 @@ export default async function HomePage({
         <p className="relative mt-6 text-center text-xs text-muted">{loc(companyCopy.technologiesNote, l)}</p>
       </section>
 
-      <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2">
+      <section className="mx-auto grid min-w-0 max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2">
         <Reveal>
           <SectionHeader
             eyebrow={tn("about")}
@@ -173,7 +174,7 @@ export default async function HomePage({
         </Reveal>
       </section>
 
-      <section className="border-y border-line bg-surface-2 py-20">
+      <section className="overflow-x-clip border-y border-line bg-surface-2 py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeader eyebrow={tn("services")} title={t("coreServices")} description={t("coreServicesSub")} />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -200,11 +201,13 @@ export default async function HomePage({
 
       <HomeArticlesSection locale={l} />
 
+      <HomePortfolioSection locale={l} />
+
       <TrustedBrands />
 
       <WhyChooseSection locale={l} />
 
-      <section id="industries" className="overflow-x-clip border-t border-line py-20">
+      <section id="industries" className="overflow-x-clip border-t border-line py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <IndustryReveal>
             <SectionHeader title={t("industries")} description={t("industriesSub")} />

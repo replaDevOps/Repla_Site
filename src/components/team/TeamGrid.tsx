@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/ui/Reveal";
+import { teamMemberImageSeo } from "@/lib/seo-image";
 import { getTeamMemberImageUrl } from "@/sanity/lib/team";
 import type { SanityTeamMember } from "@/sanity/lib/types";
 import Image from "next/image";
@@ -10,6 +11,11 @@ export function TeamGrid({ members }: { members: SanityTeamMember[] }) {
         const src = getTeamMemberImageUrl(member.image);
         if (!src) return null;
 
+        const { alt: imageAlt, title: imageTitle } = teamMemberImageSeo(
+          { name: member.name, role: member.role },
+          member.image,
+        );
+
         return (
           <li key={member._id} className="min-w-0">
             <Reveal className="h-full" delay={Math.min(index * 0.05, 0.24)}>
@@ -17,7 +23,8 @@ export function TeamGrid({ members }: { members: SanityTeamMember[] }) {
                 <div className="relative aspect-[4/5] w-full shrink-0 bg-surface-2">
                   <Image
                     src={src}
-                    alt={member.name}
+                    alt={imageAlt}
+                    title={imageTitle}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover"

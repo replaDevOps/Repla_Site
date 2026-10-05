@@ -62,7 +62,7 @@ export function ScrollToTop() {
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
       className={cn(
-        "scroll-to-top fixed bottom-6 left-5 z-40 flex h-10 w-10 items-center justify-center rounded-full sm:left-6",
+        "scroll-to-top fixed z-40 flex h-10 w-10 items-center justify-center rounded-full",
         "transition-[opacity,transform,visibility] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         visible

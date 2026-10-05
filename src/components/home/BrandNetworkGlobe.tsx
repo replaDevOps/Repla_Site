@@ -1,5 +1,6 @@
 "use client";
 
+import { brandLogoSeo } from "@/lib/seo-image";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
@@ -214,8 +215,8 @@ export function BrandNetworkGlobe() {
             <span className="brand-float-plate">
               <Image
                 src={brand.src}
-                alt={`${brand.name} logo`}
-                title={brand.name}
+                alt={brandLogoSeo(brand.name).alt}
+                title={brandLogoSeo(brand.name).title}
                 width={100}
                 height={30}
                 sizes="100px"

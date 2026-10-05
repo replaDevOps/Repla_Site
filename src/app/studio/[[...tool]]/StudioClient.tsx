@@ -1,10 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { suppressBenignStudioSseErrors } from "@/lib/studio/suppress-benign-sse-errors";
-import config from "@/sanity.config";
+import { createStudioConfig } from "@/sanity/create-studio-config";
 
 const NextStudio = dynamic(
   () => import("next-sanity/studio").then((mod) => mod.NextStudio),
@@ -21,5 +21,7 @@ const NextStudio = dynamic(
 export default function StudioClient() {
   useEffect(() => suppressBenignStudioSseErrors(), []);
 
-  return <NextStudio config={config} history="hash" />;
+  const config = useMemo(() => createStudioConfig(), []);
+
+  return <NextStudio config={config} />;
 }

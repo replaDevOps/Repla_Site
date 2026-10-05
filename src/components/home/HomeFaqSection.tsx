@@ -10,7 +10,7 @@ export async function HomeFaqSection({ locale }: { locale: Locale }) {
   const items = getCoreFaqAccordionItems(locale);
 
   return (
-    <section className="border-t border-line py-20" aria-labelledby="home-faq-heading">
+    <section className="overflow-x-clip border-t border-line py-14 sm:py-20" aria-labelledby="home-faq-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Reveal>
           <SectionHeader

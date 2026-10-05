@@ -64,7 +64,7 @@ export default async function AboutPage({
             : "شريككم الموثوق للتحول الرقمي القائم على الذكاء الاصطناعي"
         }
       />
-      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <section className="mx-auto min-w-0 max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {companyCopy.stats.map((s) => (
             <StatCounter
@@ -101,7 +101,7 @@ export default async function AboutPage({
           <p className="mt-3 max-w-3xl leading-relaxed text-muted">{loc(companyCopy.story, l)}</p>
         </Reveal>
         <div id="values" className="mt-16 scroll-mt-28">
-          <h2 className="font-display text-3xl font-bold text-foreground">
+          <h2 className="font-display text-[clamp(1.5rem,4vw,1.875rem)] font-bold text-foreground">
             {loc(companyCopy.valuesTitle, l)}
           </h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -114,7 +114,7 @@ export default async function AboutPage({
           </div>
         </div>
         <div className="mt-20">
-          <h2 className="font-display text-3xl font-bold text-foreground">{tc("journey")}</h2>
+          <h2 className="font-display text-[clamp(1.5rem,4vw,1.875rem)] font-bold text-foreground">{tc("journey")}</h2>
           <ol className="mt-10 space-y-10 border-s border-line ps-6 sm:space-y-12">
             {companyCopy.journey.map((step) => (
               <li key={step.year} className="relative pb-1">
@@ -128,7 +128,7 @@ export default async function AboutPage({
         </div>
         <div className="mt-20 grid gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            <h2 className="font-display text-3xl font-bold text-foreground">{tc("expertise")}</h2>
+            <h2 className="font-display text-[clamp(1.5rem,4vw,1.875rem)] font-bold text-foreground">{tc("expertise")}</h2>
             <ul className="mt-6 space-y-4 text-sm leading-relaxed text-muted">
               {locList(companyCopy.expertise, l).map((item) => (
                 <li key={item} className="border-s-2 border-brand/50 py-1 ps-4">
@@ -138,7 +138,7 @@ export default async function AboutPage({
             </ul>
           </div>
           <div>
-            <h2 className="font-display text-3xl font-bold text-foreground">{tc("technologies")}</h2>
+            <h2 className="font-display text-[clamp(1.5rem,4vw,1.875rem)] font-bold text-foreground">{tc("technologies")}</h2>
             <p className="mt-4 text-sm leading-relaxed text-muted">{loc(companyCopy.technologiesNote, l)}</p>
             <ul className="mt-6 flex flex-wrap gap-3">
               {TECHNOLOGIES.map((tech) => (

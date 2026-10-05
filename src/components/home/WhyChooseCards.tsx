@@ -63,7 +63,7 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
   const Icon = ICONS[activeItem.icon] ?? Cpu;
 
   return (
-    <div className="relative mx-auto mt-10 w-full overflow-hidden rounded-[24px] border border-brand/35 bg-surface/80 p-5 shadow-2xl backdrop-blur-xl transition-colors duration-300 sm:rounded-[32px] sm:p-8 lg:p-10">
+    <div className="relative mx-auto mt-8 w-full min-w-0 overflow-hidden rounded-[24px] border border-brand/35 bg-surface/80 p-4 shadow-2xl backdrop-blur-xl transition-colors duration-300 sm:mt-10 sm:rounded-[32px] sm:p-8 lg:p-10">
       {/* Background ambient lighting */}
       <div
         aria-hidden="true"
@@ -145,7 +145,7 @@ export function WhyChooseCards({ locale, items }: { locale: Locale; items: Item[
         </div>
 
         {/* Right Side: Detailed Content Card */}
-        <div className="relative flex min-h-0 flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-xl transition-colors duration-300 sm:min-h-[420px] sm:p-10 lg:col-span-7 lg:min-h-[480px] lg:p-12 [.dark_&]:border-white/10 [.dark_&]:bg-[#0d0d12]/90">
+        <div className="relative flex min-h-0 flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface p-5 shadow-xl transition-colors duration-300 sm:p-8 lg:col-span-7 lg:p-12 [.dark_&]:border-white/10 [.dark_&]:bg-[#0d0d12]/90">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
