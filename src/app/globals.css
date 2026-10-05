@@ -372,6 +372,88 @@ html.light .navbar-shell-scrolled {
   }
 }
 
+/* Portfolio hero slider — matches reference Hero slider (.hs / .hs.on) */
+.portfolio-hero-slide {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.portfolio-hero-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.portfolio-hero-slide-image {
+  transform: scale(1.08);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolio-hero-slide.is-active .portfolio-hero-slide-image {
+  transform: scale(1);
+}
+
+.portfolio-hero-slide-number {
+  opacity: 0;
+  transform: scale(0.8) rotate(-10deg);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out;
+}
+
+.portfolio-hero-slide.is-active .portfolio-hero-slide-number {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.portfolio-hero-slide-number.is-rtl {
+  transform: scale(0.8) rotate(10deg);
+}
+
+.portfolio-hero-slide.is-active .portfolio-hero-slide-number.is-rtl {
+  transform: scale(1) rotate(0deg);
+}
+
+.portfolio-hero-slide-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.portfolio-hero-slide.is-active .portfolio-hero-slide-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.25s;
+}
+
+.portfolio-hero-slide:not(.is-active) .portfolio-hero-slide-content,
+.portfolio-hero-slide:not(.is-active) .portfolio-hero-slide-number,
+.portfolio-hero-slide:not(.is-active) .portfolio-hero-slide-image {
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-hero-slide,
+  .portfolio-hero-slide-image,
+  .portfolio-hero-slide-number,
+  .portfolio-hero-slide-content {
+    transition: none !important;
+  }
+
+  .portfolio-hero-slide:not(.is-active) {
+    visibility: hidden;
+  }
+
+  .portfolio-hero-slide.is-active .portfolio-hero-slide-image,
+  .portfolio-hero-slide.is-active .portfolio-hero-slide-number,
+  .portfolio-hero-slide.is-active .portfolio-hero-slide-content {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .card-enter {
   animation: card-enter 0.6s ease both;
 }
