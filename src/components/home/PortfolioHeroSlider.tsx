@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const AUTOPLAY_MS = 5000;
+const SLIDE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 export function PortfolioHeroSlider({
   projects,
@@ -26,6 +27,7 @@ export function PortfolioHeroSlider({
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progressKey, setProgressKey] = useState(0);
   const regionRef = useRef<HTMLDivElement>(null);
+  const autoplayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isRtl = locale === "ar";
 
   useEffect(() => {
@@ -43,6 +45,34 @@ export function PortfolioHeroSlider({
   const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
   const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
 
+  const clearAutoplay = useCallback(() => {
+    if (autoplayRef.current) {
+      clearTimeout(autoplayRef.current);
+      autoplayRef.current = null;
+    }
+  }, []);
+
+  const scheduleAutoplay = useCallback(() => {
+    clearAutoplay();
+    if (paused || reducedMotion || count <= 1) return;
+
+    autoplayRef.current = setTimeout(() => {
+      setActiveIndex((current) => (current + 1) % count);
+      setProgressKey((key) => key + 1);
+    }, AUTOPLAY_MS);
+  }, [clearAutoplay, count, paused, reducedMotion]);
+
+  useEffect(() => {
+    scheduleAutoplay();
+    return clearAutoplay;
+  }, [activeIndex, scheduleAutoplay, clearAutoplay]);
+
+  useEffect(() => {
+    const onVisibility = () => setPaused(document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (!regionRef.current?.contains(document.activeElement) && document.activeElement !== document.body) {
@@ -56,15 +86,10 @@ export function PortfolioHeroSlider({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeIndex, goTo, isRtl]);
 
-  useEffect(() => {
-    if (paused || reducedMotion || count <= 1) return;
-    const timer = window.setInterval(goNext, AUTOPLAY_MS);
-    return () => window.clearInterval(timer);
-  }, [count, goNext, paused, reducedMotion, activeIndex]);
-
   if (count === 0) return null;
 
   const progress = ((activeIndex + 1) / count) * 100;
+  const showMotion = !reducedMotion;
 
   return (
     <div
@@ -73,14 +98,6 @@ export function PortfolioHeroSlider({
       role="region"
       aria-roledescription="carousel"
       aria-label={t("portfolioSliderLabel")}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={(event) => {
-        if (!regionRef.current?.contains(event.relatedTarget as Node | null)) {
-          setPaused(false);
-        }
-      }}
     >
       <div className="relative h-[min(380px,78vw)] w-full overflow-hidden rounded-[20px] bg-surface-2 text-white sm:h-[420px] sm:rounded-[26px] lg:h-[460px]">
         {projects.map((project, index) => {
@@ -92,11 +109,11 @@ export function PortfolioHeroSlider({
               key={project.id}
               aria-hidden={!isActive}
               className={cn(
-                "absolute inset-0 transition-opacity duration-700",
-                isActive ? "pointer-events-auto z-10 opacity-100" : "pointer-events-none z-0 opacity-0",
+                "portfolio-hero-slide absolute inset-0",
+                isActive ? "z-10 is-active" : "z-0",
               )}
             >
-              <div className="absolute inset-0 z-0">
+              <div className="portfolio-hero-slide-image absolute inset-0 z-0 will-change-transform">
                 <Image
                   src={project.imageSrc}
                   alt={imageAlt}
@@ -119,22 +136,15 @@ export function PortfolioHeroSlider({
               <span
                 aria-hidden
                 className={cn(
-                  "pointer-events-none absolute z-[2] top-5 text-[clamp(3rem,11vw,7rem)] font-display font-bold leading-none text-white/15 sm:top-8",
-                  isRtl ? "start-6 sm:start-10" : "end-6 sm:end-10",
-                  isActive ? "opacity-100" : "opacity-0",
+                  "portfolio-hero-slide-number pointer-events-none absolute z-[2] top-5 text-[clamp(3rem,11vw,7rem)] font-display font-bold leading-none text-white/15 sm:top-8",
+                  isRtl ? "is-rtl start-6 sm:start-10" : "end-6 sm:end-10",
                 )}
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
 
-              <div
-                className={cn(
-                  "absolute inset-x-0 bottom-0 z-[3] flex flex-col justify-end p-5 sm:p-[34px]",
-                  "transition-[transform,opacity] duration-500 ease-out",
-                  isActive ? "translate-y-0 opacity-100 delay-150" : "translate-y-5 opacity-0",
-                )}
-              >
-                <div className="relative max-w-xl">
+              <div className="absolute inset-x-0 bottom-0 z-[3] flex flex-col justify-end p-5 sm:p-[34px]">
+                <div className="portfolio-hero-slide-content relative max-w-xl">
                   <span className="mb-2 inline-flex max-w-full rounded-full border border-white/30 bg-black/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide sm:mb-3 sm:text-xs">
                     {project.categoryTitle}
                   </span>
@@ -172,10 +182,20 @@ export function PortfolioHeroSlider({
               aria-label={project.title}
               aria-current={isActive ? "true" : undefined}
               className={cn(
-                "h-2 rounded-full transition-all duration-300",
-                isActive ? "w-6 bg-brand" : "w-2 bg-line hover:bg-brand/40",
+                "relative h-2 overflow-hidden rounded-full transition-all duration-300",
+                isActive ? "w-6 bg-line" : "w-2 bg-line hover:bg-brand/40",
               )}
-            />
+            >
+              {isActive && showMotion ? (
+                <span
+                  key={progressKey}
+                  aria-hidden
+                  className="absolute inset-y-0 start-0 w-full origin-left animate-[portfolio-thumb-progress_5s_linear_forwards] rounded-full bg-brand rtl:origin-right"
+                />
+              ) : isActive ? (
+                <span aria-hidden className="absolute inset-0 rounded-full bg-brand" />
+              ) : null}
+            </button>
           );
         })}
       </div>
@@ -192,13 +212,13 @@ export function PortfolioHeroSlider({
               aria-label={project.title}
               aria-current={isActive ? "true" : undefined}
               className={cn(
-                "relative min-w-0 overflow-hidden rounded-[14px] border bg-surface/80 px-3 py-2.5 text-start text-xs transition-colors",
+                "relative min-w-0 overflow-hidden rounded-[14px] border bg-surface/80 px-3 py-2.5 text-start text-xs transition-[border-color,background-color] duration-300",
                 isActive ? "border-brand text-foreground" : "border-line text-foreground hover:border-brand/30",
               )}
             >
               <span className="line-clamp-1 font-semibold">{project.title}</span>
               <span className="mt-0.5 block text-muted">{String(index + 1).padStart(2, "0")}</span>
-              {isActive && !reducedMotion ? (
+              {isActive && showMotion ? (
                 <span
                   key={progressKey}
                   aria-hidden
@@ -226,8 +246,8 @@ export function PortfolioHeroSlider({
 
         <div className="hidden h-1 w-[min(220px,36vw)] overflow-hidden rounded-full bg-line sm:block">
           <div
-            className="h-full rounded-full bg-brand transition-[width] duration-500 ease-out"
-            style={{ width: `${progress}%` }}
+            className="h-full rounded-full bg-brand motion-safe:transition-[width] motion-safe:duration-500 motion-safe:ease-out"
+            style={{ width: `${progress}%`, transitionTimingFunction: SLIDE_EASE }}
           />
         </div>
 
