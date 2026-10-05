@@ -6,6 +6,8 @@ import { contentCallout, contentFaq, contentTable } from "@/sanity/schemaTypes/c
 import { category } from "@/sanity/schemaTypes/category";
 import { faq } from "@/sanity/schemaTypes/faq";
 import { localeString, localeText } from "@/sanity/schemaTypes/localeString";
+import { portfolioCategory } from "@/sanity/schemaTypes/portfolioCategory";
+import { portfolioProject } from "@/sanity/schemaTypes/portfolioProject";
 import { post } from "@/sanity/schemaTypes/post";
 import { teamMember } from "@/sanity/schemaTypes/teamMember";
 
@@ -23,5 +25,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     category,
     faq,
     teamMember,
+    portfolioCategory,
+    portfolioProject,
   ],
 };

@@ -1,7 +1,10 @@
 "use client";
 
+import { companyLogoSeo } from "@/lib/seo-image";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
+const logoSeo = companyLogoSeo();
 
 /** Non-blocking first-visit mark — does not cover the page. */
 export function LoadingScreen() {
@@ -28,16 +31,16 @@ export function LoadingScreen() {
     >
       <Image
         src="/logo.png"
-        alt="REPLA Technologies"
-        title="REPLA Technologies"
+        alt={logoSeo.alt}
+        title={logoSeo.title}
         width={36}
         height={36}
         className="logo-dark-only h-9 w-9 rounded-full"
       />
       <Image
         src="/logo-light.png"
-        alt="REPLA Technologies"
-        title="REPLA Technologies"
+        alt={logoSeo.alt}
+        title={logoSeo.title}
         width={36}
         height={36}
         className="logo-light-only h-9 w-9 object-contain"

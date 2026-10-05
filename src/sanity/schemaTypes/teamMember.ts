@@ -32,6 +32,14 @@ export const teamMember = defineType({
       title: "Profile Image",
       type: "image",
       options: { hotspot: true },
+      fields: [
+        defineField({
+          name: "alt",
+          type: "string",
+          title: "Alternative text",
+          description: "Describe the photo for SEO and accessibility (e.g. “Jane Doe, CEO”).",
+        }),
+      ],
       validation: (rule) => rule.required().error("Profile image is required."),
     }),
     defineField({

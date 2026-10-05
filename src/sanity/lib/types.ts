@@ -71,3 +71,24 @@ export type SanityFaq = {
   answer: LocaleField;
   order?: number;
 };
+
+export type SanityPortfolioCategory = {
+  _id: string;
+  title: LocaleField;
+  slug: string;
+  description?: LocaleField;
+  order?: number;
+  projectCount?: number;
+};
+
+export type SanityPortfolioProject = {
+  _id: string;
+  slug: string;
+  title: LocaleField;
+  description: LocaleField;
+  url: string;
+  category?: SanityPortfolioCategory;
+  order?: number;
+  _createdAt?: string;
+  image?: SanityImage;
+};

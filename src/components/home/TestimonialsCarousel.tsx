@@ -9,8 +9,6 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const AUTOPLAY_MS = 5000;
-const SLIDE_HEIGHT_VARS = "[--testimonial-slide-height:320px] sm:[--testimonial-slide-height:360px]";
-const SLIDE_HEIGHT_CLASS = "h-[var(--testimonial-slide-height)]";
 
 type TestimonialsCarouselProps = {
   locale: Locale;
@@ -49,12 +47,12 @@ export function TestimonialsCarousel({ locale }: TestimonialsCarouselProps) {
     if (paused || reducedMotion) return;
     const timer = window.setInterval(goNext, AUTOPLAY_MS);
     return () => window.clearInterval(timer);
-  }, [goNext, paused, reducedMotion]);
+  }, [goNext, paused, reducedMotion, index]);
 
   return (
     <div
       ref={carouselRef}
-      className="mx-auto flex w-full max-w-3xl items-stretch gap-3 sm:gap-4"
+      className="mx-auto flex w-full min-w-0 max-w-3xl items-stretch gap-2.5 sm:gap-4"
       role="region"
       aria-roledescription="carousel"
       aria-label={t("testimonialsCarouselLabel")}
@@ -80,27 +78,20 @@ export function TestimonialsCarousel({ locale }: TestimonialsCarouselProps) {
         else goNext();
       }}
     >
-      <div
-        className={cn(
-          "min-w-0 flex-1 overflow-hidden rounded-2xl",
-          SLIDE_HEIGHT_VARS,
-          SLIDE_HEIGHT_CLASS,
-        )}
-        aria-live="polite"
-      >
-        <div
-          className={cn(
-            "motion-safe:transition-transform motion-safe:duration-[600ms] motion-safe:ease-[cubic-bezier(0.65,0,0.35,1)]",
-          )}
-          style={{
-            transform: `translateY(calc(-1 * ${index} * var(--testimonial-slide-height)))`,
-          }}
-        >
-          {items.map((item, slideIndex) => (
+      <div className="relative min-w-0 flex-1" aria-live="polite">
+        {items.map((item, slideIndex) => {
+          const isActive = slideIndex === index;
+
+          return (
             <div
               key={item.id}
-              className={cn("px-0.5", SLIDE_HEIGHT_CLASS)}
-              aria-hidden={slideIndex !== index}
+              className={cn(
+                "motion-safe:transition-opacity motion-safe:duration-500",
+                isActive
+                  ? "relative z-10 opacity-100"
+                  : "pointer-events-none absolute inset-0 z-0 opacity-0",
+              )}
+              aria-hidden={!isActive}
             >
               <TestimonialCard
                 locale={locale}
@@ -113,17 +104,11 @@ export function TestimonialsCarousel({ locale }: TestimonialsCarouselProps) {
                 initials={item.initials}
               />
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
-      <div
-        className={cn(
-          "flex w-9 shrink-0 flex-col items-center justify-between py-0.5 sm:w-10 sm:py-1",
-          SLIDE_HEIGHT_VARS,
-          SLIDE_HEIGHT_CLASS,
-        )}
-      >
+      <div className="flex w-8 shrink-0 flex-col items-center justify-between self-stretch py-1 sm:w-10 sm:py-2">
         <button
           type="button"
           className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line bg-surface/80 text-foreground backdrop-blur-sm transition-colors hover:border-brand hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand sm:h-9 sm:w-9"
@@ -134,7 +119,7 @@ export function TestimonialsCarousel({ locale }: TestimonialsCarouselProps) {
         </button>
 
         <div
-          className="flex min-h-0 flex-1 flex-col items-center justify-center gap-2 py-2 sm:gap-2.5 sm:py-3"
+          className="flex min-h-0 flex-1 flex-col items-center justify-center gap-1.5 py-2 sm:gap-2.5 sm:py-3"
           role="tablist"
           aria-label={t("testimonialsCarouselLabel")}
         >

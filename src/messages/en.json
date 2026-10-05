@@ -18,8 +18,8 @@
     "insightsDescription": "Practical insights from REPLA Technologies on AI agents, custom software, cloud delivery, security, dedicated teams, and IoT for modern enterprises.",
     "blogTitle": "Blog | REPLA Technologies",
     "blogDescription": "Articles from REPLA Technologies on AI, custom software, cloud delivery, cybersecurity, dedicated teams, and digital transformation in Saudi Arabia.",
-    "portfolioTitle": "Portfolio & Case Studies",
-    "portfolioDescription": "REPLA Technologies portfolio and case studies. Public work will be published here; contact us to discuss relevant projects under NDA.",
+    "portfolioTitle": "Portfolio & Case Study",
+    "portfolioDescription": "Live products across tokenized real estate, Web3, AI research, and gaming. Visit each project to view the production site.",
     "privacyTitle": "Privacy Policy",
     "privacyDescription": "Privacy policy for the Repla website — how we collect, use, share, and protect your personal information, including your data rights.",
     "termsTitle": "Terms & Conditions",
@@ -291,6 +291,11 @@
     "latestArticles": "Latest articles",
     "latestArticlesSub": "Insights on AI, software delivery, and digital transformation from the REPLA team.",
     "viewAllArticles": "View All Articles",
+    "latestPortfolio": "Portfolio & Case Study",
+    "latestPortfolioSub": "The five most recently published projects from our live portfolio — browse the hero slider or pick a thumbnail below.",
+    "portfolioSliderLabel": "Latest portfolio projects",
+    "portfolioPrev": "Previous project",
+    "portfolioNext": "Next project",
     "industries": "Industries we serve",
     "industriesSub": "Specialized solutions tailored to your sector’s unique challenges.",
     "viewAllIndustries": "View All Industries",
@@ -317,6 +322,12 @@
     "code": "404",
     "title": "This page is not on the map",
     "body": "The URL does not match a published REPLA page. Go home or return to the previous screen."
+  },
+  "portfolio": {
+    "filters": "Filter portfolio projects",
+    "all": "All",
+    "visitLiveSite": "Visit live site",
+    "viewAll": "View all projects"
   },
   "empty": {
     "cta": "Talk to us about relevant work"

@@ -10,7 +10,7 @@ function Tiles({ suffix, copy = false }: { suffix: string; copy?: boolean }) {
       {TECHNOLOGIES.map((tech) => (
         <li
           key={`${tech}-${suffix}`}
-          className="tech-tile flex min-w-[8.5rem] shrink-0 cursor-default items-center gap-2 rounded-2xl border border-line bg-surface px-2.5 py-2.5 sm:min-w-36 sm:gap-2.5 sm:px-3 sm:py-3 md:min-w-48 md:px-4"
+          className="tech-tile flex min-w-[7.25rem] shrink-0 cursor-default items-center gap-1.5 rounded-2xl border border-line bg-surface px-2 py-2 sm:min-w-36 sm:gap-2.5 sm:px-3 sm:py-3 md:min-w-48 md:px-4"
         >
           <span
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-line bg-foreground/10 sm:h-11 sm:w-11"
@@ -18,7 +18,7 @@ function Tiles({ suffix, copy = false }: { suffix: string; copy?: boolean }) {
           >
             <TechLogo name={tech} className="h-7 w-7 sm:h-8 sm:w-8" />
           </span>
-          <span className="whitespace-nowrap font-display text-sm font-semibold tracking-wide text-foreground sm:text-base">
+          <span className="whitespace-nowrap font-display text-xs font-semibold tracking-wide text-foreground sm:text-base">
             {tech}
           </span>
         </li>

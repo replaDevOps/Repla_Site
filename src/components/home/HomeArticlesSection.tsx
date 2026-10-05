@@ -19,7 +19,7 @@ export async function HomeArticlesSection({ locale }: { locale: Locale }) {
   if (!posts.length) return null;
 
   return (
-    <section className="border-y border-line bg-surface-2 py-20">
+    <section className="overflow-x-clip border-y border-line bg-surface-2 py-14 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeader
           eyebrow={tn("blog")}

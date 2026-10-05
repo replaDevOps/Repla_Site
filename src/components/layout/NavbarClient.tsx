@@ -7,6 +7,7 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { COMPANY } from "@/lib/site";
 import { CONTACT_PUBLIC_PATH, BLOG_PUBLIC_PATH, industryPagePath, servicePagePath, solutionPagePath } from "@/lib/seo-routes";
 import { cn } from "@/lib/cn";
+import { companyLogoSeo } from "@/lib/seo-image";
 import { ArrowRight, ChevronDown, Mail, MapPin, Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
@@ -69,6 +70,7 @@ export function NavbarClient({
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const menuId = useId();
   const bookACallLabel = locale === "ar" ? "احجز مكالمة" : "Book a Call";
+  const logoSeo = companyLogoSeo();
 
   useEffect(() => {
     let frame = 0;
@@ -173,8 +175,8 @@ export function NavbarClient({
         <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2">
           <Image
             src="/logo.png"
-            alt="REPLA Technologies"
-            title="REPLA Technologies"
+            alt={logoSeo.alt}
+            title={logoSeo.title}
             width={40}
             height={40}
             priority
@@ -183,8 +185,8 @@ export function NavbarClient({
           />
           <Image
             src="/logo-light.png"
-            alt="REPLA Technologies"
-            title="REPLA Technologies"
+            alt={logoSeo.alt}
+            title={logoSeo.title}
             width={40}
             height={40}
             priority
@@ -347,7 +349,7 @@ export function NavbarClient({
       {mobile ? (
         <div className="border-t border-line bg-background lg:hidden">
           <div
-            className="mx-auto flex max-h-[calc(100dvh-4.75rem)] max-w-7xl flex-col overflow-y-auto px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-2 sm:px-6"
+            className="mx-auto flex max-h-[calc(100dvh-4.75rem)] max-w-7xl flex-col overflow-y-auto px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-2 sm:px-6 md:max-w-3xl lg:max-w-7xl"
             data-no-smooth-scroll
           >
             <nav className="flex flex-col" aria-label="Mobile">
@@ -657,7 +659,7 @@ function MobileAccordion({
         )}
       >
         <div className="overflow-hidden">
-          <div className="flex flex-col gap-0.5 pb-3 ps-1">{children}</div>
+          <div className="flex flex-col gap-0.5 pb-3 ps-1 md:grid md:grid-cols-2 md:gap-x-4">{children}</div>
         </div>
       </div>
     </div>

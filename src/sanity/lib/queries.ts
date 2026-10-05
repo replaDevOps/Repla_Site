@@ -123,3 +123,63 @@ export const faqsQuery = groq`
     order
   }
 `;
+
+export const portfolioCategoriesQuery = groq`
+  *[_type == "portfolioCategory" && defined(slug.current)] | order(order asc, title.en asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    order,
+    "projectCount": count(*[
+      _type == "portfolioProject" &&
+      references(^._id) &&
+      published != false &&
+      defined(slug.current) &&
+      defined(image.asset)
+    ])
+  }
+`;
+
+export const latestPortfolioProjectsQuery = groq`
+  *[_type == "portfolioProject" && published != false && defined(slug.current) && defined(image.asset)]
+    | order(_createdAt desc) [0...$limit] {
+    _id,
+    "slug": slug.current,
+    title,
+    description,
+    url,
+    order,
+    _createdAt,
+    "category": category->{
+      _id,
+      title,
+      "slug": slug.current,
+      order
+    },
+    image {
+      ${imageFields}
+    }
+  }
+`;
+
+export const portfolioProjectsQuery = groq`
+  *[_type == "portfolioProject" && published != false && defined(slug.current) && defined(image.asset)]
+    | order(order asc, _createdAt asc) {
+    _id,
+    "slug": slug.current,
+    title,
+    description,
+    url,
+    order,
+    "category": category->{
+      _id,
+      title,
+      "slug": slug.current,
+      order
+    },
+    image {
+      ${imageFields}
+    }
+  }
+`;

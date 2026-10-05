@@ -32,8 +32,20 @@ export const structure: StructureResolver = (S) =>
             .title("Team Members")
             .defaultOrdering([{ field: "order", direction: "asc" }]),
         ),
-      S.divider(),
-      ...S.documentTypeListItems().filter(
-        (item) => !["post", "author", "category", "faq", "teamMember"].includes(item.getId() ?? ""),
-      ),
+      S.listItem()
+        .title("Portfolio Categories")
+        .schemaType("portfolioCategory")
+        .child(
+          S.documentTypeList("portfolioCategory")
+            .title("Portfolio Categories")
+            .defaultOrdering([{ field: "order", direction: "asc" }]),
+        ),
+      S.listItem()
+        .title("Portfolio Projects")
+        .schemaType("portfolioProject")
+        .child(
+          S.documentTypeList("portfolioProject")
+            .title("Portfolio Projects")
+            .defaultOrdering([{ field: "order", direction: "asc" }]),
+        ),
     ]);

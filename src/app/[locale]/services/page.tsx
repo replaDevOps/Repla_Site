@@ -57,7 +57,7 @@ export default async function ServicesPage({
         containerClassName="max-w-7xl"
       />
 
-      <div className="mx-auto max-w-7xl overflow-x-clip px-4 py-16 sm:px-6">
+      <div className="mx-auto min-w-0 max-w-7xl overflow-x-clip px-4 py-14 sm:px-6 sm:py-16">
         <section aria-labelledby="services-intro-heading" className="max-w-3xl">
           <h2 id="services-intro-heading" className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
             {tm("servicesIntroTitle")}

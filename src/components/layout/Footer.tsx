@@ -11,6 +11,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { SocialLinks } from "@/components/layout/SocialLinks";
 import Image from "next/image";
 import { FooterCta, FooterExploreServicesButton } from "@/components/layout/FooterCta";
+import { companyLogoSeo } from "@/lib/seo-image";
 
 const footerIndustrySlugs = [
   "fintech-banking",
@@ -43,6 +44,7 @@ export async function Footer() {
     { href: BLOG_PUBLIC_PATH, label: tn("blog") },
     { href: "/faq", label: tn("faq") },
   ];
+  const logoSeo = companyLogoSeo();
 
   return (
     <footer className="relative overflow-hidden border-t border-line bg-background">
@@ -66,7 +68,7 @@ export async function Footer() {
               REPLA
             </span>
             <p className="relative text-xs font-medium uppercase tracking-[0.22em] text-brand">{t("ctaEyebrow")}</p>
-            <h2 className="relative mt-3 font-display text-2xl font-bold text-foreground sm:text-4xl">
+            <h2 className="relative mt-3 font-display text-[clamp(1.35rem,4vw,2.25rem)] font-bold text-foreground">
               {t("ctaTitle")}
             </h2>
             <p className="relative mx-auto mt-3 max-w-xl text-sm font-normal leading-relaxed text-muted sm:text-base">
@@ -84,21 +86,21 @@ export async function Footer() {
         {/* Equal-width tracks made the gutters look uneven, because each column's longest
             link differs. Sizing tracks to their content and spreading the leftover space
             with justify-between gives every column the same visual breathing room. */}
-        <div className="grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[repeat(5,auto)] xl:justify-between">
-          <div className="sm:col-span-2 lg:col-span-3 xl:col-span-1">
+        <div className="grid gap-10 py-12 sm:grid-cols-2 sm:py-16 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-[repeat(5,auto)] 2xl:justify-between">
+          <div className="sm:col-span-2 lg:col-span-2 xl:col-span-1 2xl:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2">
               <Image
                 src="/logo.png"
-                alt="REPLA Technologies"
-                title="REPLA Technologies"
+                alt={logoSeo.alt}
+                title={logoSeo.title}
                 width={40}
                 height={40}
                 className="logo-dark-only h-10 w-10 rounded-full"
               />
               <Image
                 src="/logo-light.png"
-                alt="REPLA Technologies"
-                title="REPLA Technologies"
+                alt={logoSeo.alt}
+                title={logoSeo.title}
                 width={40}
                 height={40}
                 className="logo-light-only h-10 w-10 object-contain"

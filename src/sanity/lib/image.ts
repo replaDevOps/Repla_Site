@@ -61,7 +61,7 @@ export function resolveSanityImageAltTitle(
     image?.alt?.trim() ||
     options?.fallback?.trim() ||
     options?.defaultText?.trim() ||
-    "REPLA Technologies blog image";
+    "REPLA Technologies";
 
   return { alt: text, title: text };
 }

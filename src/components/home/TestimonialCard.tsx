@@ -42,8 +42,8 @@ export function TestimonialCard({
         >
           ★★★★★
         </p>
-        <blockquote className="testimonial-quote-scroll mt-2 min-h-0 flex-1 overflow-y-auto sm:mt-2.5">
-          <p className="text-sm leading-relaxed text-foreground/90 [overflow-wrap:anywhere] sm:text-base md:text-[1.05rem]">
+        <blockquote className="testimonial-quote-scroll mt-2 min-h-0 flex-1 sm:mt-2.5">
+          <p className="max-h-[min(280px,45vh)] overflow-y-auto text-sm leading-relaxed text-foreground/90 [overflow-wrap:anywhere] sm:max-h-none sm:overflow-visible sm:text-base md:text-[1.05rem]">
             &ldquo;{reviewText}&rdquo;
           </p>
         </blockquote>
