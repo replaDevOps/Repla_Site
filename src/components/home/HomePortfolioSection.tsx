@@ -1,4 +1,4 @@
-import { PortfolioHeroSlider } from "@/components/home/PortfolioHeroSlider";
+import { PortfolioSplitSlider } from "@/components/home/PortfolioSplitSlider";
 import { ButtonLink } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -33,7 +33,7 @@ export async function HomePortfolioSection({ locale }: { locale: Locale }) {
           />
         </Reveal>
         <Reveal delay={0.08} className="mt-8 sm:mt-10">
-          <PortfolioHeroSlider projects={items} locale={locale} />
+          <PortfolioSplitSlider projects={items} locale={locale} />
         </Reveal>
         <div className="mt-10 flex justify-center">
           <ButtonLink href="/portfolio" variant="secondary">

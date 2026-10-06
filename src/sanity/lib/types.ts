@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from "@portabletext/types";
 
-import type { LocaleField } from "@/sanity/lib/locale";
+import type { LocaleField, LocalePortableText } from "@/sanity/lib/locale";
 
 export type SanityImageAsset = {
   _ref?: string;
@@ -85,7 +85,9 @@ export type SanityPortfolioProject = {
   _id: string;
   slug: string;
   title: LocaleField;
-  description: LocaleField;
+  description: LocalePortableText | LocaleField;
+  /** Expanded portable text when description is rich content (blog-style body). */
+  descriptionRich?: LocalePortableText | null;
   url: string;
   category?: SanityPortfolioCategory;
   order?: number;

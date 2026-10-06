@@ -86,7 +86,7 @@ export async function Footer() {
         {/* Equal-width tracks made the gutters look uneven, because each column's longest
             link differs. Sizing tracks to their content and spreading the leftover space
             with justify-between gives every column the same visual breathing room. */}
-        <div className="grid gap-10 py-12 sm:grid-cols-2 sm:py-16 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-[repeat(5,auto)] 2xl:justify-between">
+        <div className="grid gap-10 py-12 sm:grid-cols-2 sm:py-16 lg:grid-cols-3 xl:grid-cols-5 xl:justify-between">
           <div className="sm:col-span-2 lg:col-span-2 xl:col-span-1 2xl:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2">
               <Image

@@ -84,7 +84,7 @@ export default async function HomePage({
       <JsonLd data={localBusinessJsonLd()} />
       <section className="relative overflow-hidden grain">
         <div className="pointer-events-none absolute inset-0">
-          <div className="glow-orb absolute -top-24 start-1/2 h-[22rem] w-[22rem] -translate-x-1/2 sm:-top-32 sm:h-[32rem] sm:w-[32rem] rtl:translate-x-1/2" />
+          <div className="glow-orb absolute -top-24 start-1/2 h-64 w-64 -translate-x-1/2 sm:-top-32 sm:h-[32rem] sm:w-[32rem] rtl:translate-x-1/2" />
           <div className="absolute inset-0 grid-bg" />
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:gap-12 sm:px-6 sm:py-20 lg:grid-cols-2 lg:py-28">
@@ -101,14 +101,14 @@ export default async function HomePage({
             <p className="mt-4 max-w-xl text-base font-normal leading-relaxed text-muted sm:text-lg">
               {loc(companyCopy.heroBody, l)}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="/services" size="lg">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <ButtonLink href="/services" size="lg" className="w-full sm:w-auto">
                 {tn("exploreServices")}
               </ButtonLink>
-              <ButtonLink href={CONTACT_PUBLIC_PATH} variant="secondary" size="lg">
+              <ButtonLink href={CONTACT_PUBLIC_PATH} variant="secondary" size="lg" className="w-full sm:w-auto">
                 {tn("contact")}
               </ButtonLink>
-              <ButtonLink href="/careers" variant="secondary" size="lg">
+              <ButtonLink href="/careers" variant="secondary" size="lg" className="w-full sm:w-auto">
                 {t("buildYourCareer")}
               </ButtonLink>
             </div>

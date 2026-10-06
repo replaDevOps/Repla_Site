@@ -26,7 +26,7 @@ export async function HomeArticlesSection({ locale }: { locale: Locale }) {
           title={t("latestArticles")}
           description={t("latestArticlesSub")}
         />
-        <ul className="mt-10 grid list-none gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid list-none gap-4 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post, i) => (
             <li key={post._id} className="h-full">
               <Reveal delay={i * 0.04} className="h-full">

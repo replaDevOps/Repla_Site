@@ -34,7 +34,9 @@ export const portfolioProject = defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "localeText",
+      type: "localeBlockContent",
+      description:
+        "Same rich editor as the blog body — headings, lists, bold, italic, highlight, links, images, callouts, tables, and FAQ blocks.",
       validation: (rule) => rule.required(),
     }),
     defineField({
