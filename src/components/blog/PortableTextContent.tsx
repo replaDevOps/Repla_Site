@@ -47,6 +47,9 @@ const basePortableTextComponents: PortableTextComponents = {
     code: ({ children }) => (
       <code className="break-all rounded bg-surface-2 px-1.5 py-0.5 text-sm text-foreground">{children}</code>
     ),
+    highlight: ({ children }) => (
+      <mark className="rounded-sm bg-brand/20 px-0.5 text-foreground not-italic">{children}</mark>
+    ),
     link: ({ children, value }) => {
       const href = value?.href;
       if (!href) return <>{children}</>;

@@ -64,7 +64,7 @@ export default async function AboutPage({
             : "شريككم الموثوق للتحول الرقمي القائم على الذكاء الاصطناعي"
         }
       />
-      <section className="mx-auto min-w-0 max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
+      <section className="mx-auto min-w-0 max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {companyCopy.stats.map((s) => (
             <StatCounter

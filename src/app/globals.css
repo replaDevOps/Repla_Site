@@ -363,94 +363,113 @@ html.light .navbar-shell-scrolled {
   }
 }
 
-@keyframes portfolio-thumb-progress {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+/* Portfolio split slider — matches reference Split slider (.sp / .sv / .mk) */
+.portfolio-split-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-/* Portfolio hero slider — matches reference Hero slider (.hs / .hs.on) */
-.portfolio-hero-slide {
-  opacity: 0;
+.portfolio-split-wipe {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.7s cubic-bezier(0.7, 0, 0.2, 1);
   pointer-events: none;
-  transition: opacity 0.8s ease-in-out;
 }
 
-.portfolio-hero-slide.is-active {
-  opacity: 1;
+/* Image fills the entire bordered box on both axes — no crop, full image visible. */
+.portfolio-split-image-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.portfolio-split-wipe img,
+.portfolio-split-wipe .portfolio-split-image {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: fill !important;
+  object-position: center !important;
+}
+
+.portfolio-split-wipe.is-active {
+  clip-path: inset(0);
   pointer-events: auto;
+  z-index: 1;
 }
 
-.portfolio-hero-slide-image {
-  transform: scale(1.08);
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+.portfolio-split-wipe.is-instant {
+  transition: none;
 }
 
-.portfolio-hero-slide.is-active .portfolio-hero-slide-image {
-  transform: scale(1);
+.portfolio-split-desc-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.portfolio-hero-slide-number {
-  opacity: 0;
-  transform: scale(0.8) rotate(-10deg);
-  transition:
-    opacity 0.7s ease-out,
-    transform 0.7s ease-out;
+.portfolio-split-desc-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
-.portfolio-hero-slide.is-active .portfolio-hero-slide-number {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
+/* Inline “See more” on the last visible line of the clamped summary. */
+.portfolio-split-summary {
+  max-height: calc(1.625em * 3);
 }
 
-.portfolio-hero-slide-number.is-rtl {
-  transform: scale(0.8) rotate(10deg);
+.portfolio-split-summary--6 {
+  max-height: calc(1.625em * 6);
 }
 
-.portfolio-hero-slide.is-active .portfolio-hero-slide-number.is-rtl {
-  transform: scale(1) rotate(0deg);
+.portfolio-split-summary-spacer {
+  float: right;
+  width: 0;
+  height: calc(1.625em * 2);
 }
 
-.portfolio-hero-slide-content {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+.portfolio-split-summary-spacer--6 {
+  height: calc(1.625em * 5);
 }
 
-.portfolio-hero-slide.is-active .portfolio-hero-slide-content {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.25s;
+.portfolio-split-summary-more {
+  float: right;
+  clear: right;
+  margin-inline-start: 0.35em;
+  shape-outside: content-box;
 }
 
-.portfolio-hero-slide:not(.is-active) .portfolio-hero-slide-content,
-.portfolio-hero-slide:not(.is-active) .portfolio-hero-slide-number,
-.portfolio-hero-slide:not(.is-active) .portfolio-hero-slide-image {
-  transition-delay: 0s;
+html[dir="rtl"] .portfolio-split-summary-spacer,
+[dir="rtl"] .portfolio-split-summary-spacer {
+  float: left;
+}
+
+html[dir="rtl"] .portfolio-split-summary-more,
+[dir="rtl"] .portfolio-split-summary-more {
+  float: left;
+  clear: left;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .portfolio-hero-slide,
-  .portfolio-hero-slide-image,
-  .portfolio-hero-slide-number,
-  .portfolio-hero-slide-content {
+  .portfolio-split-wipe {
     transition: none !important;
   }
 
-  .portfolio-hero-slide:not(.is-active) {
+  .portfolio-split-wipe:not(.is-active) {
     visibility: hidden;
-  }
-
-  .portfolio-hero-slide.is-active .portfolio-hero-slide-image,
-  .portfolio-hero-slide.is-active .portfolio-hero-slide-number,
-  .portfolio-hero-slide.is-active .portfolio-hero-slide-content {
-    opacity: 1;
-    transform: none;
   }
 }
 
@@ -896,13 +915,15 @@ html.light .btn-slide-round.btn-primary::after {
 }
 
 .scroll-to-top {
-  inset-inline-start: max(1.25rem, env(safe-area-inset-left, 0px));
-  bottom: max(5rem, calc(env(safe-area-inset-bottom, 0px) + 4rem));
+  /* Always physical left-bottom (mobile + desktop), including RTL */
+  left: max(1.25rem, env(safe-area-inset-left, 0px));
+  right: auto;
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
 }
 
 @media (min-width: 640px) {
   .scroll-to-top {
-    inset-inline-start: max(1.5rem, env(safe-area-inset-left, 0px));
+    left: max(1.5rem, env(safe-area-inset-left, 0px));
     bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
   }
 }

@@ -292,7 +292,7 @@
     "latestArticlesSub": "Insights on AI, software delivery, and digital transformation from the REPLA team.",
     "viewAllArticles": "View All Articles",
     "latestPortfolio": "Portfolio & Case Study",
-    "latestPortfolioSub": "The five most recently published projects from our live portfolio — browse the hero slider or pick a thumbnail below.",
+    "latestPortfolioSub": "The five most recently published projects from our live portfolio — browse the split slider below.",
     "portfolioSliderLabel": "Latest portfolio projects",
     "portfolioPrev": "Previous project",
     "portfolioNext": "Next project",
@@ -329,7 +329,10 @@
     "filters": "Filter portfolio projects",
     "all": "All",
     "visitLiveSite": "Visit live site",
-    "viewAll": "View all projects"
+    "viewAll": "View all projects",
+    "seeMore": "See more",
+    "seeLess": "See less",
+    "closeDetails": "Close project details"
   },
   "empty": {
     "cta": "Talk to us about relevant work"

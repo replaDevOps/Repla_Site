@@ -148,6 +148,10 @@ export const latestPortfolioProjectsQuery = groq`
     "slug": slug.current,
     title,
     description,
+    "descriptionRich": {
+      "en": description.en[]{ ${portableTextBlock} },
+      "ar": description.ar[]{ ${portableTextBlock} }
+    },
     url,
     order,
     _createdAt,
@@ -170,6 +174,10 @@ export const portfolioProjectsQuery = groq`
     "slug": slug.current,
     title,
     description,
+    "descriptionRich": {
+      "en": description.en[]{ ${portableTextBlock} },
+      "ar": description.ar[]{ ${portableTextBlock} }
+    },
     url,
     order,
     "category": category->{

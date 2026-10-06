@@ -49,7 +49,7 @@ export default async function CareersPage({
           <div className="absolute inset-0 grid-bg opacity-40" />
         </div>
 
-        <div className="relative mx-auto grid max-w-6xl items-start gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-20">
+        <div className="relative mx-auto grid max-w-7xl items-start gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-20">
           <div className="space-y-8">
             <Reveal>
               <p className="text-xs font-medium uppercase tracking-[0.22em] text-brand">

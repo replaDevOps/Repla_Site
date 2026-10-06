@@ -1,3 +1,4 @@
+import { Highlighter } from "lucide-react";
 import { defineArrayMember, defineType } from "sanity";
 
 import { contentCallout, contentFaq, contentTable } from "@/sanity/schemaTypes/contentBlocks";
@@ -24,6 +25,7 @@ export const blockContent = defineType({
           { title: "Strong", value: "strong" },
           { title: "Emphasis", value: "em" },
           { title: "Code", value: "code" },
+          { title: "Highlight", value: "highlight", icon: Highlighter },
         ],
         annotations: [
           {
