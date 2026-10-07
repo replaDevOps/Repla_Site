@@ -5,10 +5,10 @@ import { CONTACT_PUBLIC_PATH } from "@/lib/seo-routes";
 import type { Metadata } from "next";
 
 const OG_IMAGE = {
-  url: `${SITE_URL}/logo.png`,
+  url: "/og.png",
   width: 1200,
   height: 630,
-  alt: `${COMPANY.shortName} logo`,
+  alt: `${COMPANY.shortName} — Software Development in Riyadh, Saudi Arabia`,
 };
 
 /** Trim meta descriptions to a search-friendly length without mid-word breaks. */
@@ -79,7 +79,7 @@ export function pageMetadata({
       card: "summary_large_image",
       title: ogTitle,
       description: d,
-      images: [`${SITE_URL}/logo.png`],
+      images: ["/og.png"],
     },
   };
 }
