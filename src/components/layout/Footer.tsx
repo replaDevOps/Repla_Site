@@ -83,19 +83,16 @@ export async function Footer() {
           </div>
         </FooterCta>
 
-        {/* Equal-width tracks made the gutters look uneven, because each column's longest
-            link differs. Sizing tracks to their content and spreading the leftover space
-            with justify-between gives every column the same visual breathing room. */}
-        <div className="grid gap-10 py-12 sm:grid-cols-2 sm:py-16 lg:grid-cols-3 xl:grid-cols-5 xl:justify-between">
-          <div className="sm:col-span-2 lg:col-span-2 xl:col-span-1 2xl:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2">
+        <div className="footer-nav-grid">
+          <div className="footer-brand">
+            <Link href="/" className="inline-flex max-w-full items-center gap-2">
               <Image
                 src="/logo.png"
                 alt={logoSeo.alt}
                 title={logoSeo.title}
                 width={40}
                 height={40}
-                className="logo-dark-only h-10 w-10 rounded-full"
+                className="logo-dark-only h-10 w-10 shrink-0 rounded-full"
               />
               <Image
                 src="/logo-light.png"
@@ -103,14 +100,16 @@ export async function Footer() {
                 title={logoSeo.title}
                 width={40}
                 height={40}
-                className="logo-light-only h-10 w-10 object-contain"
+                className="logo-light-only h-10 w-10 shrink-0 object-contain"
               />
-              <span className="font-display text-lg font-semibold">{COMPANY.shortName}</span>
+              <span className="min-w-0 truncate font-display text-lg font-semibold">
+                {COMPANY.shortName}
+              </span>
             </Link>
-            <p className="mt-4 max-w-[17.5rem] text-sm leading-relaxed text-muted">
+            <p className="footer-brand-copy mt-4 text-sm leading-relaxed text-muted">
               {loc(companyCopy.footerBlurb, locale)}
             </p>
-            <ul className="mt-6 max-w-[17.5rem] space-y-3 text-sm text-muted">
+            <ul className="footer-brand-contact mt-6 space-y-3 text-sm text-muted">
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
                 <span className="min-w-0 break-words">{COMPANY.address}</span>
@@ -138,71 +137,73 @@ export async function Footer() {
             <SocialLinks className="mt-4" />
           </div>
 
-          <div>
-            <p className="footer-heading">{t("company")}</p>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {companyLinks.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="footer-link">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="footer-link-cols">
+            <div>
+              <p className="footer-heading">{t("company")}</p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                {companyLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="footer-link">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div>
-            <p className="footer-heading">{t("services")}</p>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {featured.map((s) => (
-                <li key={s.slug}>
-                  <Link href={servicePagePath(s.slug)} className="footer-link">
-                    {loc(s.shortTitle, locale)}
+            <div>
+              <p className="footer-heading">{t("services")}</p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                {featured.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={servicePagePath(s.slug)} className="footer-link">
+                      {loc(s.shortTitle, locale)}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link href={servicePagePath("ui-ux-design")} className="footer-link">
+                    UI/UX
                   </Link>
                 </li>
-              ))}
-              <li>
-                <Link href={servicePagePath("ui-ux-design")} className="footer-link">
-                  UI/UX
-                </Link>
-              </li>
-              <li>
-                <Link href={servicePagePath("iot-embedded-systems")} className="footer-link">
-                  IoT
-                </Link>
-              </li>
-              <li>
-                <Link href={servicePagePath("blockchain-web3")} className="footer-link">
-                  Web3
-                </Link>
-              </li>
-            </ul>
-          </div>
+                <li>
+                  <Link href={servicePagePath("iot-embedded-systems")} className="footer-link">
+                    IoT
+                  </Link>
+                </li>
+                <li>
+                  <Link href={servicePagePath("blockchain-web3")} className="footer-link">
+                    Web3
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-          <div>
-            <p className="footer-heading">{tn("industries")}</p>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {featuredIndustries.map((industry) => (
-                <li key={industry.slug}>
-                  <Link href={industryPagePath(industry.slug)} className="footer-link">
-                    {loc(industry.title, locale)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div>
+              <p className="footer-heading">{tn("industries")}</p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                {featuredIndustries.map((industry) => (
+                  <li key={industry.slug}>
+                    <Link href={industryPagePath(industry.slug)} className="footer-link">
+                      {loc(industry.title, locale)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div>
-            <p className="footer-heading">{t("resources")}</p>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {resourceLinks.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="footer-link">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <p className="footer-heading">{t("resources")}</p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                {resourceLinks.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className="footer-link">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
