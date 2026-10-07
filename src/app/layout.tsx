@@ -38,8 +38,14 @@ export const metadata: Metadata = {
   category: "technology",
   manifest: "/site.webmanifest",
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",
@@ -50,10 +56,10 @@ export const metadata: Metadata = {
     url: SITE_URL,
     images: [
       {
-        url: `${SITE_URL}/logo.png`,
+        url: "/og.png",
         width: 1200,
         height: 630,
-          alt: `${COMPANY.shortName} logo`,
+        alt: `${COMPANY.shortName} — Software Development in Riyadh, Saudi Arabia`,
       },
     ],
   },
@@ -62,7 +68,7 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description:
       "REPLA Technologies delivers enterprise-grade AI, custom software, web, mobile, cloud, and cybersecurity solutions for organizations in Saudi Arabia and worldwide.",
-    images: [`${SITE_URL}/logo.png`],
+    images: ["/og.png"],
   },
   robots: {
     index: true,
