@@ -21,7 +21,7 @@ function PortfolioCardSummary({
   seeMoreLabel: string;
 }) {
   const [needsSeeMore, setNeedsSeeMore] = useState(false);
-  const summaryRef = useRef<HTMLDivElement>(null);
+  const summaryRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const el = summaryRef.current;
@@ -40,23 +40,24 @@ function PortfolioCardSummary({
   }, [description]);
 
   return (
-    <div
-      ref={summaryRef}
-      className="portfolio-split-summary portfolio-split-summary--6 relative mt-2 min-h-0 overflow-hidden break-words text-sm leading-relaxed text-muted [overflow-wrap:anywhere]"
-    >
+    <div className="relative mt-2 min-w-0">
+      <p
+        ref={summaryRef}
+        className="mb-0 line-clamp-6 break-words text-sm leading-relaxed text-muted [overflow-wrap:anywhere]"
+      >
+        {description}
+      </p>
       {needsSeeMore ? (
-        <>
-          <span className="portfolio-split-summary-spacer portfolio-split-summary-spacer--6" aria-hidden />
+        <div className="mt-1 flex justify-end">
           <button
             type="button"
             onClick={onSeeMore}
-            className="portfolio-split-summary-more text-sm font-medium leading-relaxed text-brand transition-opacity hover:opacity-80"
+            className="portfolio-view-details text-sm font-medium leading-relaxed text-brand"
           >
             {seeMoreLabel}
           </button>
-        </>
+        </div>
       ) : null}
-      <p className="mb-0 break-words [overflow-wrap:anywhere]">{description}</p>
     </div>
   );
 }
