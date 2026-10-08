@@ -28,7 +28,7 @@ export function PortfolioSplitSlider({
   const [modalOpen, setModalOpen] = useState(false);
   const [needsSeeMore, setNeedsSeeMore] = useState(false);
   const regionRef = useRef<HTMLDivElement>(null);
-  const descRef = useRef<HTMLDivElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
   const isRtl = locale === "ar";
 
   useEffect(() => {
@@ -127,24 +127,24 @@ export function PortfolioSplitSlider({
               </div>
             </div>
 
-            <div
-              ref={descRef}
-              key={`desc-${active.id}`}
-              className="portfolio-split-summary relative mt-3 mb-2.5 min-h-0 overflow-hidden break-words text-sm leading-relaxed text-muted [overflow-wrap:anywhere] sm:text-[15px]"
-            >
+            <div key={`desc-${active.id}`} className="relative mt-3 mb-2.5 min-w-0">
+              <p
+                ref={descRef}
+                className="mb-0 line-clamp-3 break-words text-sm leading-relaxed text-muted [overflow-wrap:anywhere] sm:text-[15px]"
+              >
+                {active.description}
+              </p>
               {needsSeeMore ? (
-                <>
-                  <span className="portfolio-split-summary-spacer" aria-hidden />
+                <div className="mt-1 flex justify-end">
                   <button
                     type="button"
                     onClick={() => setModalOpen(true)}
-                    className="portfolio-split-summary-more text-sm font-medium leading-relaxed text-brand transition-opacity hover:opacity-80 sm:text-[15px]"
+                    className="portfolio-view-details text-sm font-medium leading-relaxed text-brand sm:text-[15px]"
                   >
                     {tp("seeMore")}
                   </button>
-                </>
+                </div>
               ) : null}
-              <p className="mb-0 break-words [overflow-wrap:anywhere]">{active.description}</p>
             </div>
 
             <div className="mb-3 flex flex-wrap gap-1.5">

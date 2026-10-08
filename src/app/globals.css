@@ -426,41 +426,45 @@ html.light .navbar-shell-scrolled {
   height: 0;
 }
 
-/* Inline “See more” on the last visible line of the clamped summary. */
-.portfolio-split-summary {
-  max-height: calc(1.625em * 3);
+.portfolio-view-details {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+  animation: portfolio-view-details-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.portfolio-split-summary--6 {
-  max-height: calc(1.625em * 6);
+.portfolio-view-details::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.portfolio-split-summary-spacer {
-  float: right;
-  width: 0;
-  height: calc(1.625em * 2);
+html[dir="rtl"] .portfolio-view-details::after,
+[dir="rtl"] .portfolio-view-details::after {
+  transform-origin: right;
 }
 
-.portfolio-split-summary-spacer--6 {
-  height: calc(1.625em * 5);
+.portfolio-view-details:hover::after,
+.portfolio-view-details:focus-visible::after {
+  transform: scaleX(1);
 }
 
-.portfolio-split-summary-more {
-  float: right;
-  clear: right;
-  margin-inline-start: 0.35em;
-  shape-outside: content-box;
-}
+@keyframes portfolio-view-details-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
 
-html[dir="rtl"] .portfolio-split-summary-spacer,
-[dir="rtl"] .portfolio-split-summary-spacer {
-  float: left;
-}
-
-html[dir="rtl"] .portfolio-split-summary-more,
-[dir="rtl"] .portfolio-split-summary-more {
-  float: left;
-  clear: left;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -470,6 +474,14 @@ html[dir="rtl"] .portfolio-split-summary-more,
 
   .portfolio-split-wipe:not(.is-active) {
     visibility: hidden;
+  }
+
+  .portfolio-view-details {
+    animation: none;
+  }
+
+  .portfolio-view-details::after {
+    transition: none;
   }
 }
 
