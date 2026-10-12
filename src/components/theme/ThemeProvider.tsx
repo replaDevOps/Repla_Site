@@ -2,7 +2,8 @@
 
 import {
   applyTheme,
-  readTheme,
+  getStoredTheme,
+  resolveTheme,
   switchTheme,
   type Theme,
 } from "@/components/theme/theme";
@@ -28,9 +29,25 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
-    const current = readTheme();
-    applyTheme(current);
+    const current = resolveTheme();
+    // Sync DOM without writing storage — system default must stay unset until the user toggles.
+    applyTheme(current, { persist: false });
     setThemeState(current);
+  }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const onSystemChange = () => {
+      // Only follow OS changes when the visitor has not chosen a theme manually.
+      if (getStoredTheme()) return;
+      const next: Theme = media.matches ? "dark" : "light";
+      applyTheme(next, { persist: false });
+      setThemeState(next);
+    };
+
+    media.addEventListener("change", onSystemChange);
+    return () => media.removeEventListener("change", onSystemChange);
   }, []);
 
   const setTheme = useCallback((next: Theme) => {

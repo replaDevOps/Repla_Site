@@ -6,7 +6,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import { ThemeScript } from "@/components/theme/ThemeScript";
 import { routing } from "@/i18n/routing";
 import { organizationJsonLd } from "@/lib/metadata";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -35,7 +34,6 @@ export default async function LocaleLayout({
   return (
     <>
       <HtmlLang locale={locale} dir={dir} />
-      <ThemeScript />
       <div className="flex min-h-full flex-col bg-background text-foreground">
         <JsonLd data={organizationJsonLd()} />
         <NextIntlClientProvider messages={messages}>

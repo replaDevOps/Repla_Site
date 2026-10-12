@@ -1,3 +1,4 @@
+import { THEME_SCRIPT } from "@/components/theme/theme";
 import { COMPANY, SITE_TITLE, SITE_URL } from "@/lib/site";
 import { rootHtmlClassName } from "@/lib/fonts";
 import type { Metadata, Viewport } from "next";
@@ -85,7 +86,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${rootHtmlClassName} light`} suppressHydrationWarning>
+    <html lang="en" className={rootHtmlClassName} suppressHydrationWarning>
+      <head>
+        {/* Runs before paint so first load matches OS light/dark (mobile + desktop). */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="h-full">{children}</body>
     </html>
   );
