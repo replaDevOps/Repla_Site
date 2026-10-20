@@ -21,8 +21,8 @@ export const COMPANY = {
   hqCity: "Riyadh",
   address:
     "Riyadh - Taif Road, Riyadh, 'Asir SA, Riyadh, Saudi Arabia",
-  phone: "+92 335 0970604",
-  phoneHref: "tel:+923350970604",
+  phone: "+92 339 0006846",
+  phoneHref: "tel:+923390006846",
   email: "hr.replatech@gmail.com",
   emailInfo: "info@replatechnologies.co.uk",
   linkedin: "https://www.linkedin.com/company/replatech",
