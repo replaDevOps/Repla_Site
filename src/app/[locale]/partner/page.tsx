@@ -351,13 +351,22 @@ export default async function PartnerPage({
               {loc(partnerCopy.formIntro, l)}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted">{loc(partnerCopy.formDirect, l)}</p>
-            <a
-              href={`mailto:${COMPANY.email}`}
-              className="mt-4 inline-flex max-w-full items-center gap-2 break-all text-sm font-medium text-brand transition-colors hover:text-[#d4252c]"
-            >
-              <Mail className="h-4 w-4" aria-hidden />
-              {COMPANY.email}
-            </a>
+            <div className="mt-4 flex flex-col gap-2">
+              <a
+                href={`mailto:${COMPANY.email}`}
+                className="inline-flex max-w-full items-center gap-2 break-all text-sm text-foreground/80 transition-colors hover:text-foreground"
+              >
+                <Mail className="h-4 w-4 shrink-0 text-brand" aria-hidden />
+                {COMPANY.email}
+              </a>
+              <a
+                href={`mailto:${COMPANY.emailInfo}`}
+                className="inline-flex max-w-full items-center gap-2 break-all text-sm text-foreground/80 transition-colors hover:text-foreground"
+              >
+                <Mail className="h-4 w-4 shrink-0 text-brand" aria-hidden />
+                {COMPANY.emailInfo}
+              </a>
+            </div>
           </Reveal>
           <Suspense
             fallback={
