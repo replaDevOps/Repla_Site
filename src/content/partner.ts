@@ -29,7 +29,7 @@ export const partnerCopy = {
     "Refer a project, add engineering capacity, or collaborate on AI and software delivery with REPLA Technologies.",
     "أحيلوا مشروعاً، أو أضيفوا قدرة هندسية، أو تعاونوا في تسليم الذكاء الاصطناعي والبرمجيات مع REPLA Technologies.",
   ),
-  applyCta: L("Apply to partner", "قدّموا طلب شراكة"),
+  applyCta: L("To become a partner", "قدّموا طلب شراكة"),
   exploreCta: L("Explore partnerships", "استكشفوا نماذج الشراكة"),
   applyWithModel: L("Apply with this model", "قدّموا بهذا النموذج"),
 
