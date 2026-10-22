@@ -36,6 +36,7 @@ export async function Footer() {
     { href: "/about", label: tn("about") },
     { href: "/team", label: tn("team") },
     { href: "/careers", label: tn("careers") },
+    { href: "/partner", label: t("becomePartner") },
     { href: CONTACT_PUBLIC_PATH, label: tn("contact") },
   ];
 
