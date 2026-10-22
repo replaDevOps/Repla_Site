@@ -46,6 +46,7 @@ const COMPANY_LINKS = [
   { href: "/industries", labelKey: "industries" as const, icon: "Globe" },
   { href: "/team", labelKey: "team" as const, icon: "Users" },
   { href: "/careers", labelKey: "careers" as const, icon: "UserPlus" },
+  { href: "/partner", labelKey: "becomePartner" as const, icon: "Handshake" },
 ];
 
 export function NavbarClient({
@@ -405,6 +406,7 @@ export function NavbarClient({
                 <MobileSubLink href="/about">{t("about")}</MobileSubLink>
                 <MobileSubLink href="/team">{t("team")}</MobileSubLink>
                 <MobileSubLink href="/careers">{t("careers")}</MobileSubLink>
+                <MobileSubLink href="/partner">{t("becomePartner")}</MobileSubLink>
               </MobileAccordion>
 
               <MobileNavLink
