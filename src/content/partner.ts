@@ -24,7 +24,7 @@ export const PARTNER_SERVICE_SLUGS = [
 
 export const partnerCopy = {
   eyebrow: L("Partnerships", "الشراكات"),
-  title: L("Become a partner", "كن شريكاً"),
+  title: L("Apply to Partner", "كن شريكاً"),
   description: L(
     "Refer a project, add engineering capacity, or collaborate on AI and software delivery with REPLA Technologies.",
     "أحيلوا مشروعاً، أو أضيفوا قدرة هندسية، أو تعاونوا في تسليم الذكاء الاصطناعي والبرمجيات مع REPLA Technologies.",
@@ -295,7 +295,7 @@ export const partnerCopy = {
   ],
 
   formEyebrow: L("Application", "الطلب"),
-  formTitle: L("Apply to partner", "طلب الشراكة"),
+  formTitle: L("Become a partner", "طلب الشراكة"),
   formIntro: L(
     "Tell us about your business and how you would like to work together. Submitting this form starts a review. It does not confirm rates, a partnership, or a project.",
     "أخبرونا عن أعمالكم وكيف تودون العمل معاً. إرسال هذا النموذج يبدأ مراجعة. وهو لا يؤكد نسباً أو شراكة أو مشروعاً.",

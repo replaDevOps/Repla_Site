@@ -29,6 +29,18 @@ type Common = {
   children: React.ReactNode;
 };
 
+export function buttonClassName({
+  variant = "primary",
+  size = "md",
+  className,
+}: {
+  variant?: Variant;
+  size?: Size;
+  className?: string;
+} = {}) {
+  return cn(base, variants[variant], sizes[size], className);
+}
+
 export function Button({
   variant = "primary",
   size = "md",
@@ -37,7 +49,7 @@ export function Button({
   ...props
 }: Common & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button className={cn(base, variants[variant], sizes[size], className)} {...props}>
+    <button className={buttonClassName({ variant, size, className })} {...props}>
       {children}
     </button>
   );
@@ -51,7 +63,7 @@ export function ButtonLink({
   children,
 }: Common & { href: string }) {
   return (
-    <Link href={href} className={cn(base, variants[variant], sizes[size], className)}>
+    <Link href={href} className={buttonClassName({ variant, size, className })}>
       {children}
     </Link>
   );
