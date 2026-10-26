@@ -1,7 +1,8 @@
 import { PartnerForm } from "@/components/forms/PartnerForm";
+import { PartnerHashScroll, PartnerInPageLink } from "@/components/partner/PartnerInPageLink";
 import { Icon } from "@/components/icons";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { ButtonLink } from "@/components/ui/Button";
+import { ButtonLink, buttonClassName } from "@/components/ui/Button";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
 import { Reveal } from "@/components/ui/Reveal";
 import { partnerCopy, PARTNER_PATH, PARTNER_SERVICE_SLUGS } from "@/content/partner";
@@ -37,10 +38,6 @@ export async function generateMetadata({
   });
 }
 
-function applyHref(type: string) {
-  return `${PARTNER_PATH}?type=${type}#apply`;
-}
-
 export default async function PartnerPage({
   params,
 }: {
@@ -60,6 +57,9 @@ export default async function PartnerPage({
 
   return (
     <>
+      <Suspense fallback={null}>
+        <PartnerHashScroll />
+      </Suspense>
       <JsonLd data={faqPageJsonLd(faqItems)} />
 
       <section className="relative overflow-hidden border-b border-line">
@@ -78,17 +78,22 @@ export default async function PartnerPage({
             {loc(partnerCopy.description, l)}
           </p>
           <div className="mt-8 flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <ButtonLink href={`${PARTNER_PATH}#apply`} size="lg" className="w-full max-w-full sm:w-auto">
+            <PartnerInPageLink
+              section="apply"
+              className={buttonClassName({ size: "lg", className: "w-full max-w-full sm:w-auto" })}
+            >
               {loc(partnerCopy.applyCta, l)}
-            </ButtonLink>
-            <ButtonLink
-              href={`${PARTNER_PATH}#models`}
-              variant="secondary"
-              size="lg"
-              className="w-full max-w-full whitespace-normal text-center sm:w-auto"
+            </PartnerInPageLink>
+            <PartnerInPageLink
+              section="models"
+              className={buttonClassName({
+                variant: "secondary",
+                size: "lg",
+                className: "w-full max-w-full whitespace-normal text-center sm:w-auto",
+              })}
             >
               {loc(partnerCopy.exploreCta, l)}
-            </ButtonLink>
+            </PartnerInPageLink>
           </div>
         </div>
       </section>
@@ -99,9 +104,9 @@ export default async function PartnerPage({
         aria-labelledby="partner-models-heading"
       >
         <Reveal>
-          <p className="max-w-full break-words text-xs font-medium uppercase tracking-[0.16em] text-brand sm:tracking-[0.22em]">
+          <span className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
             {loc(partnerCopy.modelsEyebrow, l)}
-          </p>
+          </span>
           <h2
             id="partner-models-heading"
             className="mt-3 max-w-3xl font-display text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-tight text-foreground"
@@ -135,13 +140,14 @@ export default async function PartnerPage({
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    href={applyHref(model.id)}
+                  <PartnerInPageLink
+                    section="apply"
+                    type={model.id}
                     className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-brand"
                   >
                     {loc(partnerCopy.applyWithModel, l)}
                     <ArrowUpRight className="h-4 w-4" aria-hidden />
-                  </Link>
+                  </PartnerInPageLink>
                 </article>
               </Reveal>
             );
@@ -152,9 +158,9 @@ export default async function PartnerPage({
       <section className="border-t border-line" aria-labelledby="partner-benefits-heading">
         <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
           <Reveal>
-            <p className="text-xs font-medium uppercase tracking-[0.16em] text-brand sm:tracking-[0.22em]">
+            <span className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(partnerCopy.benefitsEyebrow, l)}
-            </p>
+            </span>
             <h2
               id="partner-benefits-heading"
               className="mt-3 max-w-3xl font-display text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-tight text-foreground"
@@ -190,9 +196,9 @@ export default async function PartnerPage({
       <section className="border-t border-line" aria-labelledby="partner-audience-heading">
         <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
           <Reveal>
-            <p className="max-w-full break-words text-xs font-medium uppercase tracking-[0.16em] text-brand sm:tracking-[0.22em]">
+            <span className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(partnerCopy.audienceEyebrow, l)}
-            </p>
+            </span>
             <h2
               id="partner-audience-heading"
               className="mt-3 max-w-3xl font-display text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-tight text-foreground"
@@ -207,8 +213,9 @@ export default async function PartnerPage({
             {partnerCopy.audiences.map((audience, index) => (
               <Reveal key={audience.title.en} delay={index * 0.05} className="h-full">
                 <li className="h-full">
-                  <Link
-                    href={applyHref(audience.type)}
+                  <PartnerInPageLink
+                    section="apply"
+                    type={audience.type}
                     className="card-hover group flex h-full min-w-0 flex-col rounded-2xl border border-line bg-surface p-5 sm:p-6"
                   >
                     <span className="break-words font-display text-lg font-semibold text-foreground">
@@ -221,7 +228,7 @@ export default async function PartnerPage({
                       {loc(partnerCopy.applyWithModel, l)}
                       <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" aria-hidden />
                     </span>
-                  </Link>
+                  </PartnerInPageLink>
                 </li>
               </Reveal>
             ))}
@@ -232,9 +239,9 @@ export default async function PartnerPage({
       <section className="border-t border-line" aria-labelledby="partner-services-heading">
         <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
           <Reveal>
-            <p className="max-w-full break-words text-xs font-medium uppercase tracking-[0.16em] text-brand sm:tracking-[0.22em]">
+            <span className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(partnerCopy.servicesEyebrow, l)}
-            </p>
+            </span>
             <h2
               id="partner-services-heading"
               className="mt-3 max-w-3xl font-display text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-tight text-foreground"
@@ -280,9 +287,9 @@ export default async function PartnerPage({
       <section className="border-t border-line" aria-labelledby="partner-process-heading">
         <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
           <Reveal>
-            <p className="max-w-full break-words text-xs font-medium uppercase tracking-[0.16em] text-brand sm:tracking-[0.22em]">
+            <span className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(partnerCopy.processEyebrow, l)}
-            </p>
+            </span>
             <h2
               id="partner-process-heading"
               className="mt-3 max-w-3xl font-display text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-tight text-foreground"
@@ -312,9 +319,9 @@ export default async function PartnerPage({
       <section className="border-t border-line" aria-labelledby="partner-faq-heading">
         <div className="mx-auto w-full min-w-0 max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
           <Reveal>
-            <p className="max-w-full break-words text-xs font-medium uppercase tracking-[0.16em] text-brand sm:tracking-[0.22em]">
+            <span className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(partnerCopy.faqEyebrow, l)}
-            </p>
+            </span>
             <h2
               id="partner-faq-heading"
               className="mt-3 font-display text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-tight text-foreground"
@@ -338,9 +345,9 @@ export default async function PartnerPage({
       >
         <div className="mx-auto grid w-full min-w-0 max-w-7xl items-start gap-8 px-4 py-14 sm:gap-10 sm:px-6 sm:py-20 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] xl:gap-12">
           <Reveal className="min-w-0">
-            <p className="max-w-full break-words text-xs font-medium uppercase tracking-[0.16em] text-brand sm:tracking-[0.22em]">
+            <span className="inline-block max-w-full break-words rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-brand">
               {loc(partnerCopy.formEyebrow, l)}
-            </p>
+            </span>
             <h2
               id="partner-apply-heading"
               className="mt-3 font-display text-[clamp(1.5rem,4vw,2.25rem)] font-bold leading-tight text-foreground"
